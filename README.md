@@ -1,31 +1,37 @@
-# Oromia-Mejlis-Website
+# Oromia Majlis Website
 
 Official website for Oromia Regional Islamic Affairs Supreme Council (Oromia Majlis).
 
-## 📁 Project Structure
+## Project Structure
 
 This repository contains two main projects:
 
-- **`backend/`** - Strapi CMS backend for content management
-- **`oromia-majlis/`** - Next.js frontend application
+### 🎨 Frontend (`oromia-majlis/`)
+- **Framework**: Next.js 16 with React
+- **Styling**: Tailwind CSS v4
+- **Features**: 
+  - Responsive header and footer
+  - Home page with dynamic Hero Section (powered by Strapi)
+  - Services, Offices, News, Events, Gallery pages
+  - Donate page with multi-currency support
+  - About page with organization information
+
+### 🔧 Backend (`backend/`)
+- **Framework**: Strapi 5 (Headless CMS)
+- **Database**: PostgreSQL (via Docker)
+- **Features**:
+  - Hero Section API with slides and services
+  - Content management for website content
+  - Image upload and management
 
 ## 🚀 Getting Started
 
-### Backend (Strapi)
+### Prerequisites
+- Node.js 18+ 
+- Docker and Docker Compose (for database)
+- npm or yarn
 
-Navigate to the backend directory and start the Strapi server:
-
-```bash
-cd backend
-npm install
-npm run develop
-```
-
-The Strapi admin panel will be available at `http://localhost:1337/admin`
-
-### Frontend (Next.js)
-
-Navigate to the frontend directory and start the development server:
+### Frontend Setup
 
 ```bash
 cd oromia-majlis
@@ -35,18 +41,53 @@ npm run dev
 
 The frontend will be available at `http://localhost:3000`
 
-## 🛠️ Tech Stack
+### Backend Setup
 
-- **Backend**: Strapi 5 (Headless CMS)
-- **Frontend**: Next.js 16 (React Framework)
-- **Styling**: Tailwind CSS v4
-- **Database**: PostgreSQL (via Docker Compose)
+1. **Start the database:**
+```bash
+cd backend
+docker compose up -d
+```
 
-## 📚 Learn more
+2. **Configure environment:**
+```bash
+cp .env.example .env
+# Edit .env with your database credentials
+```
 
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation
-- [Next.js documentation](https://nextjs.org/docs) - Official Next.js documentation
+3. **Start Strapi:**
+```bash
+npm install
+npm run develop
+```
 
----
+The Strapi admin panel will be available at `http://localhost:1337/admin`
 
-<sub>Built with ❤️ for Oromia Regional Islamic Affairs Supreme Council</sub>
+## 📝 Environment Variables
+
+### Frontend (`oromia-majlis/.env.local`)
+```env
+NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+```
+
+### Backend (`backend/.env`)
+See `backend/.env.example` for required variables.
+
+## 🛠️ Development
+
+- Frontend: `cd oromia-majlis && npm run dev`
+- Backend: `cd backend && npm run develop`
+- Database: `cd backend && docker compose up -d`
+
+## 📚 Documentation
+
+- Frontend integration: See `oromia-majlis/STRAPI_INTEGRATION.md`
+- Backend setup: See `backend/README.md`
+
+## 🤝 Contributing
+
+Contributions are welcome! Please ensure your code follows the project's coding standards.
+
+## 📄 License
+
+See individual project folders for license information.
