@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_hero_services",
+  "info": {
+    "displayName": "Service",
+    "description": "Service card in hero section"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "href": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
+
