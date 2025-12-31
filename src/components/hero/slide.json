@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_hero_slides",
+  "info": {
+    "displayName": "Slide",
+    "description": "Hero section slide"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text",
+      "required": true
+    },
+    "ctaText": {
+      "type": "string",
+      "required": false,
+      "default": "Discover More"
+    },
+    "ctaLink": {
+      "type": "string",
+      "required": false,
+      "default": "/discover"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}
+
