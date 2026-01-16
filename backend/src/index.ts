@@ -29,8 +29,75 @@ export default {
         return;
       }
 
+      // Define sample data (3 slides and 5 services)
+      const slidesData = [
+        {
+          title: "Oromia Regional Islamic Affairs Supreme Council",
+          subtitle: "Overseeing Islamic affairs in the Oromia region, representing the interests of Muslims, and managing Islamic affairs with dedication and excellence.",
+          ctaText: "Learn More",
+          ctaLink: "/about",
+          image: null, // Will be uploaded via admin panel
+        },
+        {
+          title: "Serving the Muslim Community",
+          subtitle: "Promoting Islamic values, supporting religious education, and fostering unity among Muslims in the Oromia region.",
+          ctaText: "Get Involved",
+          ctaLink: "/services",
+          image: null,
+        },
+        {
+          title: "Preserving Islamic Heritage",
+          subtitle: "Protecting and promoting Islamic culture, traditions, and values throughout the Oromia region for future generations.",
+          ctaText: "Discover More",
+          ctaLink: "/about",
+          image: null,
+        },
+      ];
+
+      // Create sample services data (exactly 6 services)
+      const servicesData = [
+        {
+          icon: "🕌",
+          title: "Religious Services",
+          description: "Mosque management, prayer times, and religious guidance for the community.",
+          href: "/services",
+        },
+        {
+          icon: "📚",
+          title: "Islamic Education",
+          description: "Quranic studies, Islamic schools, and educational programs for all ages.",
+          href: "/education",
+        },
+        {
+          icon: "🤝",
+          title: "Community Support",
+          description: "Social services, charity programs, and community development initiatives.",
+          href: "/community",
+        },
+        {
+          icon: "⚖️",
+          title: "Islamic Law & Justice",
+          description: "Sharia law guidance, dispute resolution, and legal consultation services.",
+          href: "/justice",
+        },
+        {
+          icon: "🌍",
+          title: "Interfaith Relations",
+          description: "Building bridges with other faith communities and promoting harmony.",
+          href: "/interfaith",
+        },
+        {
+          icon: "📋",
+          title: "Administrative Services",
+          description: "Documentation, certificates, and official administrative support for the community.",
+          href: "/admin",
+        },
+      ];
+
       // For single types in Strapi 5, check if entry exists
       let existingHero = null;
+      let needsUpdate = false;
+      
       try {
         // Try using documents API first (Strapi 5)
         const docs = await strapi.documents('api::hero-section.hero-section').findMany({
@@ -42,6 +109,7 @@ export default {
         try {
           const result = await strapi.entityService.findMany('api::hero-section.hero-section', {
             limit: 1,
+            populate: ['slides', 'services'],
           });
           existingHero = Array.isArray(result) && result.length > 0 ? result[0] : result;
         } catch (entityError) {
@@ -50,101 +118,79 @@ export default {
         }
       }
 
-      if (!existingHero) {
-        // Create sample slides data
-        const slidesData = [
-          {
-            title: "Fastest Growing City in Ethiopia",
-            subtitle: "It's Called as Electronic city because this is best city in Ethiopia to start new industrial and technology related business.",
-            ctaText: "Discover More",
-            ctaLink: "/discover",
-            image: null, // Will be uploaded via admin panel
-          },
-          {
-            title: "Oromia Regional Islamic Affairs Supreme Council",
-            subtitle: "Overseeing Islamic affairs in the Oromia region, representing the interests of Muslims, and managing Islamic affairs with dedication and excellence.",
-            ctaText: "Learn More",
-            ctaLink: "/about",
-            image: null,
-          },
-          {
-            title: "Serving the Muslim Community",
-            subtitle: "Promoting Islamic values, supporting religious education, and fostering unity among Muslims in the Oromia region.",
-            ctaText: "Get Involved",
-            ctaLink: "/services",
-            image: null,
-          },
-        ];
+      // Check if existing entry needs update (empty slides or services)
+      if (existingHero) {
+        const existingSlides = existingHero.slides || [];
+        const existingServices = existingHero.services || [];
+        
+        console.log('📊 Existing hero section check:', {
+          id: existingHero.id || existingHero.documentId,
+          slidesCount: existingSlides.length,
+          servicesCount: existingServices.length,
+          publishedAt: existingHero.publishedAt,
+        });
+        
+        if (existingSlides.length === 0 || existingServices.length === 0) {
+          needsUpdate = true;
+          console.log('⚠️ Existing hero section has empty slides or services. Updating...');
+        }
+      }
 
-        // Create sample services data
-        const servicesData = [
-          {
-            icon: "🏛️",
-            title: "Your Government",
-            description: "Leadership, policies, and administrative services for Islamic affairs.",
-            href: "/government",
-          },
-          {
-            icon: "💼",
-            title: "Jobs and Unemployment",
-            description: "Career support and workforce programs for the community.",
-            href: "/jobs",
-          },
-          {
-            icon: "🏭",
-            title: "Business and Corridor Dev't",
-            description: "Investments, permits, and growth corridors for economic development.",
-            href: "/business",
-          },
-          {
-            icon: "🚌",
-            title: "Roads and Transport",
-            description: "Transit routes, maintenance, and transportation services.",
-            href: "/transport",
-          },
-          {
-            icon: "🌳",
-            title: "Culture and Recreation",
-            description: "Parks, festivals, and community spaces for cultural activities.",
-            href: "/culture",
-          },
-          {
-            icon: "⚖️",
-            title: "Justice, Safety and the law",
-            description: "Peacekeeping, courts, and citizen rights protection.",
-            href: "/justice",
-          },
-        ];
+      if (!existingHero || needsUpdate) {
+        const dataToSave = {
+          slides: slidesData,
+          services: servicesData,
+          publishedAt: new Date(),
+        };
+        
+        console.log('💾 Saving hero section data:', {
+          slidesCount: slidesData.length,
+          servicesCount: servicesData.length,
+          isUpdate: needsUpdate && !!existingHero,
+        });
 
-        // Create hero section entry
         try {
-          // Try using documents API (Strapi 5)
-          await strapi.documents('api::hero-section.hero-section').create({
-            data: {
-              slides: slidesData,
-              services: servicesData,
-              publishedAt: new Date(),
-            },
-          });
-          console.log('✅ Hero section data seeded successfully (via documents API)');
-        } catch (docError) {
-          // Fallback to entityService
-          try {
-            await strapi.entityService.create('api::hero-section.hero-section', {
-              data: {
-                slides: slidesData,
-                services: servicesData,
-                publishedAt: new Date(),
-              },
-            });
-            console.log('✅ Hero section data seeded successfully (via entityService)');
-          } catch (entityError) {
-            console.error('❌ Failed to create hero section entry:', entityError);
-            console.log('💡 Please create the entry manually via Content Manager');
+          if (existingHero && needsUpdate) {
+            // Update existing entry
+            try {
+              await strapi.documents('api::hero-section.hero-section').update({
+                documentId: existingHero.documentId || existingHero.id,
+                data: dataToSave,
+              });
+              console.log('✅ Hero section data updated successfully (via documents API)');
+            } catch (docError) {
+              // Fallback to entityService
+              await strapi.entityService.update('api::hero-section.hero-section', existingHero.id || existingHero.documentId, {
+                data: dataToSave,
+              });
+              console.log('✅ Hero section data updated successfully (via entityService)');
+            }
+          } else {
+            // Create new entry
+            try {
+              // Try using documents API (Strapi 5)
+              await strapi.documents('api::hero-section.hero-section').create({
+                data: dataToSave,
+              });
+              console.log('✅ Hero section data seeded successfully (via documents API)');
+              console.log(`   - Created ${slidesData.length} slides`);
+              console.log(`   - Created ${servicesData.length} services`);
+            } catch (docError) {
+              // Fallback to entityService
+              await strapi.entityService.create('api::hero-section.hero-section', {
+                data: dataToSave,
+              });
+              console.log('✅ Hero section data seeded successfully (via entityService)');
+              console.log(`   - Created ${slidesData.length} slides`);
+              console.log(`   - Created ${servicesData.length} services`);
+            }
           }
+        } catch (error) {
+          console.error('❌ Failed to save hero section entry:', error);
+          console.log('💡 Please create/update the entry manually via Content Manager');
         }
       } else {
-        console.log('ℹ️ Hero section data already exists');
+        console.log('ℹ️ Hero section data already exists with content');
       }
     } catch (error) {
       console.error('❌ Error seeding hero section data:', error);

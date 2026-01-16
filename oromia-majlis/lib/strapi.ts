@@ -97,14 +97,55 @@ async function fetchStrapi<T>(endpoint: string): Promise<T> {
  */
 export async function getHeroSection(): Promise<HeroSection | null> {
   try {
-    // Use the simplest working endpoint that populates components
-    // Note: fetchStrapi already adds /api prefix, so we don't need it here
-    const response = await fetchStrapi<StrapiResponse<any>>(
-      '/hero-section?populate[slides][populate]=*&populate[services][populate]=*'
-    );
+    // Try multiple populate strategies for Strapi 5
+    let response: StrapiResponse<any> | null = null;
+    let lastError: Error | null = null;
+
+    // Strategy 1: Deep populate with component structure
+    try {
+      response = await fetchStrapi<StrapiResponse<any>>(
+        '/hero-section?populate[slides][populate]=*&populate[services][populate]=*'
+      );
+      if (response?.data) {
+        console.log('✅ Successfully fetched with populate strategy 1');
+      }
+    } catch (err) {
+      lastError = err as Error;
+      console.warn('⚠️ Populate strategy 1 failed, trying strategy 2...');
+    }
+
+    // Strategy 2: Simple populate
+    if (!response?.data) {
+      try {
+        response = await fetchStrapi<StrapiResponse<any>>(
+          '/hero-section?populate=*'
+        );
+        if (response?.data) {
+          console.log('✅ Successfully fetched with populate strategy 2');
+        }
+      } catch (err) {
+        lastError = err as Error;
+        console.warn('⚠️ Populate strategy 2 failed, trying strategy 3...');
+      }
+    }
+
+    // Strategy 3: No populate (components might be directly in response)
+    if (!response?.data) {
+      try {
+        response = await fetchStrapi<StrapiResponse<any>>(
+          '/hero-section'
+        );
+        if (response?.data) {
+          console.log('✅ Successfully fetched with populate strategy 3');
+        }
+      } catch (err) {
+        lastError = err as Error;
+        console.error('❌ All populate strategies failed');
+      }
+    }
 
     if (!response || !response.data) {
-      console.warn('Hero section not found in Strapi. Using fallback data.');
+      console.warn('Hero section not found in Strapi.', lastError?.message);
       return null;
     }
 
@@ -113,6 +154,15 @@ export async function getHeroSection(): Promise<HeroSection | null> {
     // Extract slides and services directly from response
     const slides = heroSection.slides || [];
     const services = heroSection.services || [];
+
+    // Debug logging
+    console.log('📊 Hero Section API Response:', {
+      hasData: !!heroSection,
+      slidesCount: slides.length,
+      servicesCount: services.length,
+      slides: slides.length > 0 ? slides.map((s: any) => ({ id: s.id, title: s.title })) : [],
+      services: services.length > 0 ? services.map((s: any) => ({ id: s.id, title: s.title })) : [],
+    });
 
     // If no slides or services, return null to use fallback
     if (slides.length === 0 && services.length === 0) {

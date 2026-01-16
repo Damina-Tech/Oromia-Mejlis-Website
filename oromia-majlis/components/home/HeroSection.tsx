@@ -4,76 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getHeroSection, HeroSection as HeroSectionType } from "@/lib/strapi";
 
-// Fallback data in case Strapi is unavailable
-const fallbackSlides = [
-  {
-    title: "Fastest Growing City in Ethiopia",
-    subtitle:
-      "It's Called as Electronic city because this is best city in Ethiopia to start new industrial and technology related business.",
-    cta: "Discover More",
-    href: "/discover",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
-  },
-  {
-    title: "Oromia Regional Islamic Affairs Supreme Council",
-    subtitle:
-      "Overseeing Islamic affairs in the Oromia region, representing the interests of Muslims, and managing Islamic affairs with dedication and excellence.",
-    cta: "Learn More",
-    href: "/about",
-    image:
-      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=80",
-  },
-  {
-    title: "Serving the Muslim Community",
-    subtitle:
-      "Promoting Islamic values, supporting religious education, and fostering unity among Muslims in the Oromia region.",
-    cta: "Get Involved",
-    href: "/services",
-    image:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80",
-  },
-];
-
-const fallbackServices = [
-  {
-    icon: "🏛️",
-    title: "Your Government",
-    description: "Leadership, policies, and administrative services for Islamic affairs.",
-    href: "/government",
-  },
-  {
-    icon: "💼",
-    title: "Jobs and Unemployment",
-    description: "Career support and workforce programs for the community.",
-    href: "/jobs",
-  },
-  {
-    icon: "🏭",
-    title: "Business and Corridor Dev't",
-    description: "Investments, permits, and growth corridors for economic development.",
-    href: "/business",
-  },
-  {
-    icon: "🚌",
-    title: "Roads and Transport",
-    description: "Transit routes, maintenance, and transportation services.",
-    href: "/transport",
-  },
-  {
-    icon: "🌳",
-    title: "Culture and Recreation",
-    description: "Parks, festivals, and community spaces for cultural activities.",
-    href: "/culture",
-  },
-  {
-    icon: "⚖️",
-    title: "Justice, Safety and the law",
-    description: "Peacekeeping, courts, and citizen rights protection.",
-    href: "/justice",
-  },
-];
-
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [heroData, setHeroData] = useState<HeroSectionType | null>(null);
@@ -99,17 +29,17 @@ export default function HeroSection() {
     fetchData();
   }, []);
 
-  // Use Strapi data or fallback
+  // Use Strapi data only
   const slides = heroData?.slides?.map((slide) => ({
     title: slide.title,
     subtitle: slide.subtitle,
-    cta: slide.ctaText,
-    href: slide.ctaLink,
-    image: slide.image || fallbackSlides[0].image,
-  })) || fallbackSlides;
+    image: slide.image || "",
+    ctaText: slide.ctaText || "Learn More",
+    ctaLink: slide.ctaLink || "#",
+  })) || [];
 
-  const services = heroData?.services || fallbackServices;
-  const activeSlide = slides[currentSlide] || slides[0];
+  const services = heroData?.services || [];
+  const activeSlide = slides[currentSlide];
 
   const goToSlide = (direction: "next" | "prev") => {
     setCurrentSlide((prev) => {
@@ -129,6 +59,32 @@ export default function HeroSection() {
     }, 6000);
     return () => clearInterval(interval);
   }, [slides.length]);
+
+  // Show empty state if no data
+  if (!isLoading && slides.length === 0 && services.length === 0) {
+    return (
+      <section className="relative">
+        <div className="hidden lg:block bg-red-600 text-white py-2">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between gap-2 text-sm">
+              <p>The official guide to living, working, visiting and investing in Oromia</p>
+              <Link href="/explore" className="hover:underline font-semibold">
+                Let&apos;s explore more →
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="relative h-[520px] md:h-[620px] lg:h-[700px] bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-white text-lg">No content available. Please configure Hero Section in Strapi.</p>
+            <p className="text-white/70 text-sm mt-2">
+              Debug: slides={slides.length}, services={services.length}
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   // Loading state
   if (isLoading) {
@@ -178,29 +134,32 @@ export default function HeroSection() {
       )}
 
       {/* Hero Slider */}
-      <div
-        className="relative h-[520px] md:h-[620px] lg:h-[700px] overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(120deg, rgba(6,11,25,0.75), rgba(8,47,73,0.55)), url(${activeSlide?.image || fallbackSlides[0].image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Hero Content */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-xl max-w-4xl">
-            {activeSlide?.title || fallbackSlides[0].title}
-          </h1>
-          <p className="text-lg md:text-2xl text-white/90 mb-8 max-w-3xl">
-            {activeSlide?.subtitle || fallbackSlides[0].subtitle}
-          </p>
-          <Link
-            href={activeSlide?.href || fallbackSlides[0].href}
-            className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-md text-lg transition-colors shadow-lg"
-          >
-            {activeSlide?.cta || fallbackSlides[0].cta}
-          </Link>
-        </div>
+      {activeSlide && (
+        <div
+          className="relative h-[520px] md:h-[620px] lg:h-[700px] overflow-hidden"
+          style={{
+            backgroundImage: `linear-gradient(120deg, rgba(6,11,25,0.75), rgba(8,47,73,0.55)), url(${activeSlide.image})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* Hero Content */}
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-xl max-w-4xl">
+              {activeSlide.title}
+            </h1>
+            <p className="text-lg md:text-2xl text-white/90 mb-8 max-w-3xl">
+              {activeSlide.subtitle}
+            </p>
+            {activeSlide.ctaText && (
+              <Link
+                href={activeSlide.ctaLink}
+                  className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-md text-lg transition-colors shadow-lg"
+                >
+                  {activeSlide.ctaText}
+                </Link>
+            )}
+          </div>
 
         {/* Manual Controls */}
         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 md:px-8 z-20">
@@ -222,45 +181,48 @@ export default function HeroSection() {
           </button>
         </div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-6 inset-x-0 flex justify-center gap-2 z-10">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentSlide(idx)}
-              className={`h-2.5 rounded-full transition-all ${
-                idx === currentSlide ? "w-8 bg-white" : "w-3 bg-white/60"
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Service Navigation Bar */}
-      <div className="bg-white shadow-xl -mt-12 relative z-20">
-        <div className="container mx-auto px-4 py-6 md:py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-            {services.map((service, index) => (
-              <Link
-                key={index}
-                href={service.href}
-                className="group flex flex-col items-center text-center p-4 md:p-5 rounded-2xl border border-red-100 hover:-translate-y-2 transition-all hover:shadow-xl bg-white"
-              >
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-red-500 text-red-500 flex items-center justify-center text-2xl md:text-3xl mb-3 group-hover:bg-red-500 group-hover:text-white transition-colors">
-                  {service.icon}
-                </div>
-                <h3 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
-                  {service.title}
-                </h3>
-                <p className="text-xs md:text-sm text-gray-500">
-                  {service.description}
-                </p>
-              </Link>
+          {/* Slide Indicators */}
+          <div className="absolute bottom-6 inset-x-0 flex justify-center gap-2 z-10">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2.5 rounded-full transition-all ${
+                  idx === currentSlide ? "w-8 bg-white" : "w-3 bg-white/60"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
             ))}
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Service Navigation Bar */}
+      {services.length > 0 && (
+        <div className="bg-white shadow-xl -mt-12 relative z-20">
+          <div className="container mx-auto px-4 py-6 md:py-8">
+            <div className={`grid grid-cols-2 md:grid-cols-3 ${services.length === 6 ? 'lg:grid-cols-6' : services.length === 5 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-4 md:gap-6`}>
+              {services.map((service, index) => (
+                <Link
+                  key={index}
+                  href={service.href}
+                  className="group flex flex-col items-center text-center p-4 md:p-5 rounded-2xl border-2 border-red-100 hover:border-red-500 hover:-translate-y-3 transition-all duration-300 hover:shadow-2xl bg-white cursor-pointer"
+                >
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-red-500 text-red-500 flex items-center justify-center text-2xl md:text-3xl mb-3 group-hover:bg-red-500 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-sm md:text-base font-semibold text-gray-900 mb-1 group-hover:text-red-600 transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
+                    {service.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
