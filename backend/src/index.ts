@@ -206,76 +206,207 @@ export default {
         return;
       }
 
-      // Define services data
+      // Define services data with full content
       const servicesData = [
         {
           icon: "🕋",
           title: "Hajj & Umrah Affairs",
+          slug: "hajj-umrah-affairs",
           description: "Coordination, guidance, and supervision of Hajj and Umrah services for pilgrims from the Oromia Region.",
-          href: "/services/hajj-umrah",
+          fullDescription: `<p>The Hajj & Umrah Affairs service provides comprehensive support for Muslims from the Oromia Region who wish to perform the sacred pilgrimage of Hajj or the lesser pilgrimage of Umrah. Our dedicated department ensures that all pilgrims receive proper guidance, support, and coordination throughout their spiritual journey.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Pilgrimage Registration:</strong> Online and in-person registration for Hajj and Umrah</li>
+            <li><strong>Pre-Pilgrimage Guidance:</strong> Educational sessions and materials to prepare pilgrims</li>
+            <li><strong>Travel Coordination:</strong> Assistance with travel arrangements and documentation</li>
+            <li><strong>On-Site Support:</strong> Coordination and support during the pilgrimage</li>
+            <li><strong>Post-Pilgrimage Services:</strong> Follow-up and community integration</li>
+          </ul>
+          
+          <h2>Requirements</h2>
+          <p>To register for Hajj or Umrah, pilgrims must meet certain requirements including valid travel documents, health certificates, and financial capability. Our team provides detailed information and assistance with all requirements.</p>
+          
+          <h2>Contact Information</h2>
+          <p>For more information about Hajj and Umrah services, please contact our Hajj & Umrah Affairs Department.</p>`,
+          href: "/services/hajj-umrah-affairs",
+          featured: true,
           publishedAt: new Date(),
         },
         {
           icon: "🕌",
           title: "Mosque & Islamic Institution Affairs",
+          slug: "mosque-islamic-institution-affairs",
           description: "Supervision, guidance, and support for mosques and Islamic institutions across the Oromia Region.",
-          href: "/services/mosques",
+          fullDescription: `<p>The Mosque & Islamic Institution Affairs department provides comprehensive support and supervision for mosques and Islamic institutions throughout the Oromia Region. We work to ensure that these vital community centers operate effectively and serve their communities well.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Mosque Registration:</strong> Assistance with official registration and licensing</li>
+            <li><strong>Administrative Support:</strong> Guidance on mosque management and administration</li>
+            <li><strong>Facility Development:</strong> Support for mosque construction and renovation projects</li>
+            <li><strong>Imam Training:</strong> Training programs for mosque imams and administrators</li>
+            <li><strong>Community Programs:</strong> Coordination of community activities and events</li>
+          </ul>
+          
+          <h2>Support Programs</h2>
+          <p>We offer various support programs including financial assistance for mosque maintenance, training for mosque committees, and coordination of community services.</p>`,
+          href: "/services/mosque-islamic-institution-affairs",
+          featured: true,
           publishedAt: new Date(),
         },
         {
           icon: "📖",
           title: "Islamic Education & Da'wah",
+          slug: "islamic-education-dawah",
           description: "Promotion of Islamic education, religious awareness programs, and authentic da'wah activities.",
-          href: "/services/islamic-education",
+          fullDescription: `<p>The Islamic Education & Da'wah department is dedicated to promoting authentic Islamic knowledge and education throughout the Oromia Region. We support educational institutions, organize awareness programs, and facilitate da'wah activities.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Educational Programs:</strong> Support for Islamic schools and educational institutions</li>
+            <li><strong>Quranic Studies:</strong> Programs for Quran memorization and recitation</li>
+            <li><strong>Religious Awareness:</strong> Community awareness programs and workshops</li>
+            <li><strong>Da'wah Activities:</strong> Coordination of authentic Islamic outreach programs</li>
+            <li><strong>Scholarship Support:</strong> Educational scholarships for students</li>
+          </ul>
+          
+          <h2>Programs</h2>
+          <p>We organize various educational programs including summer camps, weekend classes, and specialized courses in Islamic studies.</p>`,
+          href: "/services/islamic-education-dawah",
+          featured: true,
           publishedAt: new Date(),
         },
         {
           icon: "🤲",
           title: "Zakat, Sadaqah & Charity Coordination",
+          slug: "zakat-sadaqah-charity-coordination",
           description: "Organizing and supervising zakat, sadaqah, and charitable initiatives to support the needy.",
-          href: "/services/zakat-charity",
+          fullDescription: `<p>The Zakat, Sadaqah & Charity Coordination service manages the collection and distribution of charitable funds according to Islamic principles. We ensure transparency, accountability, and proper distribution to those in need.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Zakat Collection:</strong> Secure collection of Zakat funds</li>
+            <li><strong>Distribution Programs:</strong> Fair distribution to eligible recipients</li>
+            <li><strong>Sadaqah Coordination:</strong> Management of voluntary charitable donations</li>
+            <li><strong>Welfare Support:</strong> Direct support for needy families and individuals</li>
+            <li><strong>Transparency Reports:</strong> Regular reports on collection and distribution</li>
+          </ul>
+          
+          <h2>Eligibility</h2>
+          <p>Zakat is distributed to eight categories of recipients as defined in Islamic law, including the poor, needy, those in debt, and travelers.</p>`,
+          href: "/services/zakat-sadaqah-charity-coordination",
+          featured: true,
           publishedAt: new Date(),
         },
         {
           icon: "👨‍👩‍👧",
           title: "Marriage & Family Guidance",
+          slug: "marriage-family-guidance",
           description: "Religious guidance and counseling on marriage, family life, and social responsibility.",
-          href: "/services/family-guidance",
+          fullDescription: `<p>The Marriage & Family Guidance service provides Islamic counseling and guidance for families, couples, and individuals. We help strengthen family bonds and promote healthy relationships based on Islamic principles.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Marriage Counseling:</strong> Pre-marriage and marriage counseling services</li>
+            <li><strong>Family Mediation:</strong> Conflict resolution and family mediation</li>
+            <li><strong>Educational Workshops:</strong> Workshops on family life and relationships</li>
+            <li><strong>Youth Programs:</strong> Programs for youth on family values</li>
+            <li><strong>Support Services:</strong> Support for families in need</li>
+          </ul>
+          
+          <h2>Approach</h2>
+          <p>Our counseling services are based on Islamic principles and values, providing guidance that aligns with both religious teachings and modern family needs.</p>`,
+          href: "/services/marriage-family-guidance",
+          featured: false,
           publishedAt: new Date(),
         },
         {
           icon: "⚖️",
           title: "Religious Affairs & Fatwa Services",
+          slug: "religious-affairs-fatwa-services",
           description: "Providing guidance on religious matters in accordance with Islamic principles and national regulations.",
-          href: "/services/religious-affairs",
+          fullDescription: `<p>The Religious Affairs & Fatwa Services department provides authentic Islamic guidance and fatwas on various religious matters. Our qualified scholars ensure that guidance is based on sound Islamic principles and considers the local context.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Fatwa Services:</strong> Religious rulings on various matters</li>
+            <li><strong>Religious Consultation:</strong> Consultation on religious questions</li>
+            <li><strong>Guidance Documents:</strong> Published guidance on common issues</li>
+            <li><strong>Scholarly Support:</strong> Access to qualified Islamic scholars</li>
+            <li><strong>Legal Coordination:</strong> Coordination with legal authorities</li>
+          </ul>
+          
+          <h2>Process</h2>
+          <p>Fatwas are issued by qualified scholars after careful consideration of Islamic sources, scholarly consensus, and the specific circumstances of each case.</p>`,
+          href: "/services/religious-affairs-fatwa-services",
+          featured: false,
           publishedAt: new Date(),
         },
         {
           icon: "🏫",
           title: "Training & Capacity Building",
+          slug: "training-capacity-building",
           description: "Training programs for imams, scholars, and community leaders to enhance institutional capacity.",
-          href: "/services/training",
+          fullDescription: `<p>The Training & Capacity Building service provides comprehensive training programs for imams, scholars, and community leaders. We aim to enhance the capacity of Islamic institutions and individuals to serve their communities effectively.</p>`,
+          content: `<h2>Our Programs</h2>
+          <ul>
+            <li><strong>Imam Training:</strong> Specialized training for mosque imams</li>
+            <li><strong>Leadership Development:</strong> Programs for community leaders</li>
+            <li><strong>Scholarly Development:</strong> Advanced training for scholars</li>
+            <li><strong>Administrative Training:</strong> Training for mosque administrators</li>
+            <li><strong>Continuing Education:</strong> Ongoing education programs</li>
+          </ul>`,
+          href: "/services/training-capacity-building",
+          featured: false,
           publishedAt: new Date(),
         },
         {
           icon: "🤝",
           title: "Community Peace & Social Harmony",
+          slug: "community-peace-social-harmony",
           description: "Promoting unity, peaceful coexistence, dialogue, and conflict resolution within communities.",
-          href: "/services/community-peace",
+          fullDescription: `<p>The Community Peace & Social Harmony service works to promote unity, peaceful coexistence, and conflict resolution within Muslim communities and with the broader society.</p>`,
+          content: `<h2>Our Initiatives</h2>
+          <ul>
+            <li><strong>Dialogue Programs:</strong> Facilitating community dialogue</li>
+            <li><strong>Conflict Resolution:</strong> Mediation and conflict resolution services</li>
+            <li><strong>Unity Campaigns:</strong> Programs promoting community unity</li>
+            <li><strong>Social Cohesion:</strong> Activities to strengthen social bonds</li>
+            <li><strong>Peace Building:</strong> Long-term peace building initiatives</li>
+          </ul>`,
+          href: "/services/community-peace-social-harmony",
+          featured: false,
           publishedAt: new Date(),
         },
         {
           icon: "📊",
           title: "Research, Documentation & Publications",
+          slug: "research-documentation-publications",
           description: "Research, documentation, and publication of Islamic studies, guidelines, and official materials.",
-          href: "/services/research",
+          fullDescription: `<p>The Research, Documentation & Publications service conducts research, maintains documentation, and publishes materials related to Islamic affairs and community needs.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Research Projects:</strong> Academic and applied research</li>
+            <li><strong>Documentation:</strong> Maintaining records and archives</li>
+            <li><strong>Publications:</strong> Books, guides, and educational materials</li>
+            <li><strong>Digital Resources:</strong> Online resources and databases</li>
+            <li><strong>Scholarly Support:</strong> Support for researchers and scholars</li>
+          </ul>`,
+          href: "/services/research-documentation-publications",
+          featured: false,
           publishedAt: new Date(),
         },
         {
           icon: "🌍",
           title: "Interfaith & Public Relations",
+          slug: "interfaith-public-relations",
           description: "Engagement with religious institutions, government bodies, and stakeholders to foster cooperation.",
-          href: "/services/interfaith-relations",
+          fullDescription: `<p>The Interfaith & Public Relations service facilitates engagement with other faith communities, government bodies, and stakeholders to promote understanding and cooperation.</p>`,
+          content: `<h2>Our Activities</h2>
+          <ul>
+            <li><strong>Interfaith Dialogue:</strong> Regular dialogue with other faith communities</li>
+            <li><strong>Government Relations:</strong> Coordination with government bodies</li>
+            <li><strong>Public Engagement:</strong> Public awareness and engagement activities</li>
+            <li><strong>Media Relations:</strong> Coordination with media outlets</li>
+            <li><strong>Stakeholder Engagement:</strong> Building relationships with key stakeholders</li>
+          </ul>`,
+          href: "/services/interfaith-public-relations",
+          featured: false,
           publishedAt: new Date(),
         },
       ];

@@ -19,7 +19,7 @@ export default function ServiceCard({
 }: ServiceCardProps) {
   return (
     <Link
-      href={href}
+      href={href.startsWith('/services/') ? href : `/services/${href}`}
       className="group relative bg-white rounded-lg border border-gray-200 p-6 h-full flex flex-col transition-all duration-300 hover:shadow-lg overflow-hidden min-h-[280px]"
     >
       {/* Default State - Icon and Title */}

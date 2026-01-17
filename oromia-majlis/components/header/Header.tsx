@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import TopInfoBar from "./TopInfoBar";
 import Navigation from "./Navigation";
+import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 
 export default function Header() {
@@ -29,19 +30,7 @@ export default function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             {/* Logo */}
-            <div className="flex items-center">
-              <div className="relative">
-                {/* Subtle grid pattern background */}
-                <div className="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-                <h1 className="text-2xl md:text-3xl font-bold relative z-10">
-                  <span className="text-blue-700">OROMIA</span>
-                  <br />
-                  <span className="text-yellow-500 text-lg md:text-xl">
-                    MAJLIS
-                  </span>
-                </h1>
-              </div>
-            </div>
+            <Logo />
 
             {/* Desktop Navigation */}
             <Navigation />

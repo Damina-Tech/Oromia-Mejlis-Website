@@ -68,10 +68,19 @@ export interface HeroSection {
 
 export interface Service {
   id: number;
+  documentId?: string;
   icon: string;
   title: string;
+  slug: string;
   description: string;
+  fullDescription?: string;
+  content?: string;
+  image?: string;
   href: string;
+  featured: boolean;
+  publishedAt: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /**
@@ -289,12 +298,36 @@ export async function getServices(): Promise<Service[]> {
       // Handle both direct attributes and nested attributes structure
       const serviceData = service.attributes || service;
       
+      // Extract image URL
+      let imageUrl = undefined;
+      if (serviceData.image) {
+        if (serviceData.image.data) {
+          const image = Array.isArray(serviceData.image.data) 
+            ? serviceData.image.data[0] 
+            : serviceData.image.data;
+          if (image?.attributes?.url) {
+            imageUrl = `${STRAPI_URL}${image.attributes.url.startsWith('/') ? image.attributes.url : `/${image.attributes.url}`}`;
+          }
+        } else if (serviceData.image.url) {
+          imageUrl = `${STRAPI_URL}${serviceData.image.url.startsWith('/') ? serviceData.image.url : `/${serviceData.image.url}`}`;
+        }
+      }
+      
       return {
         id: service.id || service.documentId || Math.random(),
+        documentId: service.documentId,
         icon: serviceData.icon || '📋',
         title: serviceData.title || '',
+        slug: serviceData.slug || '',
         description: serviceData.description || '',
-        href: serviceData.href || '#',
+        fullDescription: serviceData.fullDescription || serviceData.description || '',
+        content: serviceData.content || serviceData.fullDescription || '',
+        image: imageUrl,
+        href: serviceData.href || `/services/${serviceData.slug || service.id}`,
+        featured: serviceData.featured || false,
+        publishedAt: serviceData.publishedAt || service.publishedAt || '',
+        createdAt: serviceData.createdAt || service.createdAt || '',
+        updatedAt: serviceData.updatedAt || service.updatedAt || '',
       };
     });
 
@@ -303,6 +336,82 @@ export async function getServices(): Promise<Service[]> {
   } catch (error) {
     console.error('Error fetching services:', error);
     return [];
+  }
+}
+
+/**
+ * Get a single service by ID or slug
+ */
+export async function getService(idOrSlug: string): Promise<Service | null> {
+  try {
+    let response: StrapiResponse<any> | null = null;
+
+    // Try by ID first, then by slug
+    try {
+      response = await fetchStrapi<StrapiResponse<any>>(
+        `/services/${idOrSlug}?populate=*`
+      );
+      if (response?.data) {
+        console.log('✅ Successfully fetched service with populate');
+      }
+    } catch (err) {
+      // Try finding by slug
+      try {
+        const allServices = await getServices();
+        const service = allServices.find(
+          (s) => s.slug === idOrSlug || s.id.toString() === idOrSlug
+        );
+        if (service) {
+          return service;
+        }
+      } catch (findError) {
+        console.error('❌ Failed to find service:', findError);
+        return null;
+      }
+    }
+
+    if (!response || !response.data) {
+      console.warn('⚠️ Service not found in Strapi.');
+      return null;
+    }
+
+    const service = response.data;
+    const serviceData = service.attributes || service;
+
+    // Extract image URL
+    let imageUrl = undefined;
+    if (serviceData.image) {
+      if (serviceData.image.data) {
+        const image = Array.isArray(serviceData.image.data) 
+          ? serviceData.image.data[0] 
+          : serviceData.image.data;
+        if (image?.attributes?.url) {
+          imageUrl = `${STRAPI_URL}${image.attributes.url.startsWith('/') ? image.attributes.url : `/${image.attributes.url}`}`;
+        }
+      } else if (serviceData.image.url) {
+        imageUrl = `${STRAPI_URL}${serviceData.image.url.startsWith('/') ? serviceData.image.url : `/${serviceData.image.url}`}`;
+      }
+    }
+
+    return {
+      id: service.id || service.documentId || Math.random(),
+      documentId: service.documentId,
+      icon: serviceData.icon || '📋',
+      title: serviceData.title || '',
+      slug: serviceData.slug || '',
+      description: serviceData.description || '',
+      fullDescription: serviceData.fullDescription || serviceData.description || '',
+      content: serviceData.content || serviceData.fullDescription || '',
+      image: imageUrl,
+      href: serviceData.href || `/services/${serviceData.slug || service.id}`,
+      featured: serviceData.featured || false,
+      publishedAt: serviceData.publishedAt || service.publishedAt || '',
+      createdAt: serviceData.createdAt || service.createdAt || '',
+      updatedAt: serviceData.updatedAt || service.updatedAt || '',
+    };
+  } catch (error) {
+    console.error('Error fetching service:', error);
+    return null;
   }
 }
 

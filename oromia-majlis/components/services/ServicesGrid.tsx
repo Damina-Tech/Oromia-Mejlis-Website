@@ -1,81 +1,91 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
-import { getServices, Service } from "@/lib/strapi";
+
+// Demo services data - matching the slugs in the detail page
+const demoServices = [
+  {
+    id: 1,
+    icon: "🕋",
+    title: "Hajj & Umrah Affairs",
+    description: "Coordination, guidance, and supervision of Hajj and Umrah services for pilgrims from the Oromia Region.",
+    slug: "hajj-umrah-affairs",
+  },
+  {
+    id: 2,
+    icon: "🕌",
+    title: "Mosque & Islamic Institution Affairs",
+    description: "Supervision, guidance, and support for mosques and Islamic institutions across the Oromia Region.",
+    slug: "mosque-islamic-institution-affairs",
+  },
+  {
+    id: 3,
+    icon: "📖",
+    title: "Islamic Education & Da'wah",
+    description: "Promotion of Islamic education, religious awareness programs, and authentic da'wah activities.",
+    slug: "islamic-education-dawah",
+  },
+  {
+    id: 4,
+    icon: "🤲",
+    title: "Zakat, Sadaqah & Charity Coordination",
+    description: "Organizing and supervising zakat, sadaqah, and charitable initiatives to support the needy.",
+    slug: "zakat-sadaqah-charity-coordination",
+  },
+  {
+    id: 5,
+    icon: "👨‍👩‍👧",
+    title: "Marriage & Family Guidance",
+    description: "Religious guidance and counseling on marriage, family life, and social responsibility.",
+    slug: "marriage-family-guidance",
+  },
+  {
+    id: 6,
+    icon: "⚖️",
+    title: "Religious Affairs & Fatwa Services",
+    description: "Providing guidance on religious matters in accordance with Islamic principles and national regulations.",
+    slug: "religious-affairs-fatwa-services",
+  },
+  {
+    id: 7,
+    icon: "🏫",
+    title: "Training & Capacity Building",
+    description: "Training programs for imams, scholars, and community leaders to enhance institutional capacity.",
+    slug: "training-capacity-building",
+  },
+  {
+    id: 8,
+    icon: "🤝",
+    title: "Community Peace & Social Harmony",
+    description: "Promoting unity, peaceful coexistence, dialogue, and conflict resolution within communities.",
+    slug: "community-peace-social-harmony",
+  },
+  {
+    id: 9,
+    icon: "📊",
+    title: "Research, Documentation & Publications",
+    description: "Research, documentation, and publication of Islamic studies, guidelines, and official materials.",
+    slug: "research-documentation-publications",
+  },
+  {
+    id: 10,
+    icon: "🌍",
+    title: "Interfaith & Public Relations",
+    description: "Engagement with religious institutions, government bodies, and stakeholders to foster cooperation.",
+    slug: "interfaith-public-relations",
+  },
+];
 
 export default function ServicesGrid() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const data = await getServices();
-        setServices(data);
-      } catch (err) {
-        console.error("Error fetching services:", err);
-        setError("Failed to load services. Please try again later.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchServices();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-        {[...Array(6)].map((_, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg border border-gray-200 p-6 h-[280px] animate-pulse"
-          >
-            <div className="h-16 w-16 bg-gray-200 rounded-full mx-auto mb-4"></div>
-            <div className="h-6 bg-gray-200 rounded mb-3"></div>
-            <div className="h-4 bg-gray-200 rounded mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-red-600 mb-4">{error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md transition-colors"
-        >
-          Retry
-        </button>
-      </div>
-    );
-  }
-
-  if (services.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-gray-600">No services available at this time.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      {services.map((service) => (
+      {demoServices.map((service) => (
         <ServiceCard
           key={service.id}
           icon={service.icon}
           title={service.title}
           description={service.description}
-          href={service.href}
+          href={`/services/${service.slug}`}
         />
       ))}
     </div>
