@@ -4,20 +4,20 @@ import Link from "next/link";
 
 const highlights = [
   {
-    title: "Oromia Town",
-    image: "🏘️",
+    title: "Mosques & Islamic Centers",
+    image: "🕌",
   },
   {
-    title: "Spring Conference",
-    image: "🏢",
+    title: "Religious Education",
+    image: "📚",
   },
   {
-    title: "Classic Buildings",
-    image: "🏛️",
+    title: "Community Programs",
+    image: "🤝",
   },
   {
-    title: "Modern Buildings",
-    image: "🏗️",
+    title: "Islamic Heritage",
+    image: "🌙",
   },
 ];
 

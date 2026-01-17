@@ -2,7 +2,8 @@ import ServicesGrid from "@/components/services/ServicesGrid";
 
 export const metadata = {
   title: "Services - Oromia Majlis",
-  description: "Find government services and information",
+  description:
+    "Religious, educational, and community services provided by the Oromia Regional Islamic Affairs Supreme Council",
 };
 
 export default function ServicesPage() {
@@ -13,11 +14,10 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Find Government Services and Information
+              Our Services
             </h1>
             <p className="text-lg text-gray-600">
-              We are offering the following information&apos;s about us that what
-              we actually.
+              Oromia Majlis provides a variety of services to the community.
             </p>
           </div>
 
@@ -28,4 +28,3 @@ export default function ServicesPage() {
     </main>
   );
 }
-

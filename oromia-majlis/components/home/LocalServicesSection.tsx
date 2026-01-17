@@ -4,19 +4,19 @@ import Link from "next/link";
 
 const services = [
   {
-    title: "Service Departments",
-    image: "🏢",
-    href: "/departments",
+    title: "Religious Affairs Departments",
+    image: "🕌",
+    href: "/offices",
   },
   {
-    title: "City Visitors Guide",
-    image: "👥",
-    href: "/visitors",
+    title: "Community Programs",
+    image: "🤝",
+    href: "/programs",
   },
   {
-    title: "Administrations",
-    image: "🚐",
-    href: "/administrations",
+    title: "Islamic Education Centers",
+    image: "📚",
+    href: "/education",
   },
 ];
 
@@ -26,7 +26,7 @@ export default function LocalServicesSection() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 md:mb-0">
-            Let&apos;s explore local services, programs & initiatives.
+            Explore Our Services, Programs & Initiatives
           </h2>
           <Link
             href="/services"

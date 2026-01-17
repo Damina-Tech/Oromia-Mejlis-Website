@@ -3,37 +3,39 @@
 interface GalleryFilterProps {
   activeFilter: string;
   onFilterChange: (filter: string) => void;
+  categories: string[];
 }
-
-const filters = [
-  { id: "all", label: "All" },
-  { id: "business", label: "Business" },
-  { id: "city-culture", label: "City and Culture" },
-  { id: "events", label: "Events" },
-  { id: "government", label: "Government" },
-  { id: "public-places", label: "Public Places" },
-];
 
 export default function GalleryFilter({
   activeFilter,
   onFilterChange,
+  categories,
 }: GalleryFilterProps) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-      {filters.map((filter) => (
+    <div className="flex flex-wrap gap-3 mb-8 justify-center">
+      <button
+        onClick={() => onFilterChange("all")}
+        className={`px-6 py-2.5 rounded-md font-semibold transition-all duration-300 ${
+          activeFilter === "all"
+            ? "bg-red-600 text-white shadow-lg"
+            : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+        }`}
+      >
+        All
+      </button>
+      {categories.map((category) => (
         <button
-          key={filter.id}
-          onClick={() => onFilterChange(filter.id)}
+          key={category}
+          onClick={() => onFilterChange(category)}
           className={`px-6 py-2.5 rounded-md font-semibold transition-all duration-300 ${
-            activeFilter === filter.id
-              ? "bg-red-600 text-white shadow-lg scale-105"
-              : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 hover:border-gray-400"
+            activeFilter === category
+              ? "bg-red-600 text-white shadow-lg"
+              : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
           }`}
         >
-          {filter.label}
+          {category}
         </button>
       ))}
     </div>
   );
 }
-

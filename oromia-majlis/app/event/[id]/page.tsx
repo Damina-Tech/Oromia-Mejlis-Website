@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getEvent } from "@/lib/strapi";
 
 interface EventDetailPageProps {
   params: Promise<{
@@ -7,102 +8,86 @@ interface EventDetailPageProps {
   }>;
 }
 
-const eventDetails: Record<
-  string,
-  {
-    day: number;
-    month: string;
-    dayOfWeek: string;
-    image: string;
-    category: string;
-    title: string;
-    time: string;
-    location: string;
-    description: string;
-    content: string[];
-    organizer?: string;
-    contact?: {
-      phone: string;
-      email: string;
-    };
-  }
-> = {
-  "1": {
-    day: 15,
-    month: "AUGUST",
-    dayOfWeek: "TUESDAY",
-    image: "🚴",
-    category: "Conference",
-    title: "Annual Cycling Race 2020 for the Covid-19 Donation",
-    time: "August 15, 2028 @15:00 - 19:00",
-    location: "32 Quincy Street, Cambridge, MA",
-    description:
-      "Join us for our annual cycling race to raise funds for Covid-19 relief efforts. This community event brings together cyclists of all levels to support a great cause.",
-    content: [
-      "The Annual Cycling Race is one of our most anticipated community events. Participants from across the region come together to cycle through scenic routes while raising awareness and funds for Covid-19 relief efforts.",
-      "This year's event promises to be bigger and better than ever, with multiple race categories, food vendors, live music, and family-friendly activities throughout the day.",
-      "All proceeds from registration fees and donations will go directly to supporting local families affected by the pandemic and healthcare workers on the front lines.",
-    ],
-    organizer: "City Sports Committee",
-    contact: {
-      phone: "+251911111111",
-      email: "events@oromiamajlis.com",
-    },
-  },
-  "2": {
-    day: 26,
-    month: "AUGUST",
-    dayOfWeek: "MONDAY",
-    image: "🧘",
-    category: "Health & Sports",
-    title: "Celebrating World Fitness Day at White Corner'20",
-    time: "August 26, 2024 15:00 - November 26, 2026 17:00",
-    location: "Millenia Orlando, USA",
-    description:
-      "A comprehensive fitness celebration featuring yoga sessions, fitness workshops, and wellness activities for all ages.",
-    content: [
-      "World Fitness Day is a global celebration of health and wellness, and we're proud to host this event in our city.",
-      "The event features free fitness classes, health screenings, nutrition workshops, and activities for the whole family.",
-    ],
-  },
-  "3": {
-    day: 11,
-    month: "AUGUST",
-    dayOfWeek: "TUESDAY",
-    image: "💻",
-    category: "Meeting",
-    title: "City Innovation and Technology Committee Meeting",
-    time: "August 11, 2026 13:00 - August 14, 2026 15:00",
-    location: "Mastanow City Council",
-    description:
-      "A multi-day committee meeting to discuss technology initiatives and innovation strategies for the city.",
-    content: [
-      "The City Innovation and Technology Committee meets regularly to discuss and plan technology initiatives that benefit our community.",
-      "This extended meeting will cover topics including digital infrastructure, smart city initiatives, and technology accessibility.",
-    ],
-  },
+// Helper function to parse HTML content
+const parseContent = (htmlContent: string) => {
+  const paragraphs: string[] = [];
+  
+  const textContent = htmlContent
+    .replace(/<p[^>]*>(.*?)<\/p>/gi, (match, content) => {
+      const text = content.replace(/<[^>]+>/g, '').trim();
+      if (text) {
+        paragraphs.push(text);
+      }
+      return '';
+    });
+
+  return paragraphs;
 };
 
-// Default event data for events not in the details object
-const defaultEventData = {
-  description:
-    "Join us for this exciting event. More details will be available soon.",
-  content: [
-    "We're excited to host this event for our community. Stay tuned for more information as the event date approaches.",
-  ],
+// Helper function to format date
+const formatEventDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
+  const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+  return { day, month, dayOfWeek };
+};
+
+// Helper function to format time
+const formatEventTime = (startDate: string, endDate?: string) => {
+  const start = new Date(startDate);
+  const startFormatted = start.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  if (endDate) {
+    const end = new Date(endDate);
+    const endFormatted = end.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    // Check if same day
+    if (start.toDateString() === end.toDateString()) {
+      return `${startFormatted.split(',')[0]}, ${start.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+    }
+    return `${startFormatted} - ${endFormatted}`;
+  }
+  
+  return startFormatted;
 };
 
 export default async function EventDetailPage({
   params,
 }: EventDetailPageProps) {
   const { id } = await params;
-  const event = eventDetails[id];
+  const event = await getEvent(id);
 
   if (!event) {
     notFound();
   }
 
-  const eventData = { ...event, ...defaultEventData, ...event };
+  const { day, month, dayOfWeek } = formatEventDate(event.startDate);
+  const time = formatEventTime(event.startDate, event.endDate);
+  const content = event.content ? parseContent(event.content) : [];
+
+  const categoryColors: Record<string, string> = {
+    Conference: "bg-blue-600",
+    Religious: "bg-purple-600",
+    Workshop: "bg-orange-600",
+    "Community Service": "bg-green-600",
+    Education: "bg-indigo-600",
+    Culture: "bg-pink-600",
+  };
+
+  const categoryColor = categoryColors[event.category] || "bg-gray-600";
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -119,44 +104,52 @@ export default async function EventDetailPage({
 
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {/* Event Header */}
-            <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-8 md:p-12">
+            <div className="bg-gradient-to-br from-red-100 to-red-200 p-8 md:p-12">
               <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 {/* Date Section */}
                 <div className="flex-shrink-0 text-center md:text-left">
                   <div className="text-6xl font-bold text-gray-900 leading-none">
-                    {eventData.day}
+                    {day}
                   </div>
                   <div className="text-lg font-semibold text-gray-700 uppercase mt-2">
-                    {eventData.month}
+                    {month}
                   </div>
                   <div className="text-sm text-gray-600 uppercase mt-1">
-                    {eventData.dayOfWeek}
+                    {dayOfWeek}
                   </div>
                 </div>
 
                 {/* Image */}
                 <div className="flex-shrink-0">
                   <div className="w-32 h-32 rounded-full bg-white flex items-center justify-center shadow-lg">
-                    <div className="text-6xl">{eventData.image}</div>
+                    {event.image ? (
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-6xl">📅</div>
+                    )}
                   </div>
                 </div>
 
                 {/* Title and Category */}
                 <div className="flex-1">
-                  <span className="inline-block bg-blue-600 text-white text-sm font-semibold px-4 py-1 rounded-full mb-3">
-                    {eventData.category}
+                  <span className={`inline-block ${categoryColor} text-white text-sm font-semibold px-4 py-1 rounded-full mb-3`}>
+                    {event.category}
                   </span>
                   <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    {eventData.title}
+                    {event.title}
                   </h1>
                   <div className="space-y-2 text-gray-700">
                     <div className="flex items-center gap-2">
                       <span>🕐</span>
-                      <span>{eventData.time}</span>
+                      <span>{time}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span>📍</span>
-                      <span>{eventData.location}</span>
+                      <span>{event.location}</span>
                     </div>
                   </div>
                 </div>
@@ -171,21 +164,31 @@ export default async function EventDetailPage({
                   About This Event
                 </h2>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  {eventData.description}
+                  {event.description}
                 </p>
               </div>
 
               {/* Content Sections */}
-              <div className="space-y-6 mb-8">
-                {eventData.content.map((paragraph, index) => (
-                  <p
-                    key={index}
-                    className="text-lg text-gray-700 leading-relaxed"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+              {content.length > 0 && (
+                <div className="space-y-6 mb-8">
+                  {content.map((paragraph, index) => (
+                    <p
+                      key={index}
+                      className="text-lg text-gray-700 leading-relaxed"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {/* Render HTML content if available */}
+              {event.content && content.length === 0 && (
+                <div
+                  className="text-lg text-gray-700 leading-relaxed prose prose-lg max-w-none mb-8"
+                  dangerouslySetInnerHTML={{ __html: event.content }}
+                />
+              )}
 
               {/* Event Details */}
               <div className="border-t border-gray-200 pt-8">
@@ -195,25 +198,24 @@ export default async function EventDetailPage({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Date & Time</h3>
-                    <p className="text-gray-700">{eventData.time}</p>
+                    <p className="text-gray-700">{time}</p>
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">Location</h3>
-                    <p className="text-gray-700">{eventData.location}</p>
+                    <p className="text-gray-700">{event.location}</p>
                   </div>
-                  {eventData.organizer && (
+                  {event.organizer && (
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Organizer</h3>
-                      <p className="text-gray-700">{eventData.organizer}</p>
+                      <p className="text-gray-700">{event.organizer}</p>
                     </div>
                   )}
-                  {eventData.contact && (
+                  {(event.contactPhone || event.contactEmail) && (
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Contact</h3>
                       <p className="text-gray-700">
-                        {eventData.contact.phone}
-                        <br />
-                        {eventData.contact.email}
+                        {event.contactPhone && <>{event.contactPhone}<br /></>}
+                        {event.contactEmail && event.contactEmail}
                       </p>
                     </div>
                   )}
@@ -233,4 +235,3 @@ export default async function EventDetailPage({
     </main>
   );
 }
-

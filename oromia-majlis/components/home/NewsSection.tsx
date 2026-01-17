@@ -4,19 +4,19 @@ import Link from "next/link";
 
 const newsItems = [
   {
-    date: "August 4, 2025",
-    title: "Welcome To Oromia Majlis",
-    image: "🏙️",
+    date: "January 1, 2026",
+    title: "Oromia Majlis Announces New Religious Education Initiatives",
+    image: "📚",
   },
   {
-    date: "August 4, 2025",
-    title: "Oromia Majlis Is The Capital City Of West Hararghe",
-    image: "🌆",
+    date: "December 28, 2025",
+    title: "Annual Islamic Affairs Summit Scheduled for January 2026",
+    image: "🕌",
   },
   {
-    date: "July 31, 2025",
-    title: "List Of City Weekend Celebrations",
-    image: "🛣️",
+    date: "December 20, 2025",
+    title: "Community Zakat Distribution Program Launched",
+    image: "🤝",
   },
 ];
 
@@ -30,7 +30,7 @@ export default function NewsSection() {
               News and Publications
             </h2>
             <p className="text-lg text-gray-600">
-              The news about recent activities for needed peoples.
+              Stay informed about the latest news, announcements, and activities from Oromia Majlis.
             </p>
           </div>
           <Link

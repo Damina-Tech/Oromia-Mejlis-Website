@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project",
+    "description": "Projects and initiatives by Oromia Majlis"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "fullDescription": {
+      "type": "richtext",
+      "required": false
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "required": false,
+      "default": "Planned"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "startDate": {
+      "type": "date",
+      "required": false
+    },
+    "endDate": {
+      "type": "date",
+      "required": false
+    },
+    "department": {
+      "type": "string",
+      "required": false
+    },
+    "objectives": {
+      "type": "richtext",
+      "required": false
+    },
+    "outcomes": {
+      "type": "richtext",
+      "required": false
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
+

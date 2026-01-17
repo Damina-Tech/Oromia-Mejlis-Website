@@ -67,7 +67,7 @@ export default function HeroSection() {
         <div className="hidden lg:block bg-red-600 text-white py-2">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between gap-2 text-sm">
-              <p>The official guide to living, working, visiting and investing in Oromia</p>
+              <p>Serving the Muslim community by promoting Islamic values, strengthening unity, and managing Islamic affairs across the Oromia Region.</p>
               <Link href="/explore" className="hover:underline font-semibold">
                 Let&apos;s explore more →
               </Link>
@@ -93,8 +93,8 @@ export default function HeroSection() {
         <div className="hidden lg:block bg-red-600 text-white py-2">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between gap-2 text-sm">
-              <p>The official guide to living, working, visiting and investing in Oromia</p>
-              <Link href="/explore" className="hover:underline font-semibold">
+                <p>Serving the Muslim community by promoting Islamic values, strengthening unity, and managing Islamic affairs across the Oromia Region.</p>
+                <Link href="/explore" className="hover:underline font-semibold">
                 Let&apos;s explore more →
               </Link>
             </div>
@@ -116,7 +116,7 @@ export default function HeroSection() {
       <div className="hidden lg:block bg-red-600 text-white py-2">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between gap-2 text-sm">
-            <p>The official guide to living, working, visiting and investing in Oromia</p>
+            <p>Serving the Muslim community by promoting Islamic values, strengthening unity, and managing Islamic affairs across the Oromia Region.</p>
             <Link href="/explore" className="hover:underline font-semibold">
               Let&apos;s explore more →
             </Link>

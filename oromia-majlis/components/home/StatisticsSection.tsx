@@ -1,19 +1,19 @@
 const statistics = [
   {
-    value: "2M+",
-    label: "Total People lived in our city.",
+    value: "500+",
+    label: "Mosques & Islamic Centers Supported",
   },
   {
-    value: "4.8K",
-    label: "Square kilometres region covers.",
+    value: "50K+",
+    label: "Muslims Served Across Oromia Region",
   },
   {
-    value: "32%",
-    label: "Private & domestic garden land.",
+    value: "100+",
+    label: "Religious Education Programs",
   },
   {
-    value: "2th",
-    label: "Average Costs of Home Ownership.",
+    value: "25+",
+    label: "Years of Service to the Community",
   },
 ];
 

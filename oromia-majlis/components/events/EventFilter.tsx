@@ -13,10 +13,11 @@ interface EventFilterProps {
 const eventTypes = [
   "All Event Type",
   "Conference",
-  "Health & Sports",
-  "Meeting",
-  "Entertainment",
+  "Religious",
   "Workshop",
+  "Community Service",
+  "Education",
+  "Culture",
 ];
 
 export default function EventFilter({ onFilter }: EventFilterProps) {

@@ -17,7 +17,7 @@ export default function OfficesPage() {
               Offices & Departments
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Explore our various departments and offices that serve the community
+              Explore our departments and offices dedicated to managing Islamic affairs and serving the Muslim community across the Oromia Region
             </p>
           </div>
 
@@ -25,7 +25,7 @@ export default function OfficesPage() {
           <OfficesGrid />
 
           {/* Pagination */}
-          <Pagination currentPage={1} totalPages={2} />
+          <Pagination currentPage={1} totalPages={1} />
         </div>
       </section>
     </main>

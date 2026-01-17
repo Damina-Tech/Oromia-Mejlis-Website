@@ -1,38 +1,61 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getArticles, Article } from "@/lib/strapi";
 
 interface RecentPost {
   id: string;
+  slug: string;
   title: string;
   date: string;
 }
 
-const recentPosts: RecentPost[] = [
-  { id: "1", title: "Welcome to Vist Us", date: "August 4, 2025" },
-  { id: "2", title: "Welcome to Chiro City", date: "August 4, 2025" },
-  {
-    id: "3",
-    title: "Chiro City is the capital city of west hararghe",
-    date: "August 4, 2025",
-  },
-  {
-    id: "4",
-    title: "List of City Weekend Celebrations",
-    date: "July 31, 2025",
-  },
-];
-
-const categories = ["Uncategorized"];
-
 export default function NewsSidebar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [recentPosts, setRecentPosts] = useState<RecentPost[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const articles = await getArticles();
+        
+        // Get recent posts (limit to 4)
+        const recent = articles.slice(0, 4).map((article) => ({
+          id: article.id.toString(),
+          slug: article.slug || article.id.toString(),
+          title: article.title,
+          date: new Date(article.publishedAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }),
+        }));
+        setRecentPosts(recent);
+
+        // Get unique categories
+        const uniqueCategories = Array.from(
+          new Set(articles.map((a) => a.category).filter(Boolean))
+        ) as string[];
+        setCategories(uniqueCategories.length > 0 ? uniqueCategories : ["General"]);
+      } catch (error) {
+        console.error("Error fetching articles for sidebar:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle search functionality
-    console.log("Searching for:", searchQuery);
+    if (searchQuery.trim()) {
+      window.location.href = `/news?search=${encodeURIComponent(searchQuery)}`;
+    }
   };
 
   return (
@@ -60,11 +83,14 @@ export default function NewsSidebar() {
       {/* Recent Posts */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-4">Recent Posts</h3>
-        <ul className="space-y-3">
-          {recentPosts.map((post) => (
+        {isLoading ? (
+          <p className="text-gray-600">Loading...</p>
+        ) : recentPosts.length > 0 ? (
+          <ul className="space-y-3">
+            {recentPosts.map((post) => (
             <li key={post.id}>
               <Link
-                href={`/news/${post.id}`}
+                href={`/news/${post.slug}`}
                 className="text-blue-700 hover:text-red-600 transition-colors block"
               >
                 {post.title}
@@ -73,6 +99,9 @@ export default function NewsSidebar() {
             </li>
           ))}
         </ul>
+        ) : (
+          <p className="text-gray-600">No recent posts available.</p>
+        )}
       </div>
 
       {/* Recent Comments */}

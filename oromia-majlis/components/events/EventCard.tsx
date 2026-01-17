@@ -17,10 +17,11 @@ interface EventCardProps {
 
 const categoryColors: Record<string, string> = {
   Conference: "bg-blue-600",
-  "Health & Sports": "bg-green-600",
-  Meeting: "bg-purple-600",
-  Entertainment: "bg-pink-600",
+  Religious: "bg-purple-600",
   Workshop: "bg-orange-600",
+  "Community Service": "bg-green-600",
+  Education: "bg-indigo-600",
+  Culture: "bg-pink-600",
 };
 
 export default function EventCard({
@@ -38,11 +39,11 @@ export default function EventCard({
   const categoryColor = categoryColors[category] || "bg-gray-600";
 
   return (
-    <div className="px-6 md:px-8 py-8 hover:bg-gray-50 transition-colors">
+    <div className="px-6 md:px-8 py-8 hover:bg-gray-50 transition-all duration-300 hover:shadow-lg rounded-lg group cursor-pointer">
       <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8">
         {/* Date Section */}
-        <div className="flex-shrink-0 text-center md:text-left w-20 md:w-24">
-          <div className="text-5xl md:text-6xl font-bold text-gray-900 leading-none">
+        <div className="flex-shrink-0 text-center md:text-left w-20 md:w-24 group-hover:scale-105 transition-transform duration-300">
+          <div className="text-5xl md:text-6xl font-bold text-gray-900 leading-none group-hover:text-red-600 transition-colors duration-300">
             {day}
           </div>
           <div className="text-xs md:text-sm font-semibold text-gray-600 uppercase mt-2">
@@ -54,9 +55,9 @@ export default function EventCard({
         </div>
 
         {/* Image */}
-        <div className="flex-shrink-0">
-          <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden shadow-md">
-            <div className="text-3xl md:text-4xl">{image}</div>
+        <div className="flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+          <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 group-hover:from-red-100 group-hover:to-red-200 flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-xl transition-all duration-300">
+            <div className="text-3xl md:text-4xl group-hover:scale-110 transition-transform duration-300">{image}</div>
           </div>
         </div>
 
@@ -72,7 +73,7 @@ export default function EventCard({
               </span>
 
               {/* Title */}
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 leading-tight">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-red-600 transition-colors duration-300">
                 {title}
               </h3>
 
@@ -93,7 +94,7 @@ export default function EventCard({
             <div className="flex-shrink-0 pt-2 lg:pt-0">
               <Link
                 href={href}
-                className="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-2.5 rounded-md transition-colors whitespace-nowrap shadow-sm hover:shadow-md"
+                className="inline-block bg-gray-200 hover:bg-red-600 hover:text-white text-gray-800 font-semibold px-6 py-2.5 rounded-md transition-all duration-300 whitespace-nowrap shadow-sm hover:shadow-lg hover:-translate-y-1 transform"
               >
                 More Details
               </Link>

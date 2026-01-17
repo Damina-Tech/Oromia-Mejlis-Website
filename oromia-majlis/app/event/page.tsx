@@ -2,7 +2,7 @@ import EventList from "@/components/events/EventList";
 
 export const metadata = {
   title: "Events - Oromia Majlis",
-  description: "Browse and find upcoming events in our city",
+  description: "Browse and find upcoming events organized by Oromia Regional Islamic Affairs Supreme Council",
 };
 
 export default function EventPage() {
@@ -16,8 +16,7 @@ export default function EventPage() {
               Events
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover upcoming events, conferences, workshops, and community
-              gatherings in our city
+              Discover upcoming events, conferences, workshops, and community gatherings organized by Oromia Regional Islamic Affairs Supreme Council
             </p>
           </div>
 

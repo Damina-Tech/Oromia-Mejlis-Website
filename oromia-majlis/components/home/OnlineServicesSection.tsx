@@ -1,21 +1,21 @@
 "use client";
 
 const servicesLeft = [
-  "Parking Permission",
-  "File a tax Return",
-  "Order Birth certificate",
-  "Get Building Permission",
-  "Get City ID Card",
-  "Report Pollution",
+  "Mosque Registration",
+  "Marriage Certificate",
+  "Religious Education Programs",
+  "Zakat & Charity Services",
+  "Islamic Guidance & Counseling",
+  "Hajj & Umrah Services",
 ];
 
 const servicesRight = [
-  "Public Service Identity",
-  "Apply for a City Job",
-  "Professional Licenses",
-  "National Planning Framework",
-  "Apply for Business License",
-  "Online Court Services",
+  "Quranic Studies Registration",
+  "Islamic Event Permits",
+  "Religious Scholar Certification",
+  "Community Support Programs",
+  "Interfaith Dialogue Services",
+  "Islamic Publications Request",
 ];
 
 export default function OnlineServicesSection() {
@@ -31,11 +31,10 @@ export default function OnlineServicesSection() {
           {/* Left Column */}
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Explore Online Services & Resource
+              Explore Online Services & Resources
             </h2>
             <p className="text-lg text-white/90">
-              City government providing a wide range of online services to people
-              who need help.
+              Oromia Majlis provides a wide range of online services to support the Muslim community and manage Islamic affairs efficiently.
             </p>
           </div>
 

@@ -1,0 +1,47 @@
+export default {
+  routes: [
+    {
+      method: 'GET',
+      path: '/gallery-items',
+      handler: 'gallery-item.find',
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+    {
+      method: 'GET',
+      path: '/gallery-items/:id',
+      handler: 'gallery-item.findOne',
+      config: {
+        policies: [],
+        auth: false,
+      },
+    },
+    {
+      method: 'POST',
+      path: '/gallery-items',
+      handler: 'gallery-item.create',
+      config: {
+        policies: [],
+      },
+    },
+    {
+      method: 'PUT',
+      path: '/gallery-items/:id',
+      handler: 'gallery-item.update',
+      config: {
+        policies: [],
+      },
+    },
+    {
+      method: 'DELETE',
+      path: '/gallery-items/:id',
+      handler: 'gallery-item.delete',
+      config: {
+        policies: [],
+      },
+    },
+  ],
+};
+

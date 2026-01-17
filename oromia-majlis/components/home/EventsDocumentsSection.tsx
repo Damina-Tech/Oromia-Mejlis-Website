@@ -4,28 +4,28 @@ import Link from "next/link";
 
 const events = [
   {
-    date: "02 JAN 2021",
-    category: "Conference",
-    title: "The Strategically Build Your Business",
-    time: "10:00 AM - 2:00 PM",
-    location: "City Hall",
-    image: "🤖",
+    date: "15 JAN 2026",
+    category: "Religious Conference",
+    title: "Annual Islamic Affairs Summit 2026",
+    time: "9:00 AM - 5:00 PM",
+    location: "Oromia Majlis Headquarters",
+    image: "🕌",
   },
   {
-    date: "19 APR 2021",
-    category: "Entertainment",
-    title: "The International Coffee Festival 2021",
-    time: "9:00 AM - 5:00 PM",
-    location: "Central Park",
-    image: "☕",
+    date: "28 FEB 2026",
+    category: "Community Event",
+    title: "Quranic Recitation Competition",
+    time: "2:00 PM - 6:00 PM",
+    location: "Central Mosque, Addis Ababa",
+    image: "📖",
   },
 ];
 
 const documents = [
-  { name: "Housing Development Plan", date: "2024-01-15" },
-  { name: "Business License Application", date: "2024-02-20" },
-  { name: "Rural Development Reports", date: "2024-03-10" },
-  { name: "Covid-19 Daily Updates", date: "2024-04-05" },
+  { name: "Islamic Affairs Management Guidelines", date: "2025-12-15" },
+  { name: "Mosque Registration Application", date: "2025-11-20" },
+  { name: "Annual Religious Education Report", date: "2025-10-10" },
+  { name: "Zakat & Charity Distribution Policy", date: "2025-09-05" },
 ];
 
 export default function EventsDocumentsSection() {
@@ -89,7 +89,7 @@ export default function EventsDocumentsSection() {
           <div>
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                City Documents
+                Majlis Documents
               </h2>
               <Link
                 href="/documents"
