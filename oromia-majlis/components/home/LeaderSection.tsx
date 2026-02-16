@@ -1,8 +1,30 @@
 "use client";
 
-import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function LeaderSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const videoId = "1fU0W4hkBmo";
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden"; // Prevent background scrolling
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [isModalOpen]);
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -82,9 +104,9 @@ export default function LeaderSection() {
 
             {/* Video Intro */}
             <div className="pt-2">
-              <Link
-                href="/about/video"
-                className="group flex items-center gap-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="group w-full flex items-center gap-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
               >
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                   <span className="text-xl ml-1">▶</span>
@@ -94,22 +116,57 @@ export default function LeaderSection() {
                   <p className="text-xs text-red-100 group-hover:text-white transition-colors">Learn more about Oromia Majlis</p>
                 </div>
                 <div className="text-lg group-hover:translate-x-1 transition-transform">→</div>
-              </Link>
+              </button>
             </div>
           </div>
 
           {/* Right Column - Image */}
           <div className="relative order-first lg:order-last">
-            <div className="aspect-[3/4] bg-gradient-to-br from-blue-200 to-blue-300 rounded-lg overflow-hidden shadow-xl">
+            <div className="aspect-[3/3] bg-gradient-to-br from-blue-200 to-blue-300 rounded-lg overflow-hidden shadow-xl">
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-9xl opacity-30">👤</div>
               </div>
               {/* Placeholder for actual image */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent">
+                <img src="/img/InShot_2.jpg" alt="Sheikh Gali Muktar" className="w-full h-full object-cover" />
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Video Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/70 hover:bg-black/90 text-white rounded-full flex items-center justify-center transition-colors"
+              aria-label="Close video"
+            >
+              <span className="text-2xl">×</span>
+            </button>
+
+            {/* YouTube Video Embed */}
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                title="Video Introduction - Oromia Majlis"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

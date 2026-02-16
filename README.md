@@ -18,7 +18,7 @@ This repository contains two main projects:
 
 ### 🔧 Backend (`backend/`)
 - **Framework**: Strapi 5 (Headless CMS)
-- **Database**: PostgreSQL (via Docker)
+- **Database**: PostgreSQL (local installation)
 - **Features**:
   - Hero Section API with slides and services
   - Content management for website content
@@ -28,7 +28,7 @@ This repository contains two main projects:
 
 ### Prerequisites
 - Node.js 18+ 
-- Docker and Docker Compose (for database)
+- PostgreSQL (local installation)
 - npm or yarn
 
 ### Frontend Setup
@@ -43,16 +43,16 @@ The frontend will be available at `http://localhost:3000`
 
 ### Backend Setup
 
-1. **Start the database:**
-```bash
-cd backend
-docker compose up -d
-```
+1. **Install and start PostgreSQL locally:**
+   - Install PostgreSQL from [postgresql.org](https://www.postgresql.org/download/)
+   - Ensure PostgreSQL is running on your system
+   - Create a database named `mejlis_db` (or update `.env` with your preferred database name)
 
 2. **Configure environment:**
 ```bash
-cp .env.example .env
-# Edit .env with your database credentials
+cd backend
+# The .env file should already exist with database configuration
+# Update DATABASE_NAME, DATABASE_USERNAME, and DATABASE_PASSWORD if needed
 ```
 
 3. **Start Strapi:**
@@ -77,7 +77,7 @@ See `backend/.env.example` for required variables.
 
 - Frontend: `cd oromia-majlis && npm run dev`
 - Backend: `cd backend && npm run develop`
-- Database: `cd backend && docker compose up -d`
+- Database: Ensure PostgreSQL is running locally (default port: 5432)
 
 ## 📚 Documentation
 

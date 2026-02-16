@@ -1,34 +1,60 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Event, getEvents } from "@/lib/strapi";
+import { majlisDocuments } from "@/lib/documents";
 
-const events = [
-  {
-    date: "15 JAN 2026",
-    category: "Religious Conference",
-    title: "Annual Islamic Affairs Summit 2026",
-    time: "9:00 AM - 5:00 PM",
-    location: "Oromia Majlis Headquarters",
-    image: "🕌",
-  },
-  {
-    date: "28 FEB 2026",
-    category: "Community Event",
-    title: "Quranic Recitation Competition",
-    time: "2:00 PM - 6:00 PM",
-    location: "Central Mosque, Addis Ababa",
-    image: "📖",
-  },
-];
+const formatDateLabel = (dateString: string) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
 
-const documents = [
-  { name: "Islamic Affairs Management Guidelines", date: "2025-12-15" },
-  { name: "Mosque Registration Application", date: "2025-11-20" },
-  { name: "Annual Religious Education Report", date: "2025-10-10" },
-  { name: "Zakat & Charity Distribution Policy", date: "2025-09-05" },
-];
+const formatTimeLabel = (startDate: string, endDate?: string) => {
+  const start = new Date(startDate);
+  const startTime = start.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  if (!endDate) return startTime;
+
+  const end = new Date(endDate);
+  const endTime = end.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return `${startTime} - ${endTime}`;
+};
+
+const isImageUrl = (value?: string) => {
+  if (!value) return false;
+  return value.startsWith("http://") || value.startsWith("https://") || value.startsWith("/");
+};
 
 export default function EventsDocumentsSection() {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(true);
+
+  useEffect(() => {
+    const fetchTopEvents = async () => {
+      try {
+        const allEvents = await getEvents();
+        setEvents(allEvents.slice(0, 2));
+      } catch (error) {
+        console.error("Error fetching top events:", error);
+      } finally {
+        setIsLoadingEvents(false);
+      }
+    };
+
+    fetchTopEvents();
+  }, []);
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -40,7 +66,7 @@ export default function EventsDocumentsSection() {
                 Upcoming Events
               </h2>
               <Link
-                href="/events"
+                href="/event"
                 className="text-blue-700 hover:text-red-600 font-semibold transition-colors"
               >
                 See All Events →
@@ -48,40 +74,61 @@ export default function EventsDocumentsSection() {
             </div>
 
             <div className="space-y-6">
-              {events.map((event, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
-                >
-                  <div className="flex flex-col sm:flex-row">
-                    <div className="sm:w-1/3 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-8 min-h-[200px]">
-                      <div className="text-6xl">{event.image}</div>
-                    </div>
-                    <div className="sm:w-2/3 p-6">
-                      <div className="inline-block bg-red-600 text-white text-xs font-bold px-3 py-1 rounded mb-3">
-                        {event.date}
+              {isLoadingEvents && (
+                <div className="bg-white border border-gray-200 rounded-lg p-6 text-gray-600">
+                  Loading events...
+                </div>
+              )}
+
+              {!isLoadingEvents &&
+                events.map((event) => (
+                  <div
+                    key={event.id}
+                    className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
+                  >
+                    <div className="flex flex-col sm:flex-row">
+                      <div className="sm:w-1/3 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-8 min-h-[200px]">
+                        {isImageUrl(event.image) ? (
+                          <img
+                            src={event.image}
+                            alt={event.title}
+                            className="w-full h-full object-cover rounded"
+                          />
+                        ) : (
+                          <div className="text-6xl">{event.image || "📅"}</div>
+                        )}
                       </div>
-                      <div className="text-sm text-blue-700 font-semibold mb-2">
-                        {event.category}
+                      <div className="sm:w-2/3 p-6">
+                        <div className="inline-block bg-red-600 text-white text-xs font-bold px-3 py-1 rounded mb-3">
+                          {formatDateLabel(event.startDate)}
+                        </div>
+                        <div className="text-sm text-blue-700 font-semibold mb-2">
+                          {event.category}
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">
+                          {event.title}
+                        </h3>
+                        <div className="space-y-1 text-sm text-gray-600 mb-4">
+                          <p>📅 {formatDateLabel(event.startDate)}</p>
+                          <p>🕐 {formatTimeLabel(event.startDate, event.endDate)}</p>
+                          <p>📍 {event.location}</p>
+                        </div>
+                        <Link
+                          href={`/event/${event.slug || event.id}`}
+                          className="inline-block text-red-600 hover:text-red-700 font-semibold text-sm transition-colors"
+                        >
+                          More Details →
+                        </Link>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">
-                        {event.title}
-                      </h3>
-                      <div className="space-y-1 text-sm text-gray-600 mb-4">
-                        <p>📅 {event.date}</p>
-                        <p>🕐 {event.time}</p>
-                        <p>📍 {event.location}</p>
-                      </div>
-                      <Link
-                        href={`/events/${index + 1}`}
-                        className="inline-block text-red-600 hover:text-red-700 font-semibold text-sm transition-colors"
-                      >
-                        More Details →
-                      </Link>
                     </div>
                   </div>
+                ))}
+
+              {!isLoadingEvents && events.length === 0 && (
+                <div className="bg-white border border-gray-200 rounded-lg p-6 text-gray-600">
+                  No upcoming events found.
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
@@ -100,10 +147,10 @@ export default function EventsDocumentsSection() {
             </div>
 
             <div className="space-y-4">
-              {documents.map((doc, index) => (
+              {majlisDocuments.map((doc) => (
                 <Link
-                  key={index}
-                  href={`/documents/${index + 1}`}
+                  key={doc.id}
+                  href={`/documents#doc-${doc.id}`}
                   className="flex items-center gap-4 p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors group"
                 >
                   <div className="text-red-600 text-2xl">📄</div>

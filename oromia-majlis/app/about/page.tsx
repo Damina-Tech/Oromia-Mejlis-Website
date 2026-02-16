@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 
 const navSections = [
   { id: "mission", label: "Mission & Vision" },
@@ -44,11 +47,105 @@ const missionVisionValues = [
 ];
 
 const stats = [
-  { value: "500+", label: "Mosques & Islamic Centers Supported" },
-  { value: "50K+", label: "Muslims Served Across Oromia" },
+  { value: "50k+", label: "Mosques & Islamic Centers Supported" },
+  { value: "30M+", label: "Muslims Served Across Oromia" },
   { value: "100+", label: "Religious Education Programs" },
   { value: "25+", label: "Years of Service to Community" },
 ];
+
+// Parse value string to number (handles K, M, +)
+function parseValue(value: string): number {
+  const cleanValue = value.replace(/[^0-9.KMkm]/g, "");
+  const num = parseFloat(cleanValue);
+  
+  if (cleanValue.toLowerCase().includes("m")) {
+    return num * 1000000;
+  } else if (cleanValue.toLowerCase().includes("k")) {
+    return num * 1000;
+  }
+  return num;
+}
+
+// Format number back to original format
+function formatValue(value: number, original: string): string {
+  const hasPlus = original.includes("+");
+  const hasK = original.toLowerCase().includes("k");
+  const hasM = original.toLowerCase().includes("m");
+  
+  if (hasM && value >= 1000000) {
+    return `${(value / 1000000).toFixed(0)}M${hasPlus ? "+" : ""}`;
+  } else if (hasK && value >= 1000) {
+    return `${(value / 1000).toFixed(0)}K${hasPlus ? "+" : ""}`;
+  } else {
+    return `${Math.floor(value)}${hasPlus ? "+" : ""}`;
+  }
+}
+
+// Counter component for individual statistic
+function Counter({ targetValue, originalValue, label }: { targetValue: number; originalValue: string; label: string }) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (hasAnimated) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+            
+            const duration = 2000; // 2 seconds
+            const startTime = Date.now();
+            const startValue = 0;
+            const endValue = targetValue;
+
+            const animate = () => {
+              const now = Date.now();
+              const elapsed = now - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              
+              // Easing function (ease-out)
+              const easeOut = 1 - Math.pow(1 - progress, 3);
+              const currentValue = startValue + (endValue - startValue) * easeOut;
+              
+              setCount(currentValue);
+
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              } else {
+                setCount(endValue);
+              }
+            };
+
+            requestAnimationFrame(animate);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
+      }
+    };
+  }, [targetValue, hasAnimated]);
+
+  return (
+    <div ref={elementRef} className="text-center group">
+      <p className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
+        {formatValue(count, originalValue)}
+      </p>
+      <p className="text-sm md:text-base text-white/90">{label}</p>
+    </div>
+  );
+}
 
 const managementTeam = [
   {
@@ -213,13 +310,13 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+              <div className="aspect-[4/4] rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
                 <div className="w-full h-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
-                  <div className="text-9xl opacity-30">🕌</div>
+                  <img src="/img/InShot_4.jpg" alt="Sheikh Ghali Muktar" className="w-full h-full object-cover" />
                 </div>
               </div>
               <div className="absolute -bottom-6 -left-4 bg-white shadow-2xl rounded-xl px-6 py-4 transform hover:scale-105 transition-transform">
-                <p className="font-bold text-gray-900">Sheikh Gali Muktar</p>
+                <p className="font-bold text-gray-900">Sheikh Ghali Muktar</p>
                 <p className="text-sm text-gray-600">President, Oromia Majlis</p>
               </div>
             </div>
@@ -275,12 +372,12 @@ export default function AboutPage() {
         {/* Statistics */}
         <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-3xl p-10 md:p-12 grid grid-cols-2 md:grid-cols-4 gap-8 shadow-2xl transform hover:scale-[1.02] transition-transform duration-300">
           {stats.map((stat) => (
-            <div key={stat.label} className="text-center group">
-              <p className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
-                {stat.value}
-              </p>
-              <p className="text-sm md:text-base text-white/90">{stat.label}</p>
-            </div>
+            <Counter
+              key={stat.label}
+              targetValue={parseValue(stat.value)}
+              originalValue={stat.value}
+              label={stat.label}
+            />
           ))}
         </div>
       </section>

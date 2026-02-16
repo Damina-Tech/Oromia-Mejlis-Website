@@ -1,28 +1,33 @@
-version: '3.8'
-
-services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: mejlis-postgres
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: ${DATABASE_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
-      POSTGRES_DB: ${DATABASE_NAME:-mejlis_db}
-      PGDATA: /var/lib/postgresql/data/pgdata
-    ports:
-      - "${DATABASE_PORT:-5432}:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME:-postgres}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  postgres_data:
-    driver: local
-
+# Docker Compose configuration is no longer used.
+# This project now uses a local PostgreSQL installation instead of Docker.
+# 
+# To use Docker Compose instead, uncomment the configuration below and ensure
+# PostgreSQL is not running locally on port 5432.
+#
+# version: '3.8'
+#
+# services:
+#   postgres:
+#     image: postgres:15-alpine
+#     container_name: mejlis-postgres
+#     restart: unless-stopped
+#     env_file:
+#       - .env
+#     environment:
+#       POSTGRES_USER: ${DATABASE_USERNAME:-postgres}
+#       POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+#       POSTGRES_DB: ${DATABASE_NAME:-mejlis_db}
+#       PGDATA: /var/lib/postgresql/data/pgdata
+#     ports:
+#       - "${DATABASE_PORT:-5432}:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME:-postgres}"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+#
+# volumes:
+#   postgres_data:
+#     driver: local
