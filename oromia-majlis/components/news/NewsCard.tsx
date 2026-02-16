@@ -23,12 +23,23 @@ export default function NewsCard({
   image,
   comments = 0,
 }: NewsCardProps) {
+  const isImageUrl =
+    image.startsWith("http://") || image.startsWith("https://") || image.startsWith("/");
+
   return (
     <article className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
       {/* Image */}
       <Link href={`/news/${id}`}>
         <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center overflow-hidden">
-          <div className="text-6xl opacity-50">{image}</div>
+          {isImageUrl ? (
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="text-6xl opacity-50">{image}</div>
+          )}
         </div>
       </Link>
 

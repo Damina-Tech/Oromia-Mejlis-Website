@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "donations",
+  "info": {
+    "singularName": "donation",
+    "pluralName": "donations",
+    "displayName": "Donation",
+    "description": "Donation transactions created from Stripe and Chapa checkouts"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "donorName": {
+      "type": "string",
+      "required": true
+    },
+    "donorEmail": {
+      "type": "email",
+      "required": true
+    },
+    "donorPhone": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "currency": {
+      "type": "string",
+      "required": true
+    },
+    "provider": {
+      "type": "enumeration",
+      "enum": ["stripe", "chapa"],
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "initiated",
+        "checkout_created",
+        "failed",
+        "verified",
+        "paid",
+        "cancelled"
+      ],
+      "default": "initiated",
+      "required": true
+    },
+    "providerReference": {
+      "type": "string"
+    },
+    "checkoutUrl": {
+      "type": "text"
+    },
+    "failureReason": {
+      "type": "text"
+    },
+    "providerResponse": {
+      "type": "json"
+    },
+    "paidAt": {
+      "type": "datetime"
+    },
+    "metadata": {
+      "type": "json"
+    }
+  }
+}
+

@@ -193,33 +193,65 @@ const managementTeam = [
 ];
 
 const previousLeaders = [
-  { years: "2000 - 2005", name: "Sheikh Mohammed Abdi", role: "President" },
-  { years: "2005 - 2010", name: "Sheikh Hassan Ibrahim", role: "President" },
-  { years: "2010 - 2015", name: "Sheikh Aisha Mohammed", role: "President" },
-  { years: "2015 - 2020", name: "Sheikh Abdullah Hassan", role: "President" },
+  {
+    years: "2000 - 2005",
+    name: "Sheikh Mohammed Abdi",
+    role: "President",
+    image: "/img/InShot_3.jpg",
+  },
+  {
+    years: "2005 - 2010",
+    name: "Sheikh Hassan Ibrahim",
+    role: "President",
+    image: "/img/InShot_4.jpg",
+  },
+  {
+    years: "2010 - 2015",
+    name: "Sheikh Aisha Mohammed",
+    role: "President",
+    image: "/img/InShot_5.jpg",
+  },
+  {
+    years: "2015 - 2020",
+    name: "Sheikh Abdullah Hassan",
+    role: "President",
+    image: "/img/InShot_2.jpg",
+  },
 ];
+
+const foundingDates = {
+  ec: "28/07/1987 EC",
+  gc: "April 6, 1975 GC",
+  hijri: "Rabi' al-Awwal 1395 AH",
+};
 
 const historyTimeline = [
   {
-    year: "1999",
-    title: "Establishment",
+    period: "1975 GC",
+    title: "Formal Foundation",
     description:
-      "Oromia Regional Islamic Affairs Supreme Council was established to oversee and manage Islamic affairs across the Oromia Region.",
+      "The Oromia Regional Islamic Affairs Supreme Council was formally founded to coordinate and strengthen Islamic affairs across the region.",
   },
   {
-    year: "2005",
+    period: "1987 EC",
+    title: "Institutional Recognition",
+    description:
+      "The council entered a new phase of organized administration and expanded structure under the Ethiopian Calendar timeline.",
+  },
+  {
+    period: "2005",
     title: "Educational Expansion",
     description:
       "Launched comprehensive Islamic education programs and established partnerships with religious schools and institutions.",
   },
   {
-    year: "2012",
-    title: "Community Services",
+    period: "2012",
+    title: "Community Services Scale-Up",
     description:
       "Expanded community support services including Zakat distribution, marriage counseling, and social welfare programs.",
   },
   {
-    year: "2020",
+    period: "2020",
     title: "Digital Transformation",
     description:
       "Introduced digital services for mosque registration, event management, and online religious guidance services.",
@@ -472,45 +504,77 @@ export default function AboutPage() {
             Key moments in our journey of serving the Muslim community
           </p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-10">
-          <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-shadow duration-300">
-            <h3 className="text-2xl font-bold mb-6 text-gray-900">History & Milestones</h3>
-            <div className="space-y-8">
-              {historyTimeline.map((item, idx) => (
-                <div
-                  key={item.year}
-                  className="flex gap-4 group cursor-pointer"
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-red-700 text-white font-bold text-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
-                      {item.year.slice(-2)}
+        <div className="grid grid-cols-1 xl:grid-cols-[3fr_2fr] gap-10">
+          <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-shadow duration-300 border border-gray-100">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900">History & Milestones</h3>
+                <p className="text-sm text-gray-500 mt-2">
+                  Foundation dates in Ethiopian, Gregorian, and Hijri calendars
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:w-auto">
+                <div className="rounded-xl bg-blue-50 border border-blue-100 px-4 py-3">
+                  <p className="text-xs uppercase tracking-wide text-blue-700 font-semibold">EC</p>
+                  <p className="text-sm font-bold text-gray-900">{foundingDates.ec}</p>
+                </div>
+                <div className="rounded-xl bg-red-50 border border-red-100 px-4 py-3">
+                  <p className="text-xs uppercase tracking-wide text-red-700 font-semibold">GC</p>
+                  <p className="text-sm font-bold text-gray-900">{foundingDates.gc}</p>
+                </div>
+                <div className="rounded-xl bg-emerald-50 border border-emerald-100 px-4 py-3">
+                  <p className="text-xs uppercase tracking-wide text-emerald-700 font-semibold">Hijri</p>
+                  <p className="text-sm font-bold text-gray-900">{foundingDates.hijri}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 via-blue-300 to-transparent" />
+              <div className="space-y-8">
+                {historyTimeline.map((item) => (
+                  <div key={item.period} className="relative pl-14 group">
+                    <div className="absolute left-0 top-1.5 w-8 h-8 rounded-full bg-gradient-to-br from-red-600 to-red-700 border-4 border-white shadow-md group-hover:scale-110 transition-transform" />
+                    <div className="bg-gray-50 border border-gray-100 rounded-xl p-5 group-hover:border-red-200 group-hover:shadow-md transition-all">
+                      <p className="inline-flex items-center rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 px-3 py-1 mb-3">
+                        {item.period}
+                      </p>
+                      <p className="font-semibold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
+                        {item.title}
+                      </p>
+                      <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
                     </div>
                   </div>
-                  <div className="flex-1 pt-1">
-                    <p className="font-semibold text-gray-900 mb-1 group-hover:text-red-600 transition-colors">
-                      {item.title}
-                    </p>
-                    <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-          <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-shadow duration-300">
-            <h3 className="text-2xl font-bold mb-6 text-gray-900">Previous Leadership</h3>
+
+          <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-shadow duration-300 border border-gray-100">
+            <h3 className="text-2xl font-bold mb-2 text-gray-900">Previous Leadership</h3>
+            <p className="text-sm text-gray-500 mb-6">
+              Leaders who served with dedication and guided the institution across different eras.
+            </p>
             <ul className="space-y-4">
               {previousLeaders.map((leader) => (
                 <li
                   key={leader.years}
-                  className="flex justify-between items-center border-b border-gray-200 pb-4 hover:border-red-300 transition-colors group"
+                  className="flex items-center gap-4 rounded-xl border border-gray-200 p-4 hover:border-red-300 hover:shadow-md transition-all group bg-gray-50/60"
                 >
-                  <div>
-                    <p className="font-semibold text-gray-900 group-hover:text-red-600 transition-colors">
+                  <div className="w-26 h-26 rounded-full overflow-hidden border-2 border-white shadow-md shrink-0 bg-white">
+                    <img
+                      src={leader.image}
+                      alt={leader.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-gray-900 group-hover:text-red-600 transition-colors truncate">
                       {leader.name}
                     </p>
                     <p className="text-sm text-gray-500">{leader.role}</p>
                   </div>
-                  <p className="text-sm font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                  <p className="text-xs md:text-sm font-semibold text-gray-600 bg-white border border-gray-200 px-3 py-1 rounded-full whitespace-nowrap">
                     {leader.years}
                   </p>
                 </li>
@@ -521,7 +585,7 @@ export default function AboutPage() {
       </section>
 
       {/* Current Activities Section */}
-      <section id="activities" className="bg-gradient-to-br from-gray-50 to-white">
+      {/* <section id="activities" className="bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto px-4 py-16 space-y-12">
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-sm uppercase text-red-600 font-semibold mb-3">Active Initiatives</p>
@@ -551,7 +615,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

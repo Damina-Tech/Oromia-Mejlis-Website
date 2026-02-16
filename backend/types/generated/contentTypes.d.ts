@@ -504,6 +504,59 @@ export interface ApiContactMessageContactMessage
   };
 }
 
+export interface ApiDonationDonation extends Struct.CollectionTypeSchema {
+  collectionName: 'donations';
+  info: {
+    description: 'Donation transactions created from Stripe and Chapa checkouts';
+    displayName: 'Donation';
+    pluralName: 'donations';
+    singularName: 'donation';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    checkoutUrl: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currency: Schema.Attribute.String & Schema.Attribute.Required;
+    donorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    donorName: Schema.Attribute.String & Schema.Attribute.Required;
+    donorPhone: Schema.Attribute.String;
+    failureReason: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donation.donation'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON;
+    paidAt: Schema.Attribute.DateTime;
+    provider: Schema.Attribute.Enumeration<['stripe', 'chapa']> &
+      Schema.Attribute.Required;
+    providerReference: Schema.Attribute.String;
+    providerResponse: Schema.Attribute.JSON;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      [
+        'initiated',
+        'checkout_created',
+        'failed',
+        'verified',
+        'paid',
+        'cancelled',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'initiated'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   collectionName: 'events';
   info: {
@@ -1199,6 +1252,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
       'api::contact-message.contact-message': ApiContactMessageContactMessage;
+      'api::donation.donation': ApiDonationDonation;
       'api::event.event': ApiEventEvent;
       'api::gallery-item.gallery-item': ApiGalleryItemGalleryItem;
       'api::hero-section.hero-section': ApiHeroSectionHeroSection;
