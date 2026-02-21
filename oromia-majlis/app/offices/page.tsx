@@ -17,7 +17,7 @@ export default function OfficesPage() {
               Offices & Departments
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Explore our departments and offices dedicated to managing Islamic affairs and serving the Muslim community across the Oromia Region
+              Explore our departments and offices dedicated to managing Islamic affairs, including Halal Certification services for businesses across the Oromia Region
             </p>
           </div>
 

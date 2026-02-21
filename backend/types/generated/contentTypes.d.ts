@@ -662,6 +662,50 @@ export interface ApiHeroSectionHeroSection extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
+  collectionName: 'offices';
+  info: {
+    description: 'Majlis departments and office details';
+    displayName: 'Office';
+    pluralName: 'offices';
+    singularName: 'office';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaLink: Schema.Attribute.String;
+    ctaText: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    email: Schema.Attribute.Email;
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    headName: Schema.Attribute.String;
+    headTitle: Schema.Attribute.String;
+    hours: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::office.office'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.RichText;
+    mission: Schema.Attribute.RichText;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    services: Schema.Attribute.JSON;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    vision: Schema.Attribute.RichText;
+  };
+}
+
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
@@ -1256,6 +1300,7 @@ declare module '@strapi/strapi' {
       'api::event.event': ApiEventEvent;
       'api::gallery-item.gallery-item': ApiGalleryItemGalleryItem;
       'api::hero-section.hero-section': ApiHeroSectionHeroSection;
+      'api::office.office': ApiOfficeOffice;
       'api::project.project': ApiProjectProject;
       'api::service.service': ApiServiceService;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -5,6 +5,14 @@ import ServiceCard from "./ServiceCard";
 // Demo services data - matching the slugs in the detail page
 const demoServices = [
   {
+    id: 0,
+    icon: "✅",
+    title: "Halal Certification Services",
+    description: "Apply online for Halal Certification through Oromia Majlis HRMS and follow your approval workflow.",
+    slug: "halal-certification",
+    href: "/services/halal-certification",
+  },
+  {
     id: 1,
     icon: "🕋",
     title: "Hajj & Umrah Affairs",
@@ -85,7 +93,7 @@ export default function ServicesGrid() {
           icon={service.icon}
           title={service.title}
           description={service.description}
-          href={`/services/${service.slug}`}
+          href={service.href || `/services/${service.slug}`}
         />
       ))}
     </div>

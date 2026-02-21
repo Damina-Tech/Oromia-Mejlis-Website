@@ -17,7 +17,7 @@ export default function ServicesPage() {
               Our Services
             </h1>
             <p className="text-lg text-gray-600">
-              Oromia Majlis provides a variety of services to the community.
+              Oromia Majlis provides a variety of services to the community, including Halal Certification support for businesses.
             </p>
           </div>
 

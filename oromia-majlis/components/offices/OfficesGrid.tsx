@@ -4,6 +4,14 @@ import OfficeCard from "./OfficeCard";
 
 const offices = [
   {
+    id: "halal-certification",
+    title: "Halal Certification Department",
+    description: "Dedicated support for Halal business registration, certification workflow, and compliance follow-up.",
+    image: "✅",
+    icon: "✅",
+    href: "/offices/halal-certification",
+  },
+  {
     id: "religious-affairs",
     title: "Religious Affairs Department",
     description: "Overseeing religious matters, providing fatwa services, and ensuring compliance with Islamic principles and national regulations.",
@@ -79,7 +87,7 @@ export default function OfficesGrid() {
           description={office.description}
           image={office.image}
           icon={office.icon}
-          href={`/offices/${office.id}`}
+          href={office.href || `/offices/${office.id}`}
         />
       ))}
     </div>

@@ -1,10 +1,50 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState(searchParams.get("email") || "");
+  const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const registered = searchParams.get("registered") === "1";
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!email.trim() || !password.trim()) {
+      setError("Email and password are required.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      const response = await fetch("/api/hrms/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data?.redirectUrl) {
+        throw new Error(data?.error || "Unable to sign in. Please try again.");
+      }
+
+      window.location.href = data.redirectUrl;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Login failed.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className="min-h-[calc(100vh-180px)] bg-gradient-to-br from-gray-50 via-white to-blue-50 py-12 md:py-20">
@@ -47,10 +87,22 @@ export default function LoginPage() {
                 Sign In
               </h2>
               <p className="mt-2 text-sm text-gray-600">
-                Enter your credentials to continue.
+                Enter your credentials to continue to Halal Certification services.
               </p>
 
-              <form className="mt-8 space-y-5" onSubmit={(e) => e.preventDefault()}>
+              {registered && (
+                <div className="mt-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                  Account created successfully. Please log in with your new credentials.
+                </div>
+              )}
+
+              {error && (
+                <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
+
+              <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                 <div>
                   <label
                     htmlFor="email"
@@ -62,6 +114,8 @@ export default function LoginPage() {
                     id="email"
                     type="email"
                     placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     required
                   />
@@ -79,6 +133,8 @@ export default function LoginPage() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="w-full rounded-xl border border-gray-300 px-4 py-3 pr-12 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                       required
                     />
@@ -107,13 +163,24 @@ export default function LoginPage() {
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-red-600 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-red-700 hover:shadow-lg"
+                  disabled={isSubmitting}
+                  className="w-full rounded-xl bg-red-600 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-red-700 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Sign In
+                  {isSubmitting ? "Signing in..." : "Sign In"}
                 </button>
               </form>
 
               <p className="mt-6 text-center text-sm text-gray-600">
+                New business owner?{" "}
+                <Link
+                  href="/register"
+                  className="font-semibold text-blue-700 hover:text-red-600"
+                >
+                  Create account
+                </Link>
+              </p>
+
+              <p className="mt-3 text-center text-sm text-gray-600">
                 Need help accessing your account?{" "}
                 <Link
                   href="/contact"

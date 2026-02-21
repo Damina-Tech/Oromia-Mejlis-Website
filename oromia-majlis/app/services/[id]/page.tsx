@@ -19,6 +19,7 @@ const serviceNames: Record<string, string> = {
   "community-peace-social-harmony": "Community Peace & Social Harmony",
   "research-documentation-publications": "Research, Documentation & Publications",
   "interfaith-public-relations": "Interfaith & Public Relations",
+  "halal-certification": "Halal Certification Services",
 };
 
 // Generate static params for all services
@@ -54,6 +55,12 @@ type ServiceData = {
   };
   features: string[];
   benefits: string[];
+  cta?: {
+    title: string;
+    description: string;
+    label: string;
+    href: string;
+  };
 };
 
 // Default service data
@@ -519,6 +526,54 @@ const serviceDataMap: Record<string, ServiceData> = {
       "Stronger community partnerships",
     ],
   },
+  "halal-certification": {
+    name: "Halal Certification Services",
+    icon: "✅",
+    coordinator: {
+      name: "Sheikh Abdulhadi Abate",
+      title: "Coordinator, Halal Certification Services",
+      image: "👤",
+    },
+    information: {
+      description:
+        "The Halal Certification Services unit helps businesses register, apply, and complete Halal compliance verification through the Oromia Majlis digital process.",
+      mission:
+        "To provide transparent, efficient, and Sharia-compliant certification support for food, beverage, hospitality, and related sectors seeking Halal certification.",
+      vision:
+        "To become a trusted regional center for high-quality Halal certification services that improve consumer confidence and market access.",
+    },
+    message: {
+      title: "Message from the Coordinator",
+      content:
+        "Our department is committed to supporting businesses at every step of the Halal certification journey. From initial application and document verification to inspection and final approval, we provide clear guidance and reliable service through our digital platform.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "halal@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    features: [
+      "Online business registration for Halal certification",
+      "Document submission and compliance review workflow",
+      "Inspection and audit coordination support",
+      "Certification status tracking and update notifications",
+      "Guidance on Halal standards and renewal requirements",
+    ],
+    benefits: [
+      "Faster and structured certification workflow",
+      "Better business credibility with Halal consumers",
+      "Clear guidance from application to approval",
+      "Digital tracking for improved transparency",
+    ],
+    cta: {
+      title: "Start Halal Certification",
+      description:
+        "Ready to begin your certification process? Create your account and submit your application online.",
+      label: "Apply for Halal Certification",
+      href: "/register",
+    },
+  },
 };
 
 export default async function ServiceDetailPage({
@@ -722,6 +777,19 @@ export default async function ServiceDetailPage({
                   </div>
                 </div>
               </div>
+
+              {serviceData.cta && (
+                <div className="bg-gradient-to-br from-red-600 to-blue-900 rounded-lg shadow-lg p-6 text-white">
+                  <h3 className="text-xl font-bold mb-3">{serviceData.cta.title}</h3>
+                  <p className="text-white/90 mb-5 text-sm">{serviceData.cta.description}</p>
+                  <Link
+                    href={serviceData.cta.href}
+                    className="inline-flex w-full items-center justify-center rounded-md bg-white px-6 py-3 text-center font-semibold text-red-700 hover:bg-red-50 transition-colors"
+                  >
+                    {serviceData.cta.label}
+                  </Link>
+                </div>
+              )}
 
               {/* Quick Links */}
               <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">

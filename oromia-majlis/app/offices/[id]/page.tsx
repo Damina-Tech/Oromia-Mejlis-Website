@@ -53,6 +53,7 @@ const departmentNames: Record<string, string> = {
   "training-capacity": "Training & Capacity Building",
   "interfaith-relations": "Interfaith & Public Relations",
   "research-publications": "Research, Documentation & Publications",
+  "halal-certification": "Halal Certification Department",
 };
 
 const departmentDataMap: Record<string, typeof departmentData> = {
@@ -362,6 +363,40 @@ const departmentDataMap: Record<string, typeof departmentData> = {
       "Library and resource management",
     ],
   },
+  "halal-certification": {
+    name: "Halal Certification Department",
+    head: {
+      name: "Sheikh Abdulhadi Abate",
+      title: "Director, Halal Certification Department",
+      image: "👤",
+    },
+    information: {
+      description:
+        "The Halal Certification Department provides end-to-end support for businesses applying for Halal certification, including registration, compliance checks, and process guidance.",
+      mission:
+        "To deliver credible, efficient, and Sharia-aligned Halal certification support services for businesses across Oromia and beyond.",
+      vision:
+        "To become a recognized center of excellence for trusted Halal certification and compliance services.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Our department is dedicated to helping businesses complete Halal certification with clarity and confidence. We support each stage of the process, from application to verification, through a transparent digital workflow.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "halal@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Business registration for Halal certification",
+      "Application review and documentation support",
+      "Audit and inspection coordination",
+      "Compliance guidance and correction support",
+      "Certification status follow-up and renewal guidance",
+    ],
+  },
 };
 
 export default async function DepartmentDetailPage({
@@ -555,6 +590,21 @@ export default async function DepartmentDetailPage({
                   </li>
                 </ul>
               </div>
+
+              {id === "halal-certification" && (
+                <div className="bg-gradient-to-br from-red-600 to-blue-900 rounded-lg shadow-lg p-6 text-white">
+                  <h3 className="text-xl font-bold mb-3">Apply for Halal Certification</h3>
+                  <p className="text-white/90 mb-5 text-sm">
+                    Start your application process online and track your certification progress.
+                  </p>
+                  <Link
+                    href="/register"
+                    className="inline-flex w-full items-center justify-center rounded-md bg-white px-6 py-3 text-center font-semibold text-red-700 hover:bg-red-50 transition-colors"
+                  >
+                    Start Registration
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

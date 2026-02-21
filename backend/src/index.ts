@@ -409,6 +409,26 @@ export default {
           featured: false,
           publishedAt: new Date(),
         },
+        {
+          icon: "✅",
+          title: "Halal Certification Services",
+          slug: "halal-certification",
+          description: "Apply online for Halal certification with guided registration, compliance support, and status tracking.",
+          fullDescription: `<p>The Halal Certification Services department supports businesses through end-to-end Halal certification. Applicants can register online, submit required documents, receive guidance on compliance requirements, and track their progress through each review stage.</p>`,
+          content: `<h2>Our Services</h2>
+          <ul>
+            <li><strong>Business Registration:</strong> Digital registration and account setup for applicants</li>
+            <li><strong>Document Review:</strong> Structured review of submitted compliance documents</li>
+            <li><strong>Inspection Coordination:</strong> Scheduling and guidance for audit and inspection stages</li>
+            <li><strong>Status Tracking:</strong> Transparent progress updates throughout the certification workflow</li>
+            <li><strong>Renewal Support:</strong> Guidance for renewal and continued compliance</li>
+          </ul>
+          <h2>Who Can Apply</h2>
+          <p>Food producers, restaurants, hotels, exporters, and related businesses that require recognized Halal certification can start the process online.</p>`,
+          href: "/services/halal-certification",
+          featured: true,
+          publishedAt: new Date(),
+        },
       ];
 
       // Check if services already exist
@@ -431,11 +451,20 @@ export default {
 
       console.log(`📊 Found ${existingServices.length} existing services`);
 
-      if (existingServices.length === 0) {
-        // Create all services
-        console.log(`💾 Creating ${servicesData.length} services...`);
-        
-        for (const serviceData of servicesData) {
+      const existingServiceSlugs = new Set(
+        existingServices
+          .map((service: any) => service?.slug || service?.attributes?.slug)
+          .filter(Boolean)
+      );
+      const missingServices = servicesData.filter(
+        (serviceData) => !existingServiceSlugs.has(serviceData.slug)
+      );
+
+      if (missingServices.length > 0) {
+        // Create only missing services so new additions (like Halal Certification) are inserted safely
+        console.log(`💾 Creating ${missingServices.length} missing services...`);
+
+        for (const serviceData of missingServices) {
           try {
             await strapi.documents('api::service.service').create({
               data: serviceData,
@@ -450,14 +479,110 @@ export default {
             }
           }
         }
-        
+
         console.log('✅ Services data seeded successfully');
-        console.log(`   - Created ${servicesData.length} services`);
+        console.log(`   - Created ${missingServices.length} missing services`);
       } else {
-        console.log('ℹ️ Services already exist. Skipping seeding.');
+        console.log('ℹ️ Services already exist. No missing services to seed.');
       }
     } catch (error) {
       console.error('❌ Error seeding services data:', error);
+      // Don't throw - allow Strapi to start even if seeding fails
+    }
+
+    // Seed offices/departments data if it doesn't exist
+    try {
+      const officeContentType = strapi.contentTypes['api::office.office'];
+      if (!officeContentType) {
+        console.warn('⚠️ Office content type not found. Please create it via Content-Type Builder first.');
+      } else {
+        const officesData = [
+          {
+            title: "Halal Certification Department",
+            slug: "halal-certification",
+            description:
+              "Dedicated support for Halal business registration, certification workflow, and compliance follow-up.",
+            mission:
+              "To provide reliable and efficient Halal certification services that help businesses meet recognized compliance standards.",
+            vision:
+              "To become a trusted center of excellence for Halal certification and verification services.",
+            headName: "Sheikh Abdulhadi Abate",
+            headTitle: "Director, Halal Certification Department",
+            message:
+              "Our department supports businesses from registration to final decision with transparent, guided, and digital-first service delivery.",
+            phone: "+251 9XX XXX XXX",
+            email: "halal@oromiamajlis.et",
+            address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+            hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+            services: [
+              "Business registration for Halal certification",
+              "Application document verification support",
+              "Inspection and audit coordination",
+              "Compliance advisory and gap guidance",
+              "Certification status follow-up and renewal guidance",
+            ],
+            ctaText: "Apply for Halal Certification",
+            ctaLink: "/register",
+            featured: true,
+            publishedAt: new Date(),
+          },
+        ];
+
+        let existingOffices = [];
+        try {
+          const docs = await strapi.documents('api::office.office').findMany({
+            limit: 100,
+          });
+          existingOffices = docs || [];
+        } catch (docError) {
+          try {
+            const result = await strapi.entityService.findMany('api::office.office', {
+              limit: 100,
+            });
+            existingOffices = Array.isArray(result) ? result : [];
+          } catch (entityError) {
+            existingOffices = [];
+          }
+        }
+
+        console.log(`📊 Found ${existingOffices.length} existing offices`);
+
+        const existingOfficeSlugs = new Set(
+          existingOffices
+            .map((office: any) => office?.slug || office?.attributes?.slug)
+            .filter(Boolean)
+        );
+        const missingOffices = officesData.filter(
+          (officeData) => !existingOfficeSlugs.has(officeData.slug)
+        );
+
+        if (missingOffices.length > 0) {
+          console.log(`💾 Creating ${missingOffices.length} missing offices...`);
+
+          for (const officeData of missingOffices) {
+            try {
+              await strapi.documents('api::office.office').create({
+                data: officeData as any,
+              });
+            } catch (docError) {
+              try {
+                await strapi.entityService.create('api::office.office', {
+                  data: officeData as any,
+                });
+              } catch (entityError) {
+                console.error(`❌ Failed to create office: ${officeData.title}`, entityError);
+              }
+            }
+          }
+
+          console.log('✅ Offices data seeded successfully');
+          console.log(`   - Created ${missingOffices.length} missing offices`);
+        } else {
+          console.log('ℹ️ Offices already exist. No missing offices to seed.');
+        }
+      }
+    } catch (error) {
+      console.error('❌ Error seeding offices data:', error);
       // Don't throw - allow Strapi to start even if seeding fails
     }
 
