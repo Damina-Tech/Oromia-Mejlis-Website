@@ -13,6 +13,15 @@ const demoServices = [
     href: "/services/halal-certification",
   },
   {
+    id: 11,
+    icon: "🪪",
+    title: "Membership Certificate",
+    description:
+      "Apply online for a Membership Certificate by selecting a monthly, quarterly, or yearly plan, paying the fee, and receiving your certificate.",
+    slug: "membership-certificate",
+    href: "/services/membership-certificate",
+  },
+  {
     id: 1,
     icon: "🕋",
     title: "Hajj & Umrah Affairs",

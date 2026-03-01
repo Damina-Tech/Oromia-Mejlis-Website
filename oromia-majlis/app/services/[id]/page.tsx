@@ -20,6 +20,7 @@ const serviceNames: Record<string, string> = {
   "research-documentation-publications": "Research, Documentation & Publications",
   "interfaith-public-relations": "Interfaith & Public Relations",
   "halal-certification": "Halal Certification Services",
+  "membership-certificate": "Membership Certificate",
 };
 
 // Generate static params for all services
@@ -572,6 +573,54 @@ const serviceDataMap: Record<string, ServiceData> = {
         "Ready to begin your certification process? Create your account and submit your application online.",
       label: "Apply for Halal Certification",
       href: "/register",
+    },
+  },
+  "membership-certificate": {
+    name: "Membership Certificate",
+    icon: "🪪",
+    coordinator: {
+      name: "Sheikh Abdinasir Mohammed",
+      title: "Coordinator, Membership Certificate Service",
+      image: "👤",
+    },
+    information: {
+      description:
+        "The Membership Certificate service enables Muslim community members to apply online, select a membership plan, complete payment, and receive their certificate digitally.",
+      mission:
+        "To provide an easy, transparent, and accessible online membership certification process for the Muslim community across Oromia.",
+      vision:
+        "To establish a trusted and modern digital membership system that strengthens community participation and access to Majlis services.",
+    },
+    message: {
+      title: "Message from the Coordinator",
+      content:
+        "This service is designed to simplify membership application for our community. Applicants can submit their information online, choose monthly, quarterly, or yearly plans, pay the required fee, and receive their membership certificate through a smooth digital process.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "membership@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    features: [
+      "Online application form with applicant information",
+      "Plan selection: Monthly, Quarterly, or Yearly",
+      "Integrated payment step for certificate fees",
+      "Certificate issuance after successful processing",
+      "Digital process tracking and status visibility",
+    ],
+    benefits: [
+      "Fast and convenient online application workflow",
+      "Flexible membership plan options",
+      "Secure fee payment and clear process steps",
+      "Reliable certificate delivery for approved members",
+    ],
+    cta: {
+      title: "Apply for Membership Certificate",
+      description:
+        "Start your membership application online, choose your preferred plan, and complete your payment.",
+      label: "Start Membership Application",
+      href: "http://localhost:8080/register/membership",
     },
   },
 };
