@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { managementTeam, getLeaderSlug } from "@/lib/leadership";
 
 const navSections = [
   { id: "mission", label: "Mission & Vision" },
@@ -146,51 +147,6 @@ function Counter({ targetValue, originalValue, label }: { targetValue: number; o
     </div>
   );
 }
-
-const managementTeam = [
-  {
-    name: "Sheikh Gali Muktar",
-    role: "President",
-    level: "Executive Council",
-    email: "president@oromiamajlis.et",
-    phone: "+251 9XX XXX XXX",
-  },
-  {
-    name: "Sheikh Ahmed Mohammed",
-    role: "Vice President, Religious Affairs",
-    level: "Executive Council",
-    email: "vpreligious@oromiamajlis.et",
-    phone: "+251 9XX XXX XXX",
-  },
-  {
-    name: "Sheikh Fatima Hassan",
-    role: "Director, Islamic Education",
-    level: "Strategic Committee",
-    email: "education@oromiamajlis.et",
-    phone: "+251 9XX XXX XXX",
-  },
-  {
-    name: "Sheikh Omar Abdullah",
-    role: "Director, Community Services",
-    level: "Strategic Committee",
-    email: "community@oromiamajlis.et",
-    phone: "+251 9XX XXX XXX",
-  },
-  {
-    name: "Sheikh Amina Ibrahim",
-    role: "Director, Zakat & Charity",
-    level: "Implementation Council",
-    email: "zakat@oromiamajlis.et",
-    phone: "+251 9XX XXX XXX",
-  },
-  {
-    name: "Sheikh Yusuf Ali",
-    role: "Director, Interfaith Relations",
-    level: "Implementation Council",
-    email: "interfaith@oromiamajlis.et",
-    phone: "+251 9XX XXX XXX",
-  },
-];
 
 const previousLeaders = [
   {
@@ -459,35 +415,56 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership Section */}
-      <section id="management" className="bg-white border-y">
-        <div className="container mx-auto px-4 py-16 space-y-12">
+      <section id="management" className="bg-gradient-to-b from-gray-50 to-white border-y border-gray-100">
+        <div className="container mx-auto px-4 py-16 md:py-20 space-y-12">
           <div className="text-center max-w-3xl mx-auto">
-            <p className="text-sm uppercase text-red-600 font-semibold mb-3">Our Leadership</p>
+            <p className="text-sm uppercase text-red-600 font-semibold tracking-wide mb-3">Our Leadership</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Executive Council & Committees</h2>
             <p className="text-lg text-gray-600">
               Our leadership structure ensures effective governance, strategic planning, and day-to-day management of Islamic affairs across the Oromia Region.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {managementTeam.map((leader) => (
               <div
                 key={leader.email}
-                className="group bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-md hover:shadow-2xl border border-gray-100 hover:border-red-300 transition-all duration-300 transform hover:-translate-y-2"
+                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl border border-gray-100 hover:border-red-200 transition-all duration-300 transform hover:-translate-y-1"
               >
-                <p className="text-xs uppercase text-red-600 font-semibold mb-3">{leader.level}</p>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors">
-                  {leader.name}
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">{leader.role}</p>
-                <div className="space-y-2 text-sm text-gray-600 pt-4 border-t border-gray-200">
-                  <p className="flex items-center gap-2">
-                    <span className="text-red-600">✉</span>
-                    <span className="hover:text-red-600 transition-colors">{leader.email}</span>
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-red-600">📞</span>
-                    <span>{leader.phone}</span>
-                  </p>
+                <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="absolute top-3 left-3 text-xs uppercase tracking-wider font-semibold text-white bg-red-600/90 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                    {leader.level}
+                  </span>
+                </div>
+                <div className="p-6">
+                  <Link href={`/about/leadership/${getLeaderSlug(leader)}`}>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-red-600 transition-colors line-clamp-2">
+                      {leader.name}
+                    </h3>
+                  </Link>
+                  <p className="text-sm font-medium text-red-600 mb-4">{leader.role}</p>
+                  <div className="space-y-2 text-sm text-gray-600 pt-4 border-t border-gray-100">
+                    <p className="flex items-center gap-2 truncate">
+                      <span className="text-red-600 shrink-0">✉</span>
+                      <span className="truncate hover:text-red-600 transition-colors">{leader.email}</span>
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <span className="text-red-600 shrink-0">📞</span>
+                      <span>{leader.phone}</span>
+                    </p>
+                    <Link
+                      href={`/about/leadership/${getLeaderSlug(leader)}`}
+                      className="inline-flex items-center gap-2 mt-4 text-red-600 hover:text-red-700 font-semibold text-sm transition-colors"
+                    >
+                      <span className="text-blue-600 hover:text-blue-700">See Biography</span>
+                      <span aria-hidden>→</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
