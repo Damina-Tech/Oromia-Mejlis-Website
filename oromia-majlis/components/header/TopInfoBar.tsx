@@ -1,8 +1,12 @@
 "use client";
 
-import LanguageDropdown from "./LanguageDropdown";
+import { ReactNode } from "react";
 
-export default function TopInfoBar() {
+interface TopInfoBarProps {
+  languageSelector?: ReactNode;
+}
+
+export default function TopInfoBar({ languageSelector }: TopInfoBarProps) {
   return (
     <div className="hidden md:block bg-blue-900 text-white py-2">
       <div className="container mx-auto px-4">
@@ -19,8 +23,10 @@ export default function TopInfoBar() {
             </div>
           </div>
 
-          {/* Right Side - Language Dropdown */}
-          <LanguageDropdown />
+          {/* Right Side - Language Switcher */}
+          <div className="flex items-center">
+            {languageSelector}
+          </div>
         </div>
       </div>
     </div>

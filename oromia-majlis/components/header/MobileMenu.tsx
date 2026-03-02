@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import LanguageDropdown from "./LanguageDropdown";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -119,6 +120,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               {item.name}
             </Link>
           ))}
+
+          {/* Language Selector - mobile only */}
+          <div className="py-3 px-4 rounded-md bg-gray-50 border border-gray-200">
+            <p className="text-xs font-semibold text-gray-700 mb-2">Select Language</p>
+            <LanguageDropdown />
+          </div>
 
           <Link
             href="/login"

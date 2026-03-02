@@ -65,3 +65,38 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* Google Translate widget - high contrast for visibility on blue and white backgrounds */
+.goog-te-gadget,
+.goog-te-gadget-simple,
+.skiptranslate {
+  color: #111827 !important;
+  font-family: inherit;
+}
+.goog-te-gadget span,
+.goog-te-gadget-simple span,
+.goog-te-gadget div,
+.goog-te-gadget-simple div {
+  color: #111827 !important;
+  font-weight: 600;
+}
+.goog-te-combo {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #374151 !important;
+  font-weight: 600;
+  padding: 0.35rem 0.5rem;
+  min-height: 2rem;
+}
+
+/* Ensure widget text is visible when wrapped in our containers */
+.translate-widget-wrapper .goog-te-gadget,
+.translate-widget-wrapper .goog-te-gadget-simple,
+.translate-widget-wrapper .skiptranslate {
+  color: #111827 !important;
+}
+.translate-widget-wrapper .goog-te-gadget span,
+.translate-widget-wrapper .goog-te-gadget-simple span {
+  color: #111827 !important;
+  font-weight: 600;
+}

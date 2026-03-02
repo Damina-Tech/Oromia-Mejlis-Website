@@ -1,77 +1,116 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useId, useRef } from "react";
 
-const languages = [
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "om", name: "Oromo", flag: "🇪🇹" },
-  { code: "am", name: "አማርኛ", flag: "🇪🇹" },
-  { code: "ar", name: "العربية", flag: "🇸🇦" },
-];
+declare global {
+  interface Window {
+    googleTranslateElementInit?: () => void;
+    google?: {
+      translate?: {
+        TranslateElement?: new (
+          options: {
+            pageLanguage: string;
+            includedLanguages: string;
+            autoDisplay: boolean;
+            layout?: unknown;
+          },
+          elementId: string
+        ) => void;
+      };
+    };
+  }
+}
 
 export default function LanguageDropdown() {
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const translateElementId = `google_translate_element_${useId().replace(/:/g, "_")}`;
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
+    const initializeTranslate = () => {
+      if (!window.google?.translate?.TranslateElement) {
+        return;
       }
+
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "en,om,am,ar",
+          autoDisplay: false,
+        },
+        translateElementId
+      );
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    window.googleTranslateElementInit = initializeTranslate;
 
-  const handleLanguageChange = (lang: typeof languages[0]) => {
-    setSelectedLanguage(lang);
-    setIsOpen(false);
-    // TODO: Implement language switching logic
-    console.log("Language changed to:", lang.code);
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      'script[src*="translate.google.com/translate_a/element.js"]'
+    );
+
+    if (existingScript) {
+      initializeTranslate();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src =
+      "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    script.async = true;
+    script.onerror = () => {
+      console.error("Failed to load Google Translate script.");
+    };
+    document.body.appendChild(script);
+  }, [translateElementId]);
+
+  const handleTriggerClick = () => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    const select = wrapper.querySelector<HTMLSelectElement>(".goog-te-combo");
+    if (select) {
+      select.focus();
+      if (typeof select.showPicker === "function") {
+        select.showPicker();
+      } else {
+        select.click();
+      }
+    }
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div ref={wrapperRef} className="relative inline-flex items-center">
+      {/* Compact trigger button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-blue-800 hover:bg-blue-700 transition-colors text-sm"
-        aria-label="Select language"
-        aria-expanded={isOpen}
+        type="button"
+        onClick={handleTriggerClick}
+        className="flex items-center justify-center gap-1.5 rounded-md bg-white px-2.5 py-1.5 text-gray-800 shadow-sm border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-colors"
+        aria-label="Select language / Translate page"
+        title="Translate page"
       >
-        <span>{selectedLanguage.flag}</span>
-        <span className="hidden sm:inline">{selectedLanguage.name}</span>
-        <span className="text-xs">▼</span>
+        <span className="text-blue-600 font-bold text-sm">Language</span>
+        <svg
+          className="w-3.5 h-3.5 text-gray-500"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
       </button>
 
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-          <div className="py-1">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => handleLanguageChange(lang)}
-                className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-blue-50 transition-colors ${
-                  selectedLanguage.code === lang.code
-                    ? "bg-blue-50 text-blue-700 font-semibold"
-                    : "text-gray-700"
-                }`}
-              >
-                <span>{lang.flag}</span>
-                <span>{lang.name}</span>
-                {selectedLanguage.code === lang.code && (
-                  <span className="ml-auto text-blue-600">✓</span>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Hidden Google Translate widget - kept in DOM for functionality */}
+      <div
+        className="absolute left-0 top-0 w-px h-px overflow-hidden opacity-0 pointer-events-none"
+        style={{ clip: "rect(0,0,0,0)" }}
+        aria-hidden
+      >
+        <div id={translateElementId} />
+      </div>
     </div>
   );
 }
-

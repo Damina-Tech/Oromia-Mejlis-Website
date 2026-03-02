@@ -8,9 +8,24 @@ import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import LanguageDropdown from "./LanguageDropdown";
 
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    setMatches(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [query]);
+
+  return matches;
+}
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +37,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full">
-      <TopInfoBar />
+      <TopInfoBar languageSelector={isDesktop ? <LanguageDropdown /> : null} />
       <div
         className={`bg-white transition-shadow ${
           isScrolled ? "shadow-md" : ""
@@ -56,7 +71,6 @@ export default function Header() {
 
             {/* Mobile Actions */}
             <div className="lg:hidden flex items-center gap-2">
-              <LanguageDropdown />
               <button
                 className="p-2 rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-colors"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
