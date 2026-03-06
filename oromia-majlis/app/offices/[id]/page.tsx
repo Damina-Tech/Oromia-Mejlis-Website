@@ -43,73 +43,135 @@ const defaultDepartmentData = {
   ],
 };
 
+type DepartmentData = typeof defaultDepartmentData;
+
 const departmentNames: Record<string, string> = {
-  "religious-affairs": "Religious Affairs Department",
-  "islamic-education": "Islamic Education & Da'wah",
-  "mosque-affairs": "Mosque & Islamic Institution Affairs",
-  "zakat-charity": "Zakat & Charity Coordination",
-  "community-services": "Community Services & Family Guidance",
-  "hajj-umrah": "Hajj & Umrah Affairs",
-  "training-capacity": "Training & Capacity Building",
-  "interfaith-relations": "Interfaith & Public Relations",
-  "research-publications": "Research, Documentation & Publications",
-  "halal-certification": "Halal Certification Department",
+  "organizational-structure-institutional": "Organizational Structure and Institutional Department",
+  "finance-resource-administration": "Finance and Resource Administration Department",
+  "audit-inspection": "Audit and Inspection Department",
+  "education-training": "Education and Training Department",
+  "dawah-guidance-irshad": "Da'wah and Guidance (Irshad) Department",
+  "fatwa-islamic-research": "Fatwa and Islamic Research Department",
+  "mosques-awqaf-heritage": "Mosques, Awqaf, and Islamic Heritage Administration Department",
+  "zakat-administration-development": "Zakat Administration and Development Department",
+  "social-affairs-islamic-associations": "Social Affairs and Islamic Associations Department",
+  "income-development": "Income and Development Department",
+  "hajj-umrah-services": "Hajj and Umrah Services Department",
+  "halal-services": "Halal Services Department",
+  "legal-services": "Legal Services Department",
+  "security-public-relations": "Security and Public Relations Department",
+  "communications": "Communications Department",
+  "study-research-policy": "Study, Research, and Policy Department",
+  "youth-womens-council": "Youth and Women's Council Department",
+  "it-digital-services": "Information Technology (IT) and Digital Services Department",
 };
 
-const departmentDataMap: Record<string, typeof departmentData> = {
-  "religious-affairs": {
-    name: "Religious Affairs Department",
-    head: {
-      name: "Sheikh Ahmed Mohammed",
-      title: "Director, Religious Affairs",
-      image: "👤",
-    },
+const departmentDataMap: Record<string, DepartmentData> = {
+  "organizational-structure-institutional": {
+    name: "Organizational Structure and Institutional Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
     information: {
       description:
-        "The Religious Affairs Department oversees religious matters, provides fatwa services, and ensures all activities comply with Islamic principles and national regulations. We serve as the primary authority for religious guidance in the Oromia Region.",
+        "The Organizational Structure and Institutional Department oversees the organizational design, bylaws, and institutional framework of Oromia Majlis. It ensures clear mandates, reporting lines, and governance so that all offices and departments operate effectively and in line with Islamic and administrative best practices.",
       mission:
-        "To provide authentic Islamic guidance, issue religious rulings (fatwas) in accordance with Islamic jurisprudence, and ensure that all religious activities align with Islamic principles and Ethiopian law.",
+        "To establish and maintain a robust organizational structure and institutional framework that enables Oromia Majlis to fulfill its mandate with clarity, accountability, and efficiency.",
       vision:
-        "To be the trusted source of Islamic guidance and religious authority, promoting authentic Islamic teachings while fostering harmony within the Muslim community and with other faith communities.",
+        "To be the backbone of institutional excellence, ensuring Oromia Majlis remains well-organized, adaptable, and capable of serving the Muslim community for generations to come.",
     },
     message: {
       title: "Message from the Director",
       content:
-        "As the Director of Religious Affairs, I am committed to ensuring that our department provides accurate, authentic Islamic guidance to the Muslim community. We work diligently to address religious questions, provide fatwas, and ensure that all Islamic activities in our region are conducted in accordance with Islamic principles. Our team of qualified scholars is always ready to serve the community with wisdom and integrity.",
+        "A strong structure is the foundation of every successful institution. Our department is committed to keeping Oromia Majlis well-organized, with clear roles and processes, so that we can serve the community with consistency and integrity.",
     },
     contact: {
       phone: "+251 9XX XXX XXX",
-      email: "religious@oromiamajlis.et",
+      email: "institutional@oromiamajlis.et",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
       hours: "Mon - Fri: 8:00 AM - 5:30 PM",
     },
     services: [
-      "Fatwa services and religious guidance",
-      "Religious compliance and oversight",
-      "Islamic jurisprudence consultation",
-      "Religious dispute resolution",
-      "Coordination with national religious authorities",
+      "Organizational design and structure review",
+      "Bylaws and governance framework development",
+      "Mandate and job description documentation",
+      "Institutional capacity assessment",
+      "Coordination with branches and units",
     ],
   },
-  "islamic-education": {
-    name: "Islamic Education & Da'wah",
-    head: {
-      name: "Sheikh Fatima Hassan",
-      title: "Director, Islamic Education",
-      image: "👤",
-    },
+  "finance-resource-administration": {
+    name: "Finance and Resource Administration Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
     information: {
       description:
-        "The Islamic Education & Da'wah Department promotes Islamic education, manages religious schools, and organizes da'wah programs to enhance religious awareness and knowledge throughout the Oromia Region.",
+        "The Finance and Resource Administration Department manages the financial operations, budgeting, procurement, and resource allocation of Oromia Majlis. It ensures transparency, accountability, and Sharia-compliant financial practices in support of all programs and services.",
       mission:
-        "To provide comprehensive Islamic education programs, support religious schools, and organize authentic da'wah activities that promote Islamic values and strengthen the faith of the Muslim community.",
+        "To manage financial and material resources with integrity, transparency, and efficiency, enabling Oromia Majlis to deliver its services and sustain its operations in accordance with Islamic and legal standards.",
       vision:
-        "To establish a network of excellent Islamic educational institutions and da'wah programs that produce knowledgeable, pious Muslims who contribute positively to society.",
+        "To be a model of sound financial and resource administration for Islamic institutions, fostering trust and sustainability.",
     },
     message: {
       title: "Message from the Director",
       content:
-        "Education is the foundation of a strong Muslim community. Our department is dedicated to ensuring that every Muslim in the Oromia Region has access to quality Islamic education. We support Quranic schools, Islamic institutions, and organize da'wah programs that spread authentic Islamic teachings. Together, we can build a generation of Muslims who are well-grounded in their faith and ready to serve their community.",
+        "Sound finance and resource management are essential to our mission. We are dedicated to prudent budgeting, transparent reporting, and efficient use of resources so that every birr serves the community and upholds trust.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "finance@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Budget planning and execution",
+      "Financial reporting and accountability",
+      "Procurement and asset management",
+      "Payroll and human resource administration",
+      "Donor and grant fund management",
+    ],
+  },
+  "audit-inspection": {
+    name: "Audit and Inspection Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Audit and Inspection Department conducts internal audits, compliance checks, and inspections across Oromia Majlis offices and programs. It promotes accountability, detects irregularities, and recommends improvements in line with Islamic ethics and regulatory requirements.",
+      mission:
+        "To safeguard the integrity and resources of Oromia Majlis through independent audit and inspection, ensuring compliance, transparency, and continuous improvement.",
+      vision:
+        "To be a trusted guardian of accountability and good governance within Oromia Majlis and a reference for Islamic institutions.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Accountability is central to our faith and to public trust. Our department works independently to verify that operations, finances, and practices meet the highest standards so that the community can have confidence in Oromia Majlis.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "audit@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Internal audit and risk assessment",
+      "Compliance and process inspection",
+      "Fraud prevention and detection",
+      "Recommendations for improvement",
+      "Follow-up on corrective actions",
+    ],
+  },
+  "education-training": {
+    name: "Education and Training Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Education and Training Department develops and delivers Islamic and professional education and training programs for imams, teachers, and staff. It supports curriculum development, teacher training, and capacity building to raise the quality of Islamic education across the Oromia Region.",
+      mission:
+        "To provide high-quality Islamic and professional education and training that equips religious and community workers with the knowledge and skills to serve the Muslim community effectively.",
+      vision:
+        "To be the leading provider of Islamic and institutional training in the region, building a capable and knowledgeable workforce for Oromia Majlis and the community.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Education and training are investments in our future. We are committed to developing curricula and programs that strengthen both religious understanding and professional competence, so that our personnel can serve with excellence.",
     },
     contact: {
       phone: "+251 9XX XXX XXX",
@@ -118,32 +180,88 @@ const departmentDataMap: Record<string, typeof departmentData> = {
       hours: "Mon - Fri: 8:00 AM - 5:30 PM",
     },
     services: [
-      "Quranic studies and memorization programs",
-      "Islamic school support and accreditation",
-      "Da'wah and religious awareness campaigns",
-      "Scholarship programs for students",
-      "Teacher training and development",
+      "Curriculum development for Islamic education",
+      "Imam and teacher training programs",
+      "Professional and leadership training",
+      "Certification and accreditation support",
+      "Training materials and resource development",
     ],
   },
-  "mosque-affairs": {
-    name: "Mosque & Islamic Institution Affairs",
-    head: {
-      name: "Sheikh Omar Abdullah",
-      title: "Director, Mosque Affairs",
-      image: "👤",
-    },
+  "dawah-guidance-irshad": {
+    name: "Da'wah and Guidance (Irshad) Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
     information: {
       description:
-        "The Mosque & Islamic Institution Affairs Department provides supervision, guidance, and support for mosques and Islamic institutions across the Oromia Region, ensuring they serve the community effectively.",
+        "The Da'wah and Guidance (Irshad) Department organizes and coordinates da'wah activities, religious guidance, and outreach programs. It promotes authentic Islamic teachings, supports preachers and guides, and engages with the community to strengthen faith and practice.",
       mission:
-        "To support and supervise mosques and Islamic institutions, ensuring they provide quality services, maintain proper facilities, and serve as centers of community engagement and spiritual growth.",
+        "To convey Islam with wisdom and clarity through organized da'wah and guidance, fostering religious awareness, correct practice, and spiritual growth in the Oromia Region.",
       vision:
-        "To have well-managed, vibrant mosques and Islamic institutions that serve as pillars of the Muslim community, providing spiritual guidance, education, and social services.",
+        "To have a vibrant, well-coordinated da'wah and guidance system that reaches every corner of the region with authentic, balanced Islamic message.",
     },
     message: {
       title: "Message from the Director",
       content:
-        "Mosques are the heart of our Muslim community. Our department works tirelessly to ensure that every mosque in the Oromia Region is well-maintained, properly managed, and serves its community effectively. We provide support for mosque construction, maintenance, and management, and help coordinate activities that strengthen the role of mosques in our communities.",
+        "Da'wah and irshad are at the heart of our mission. We work to ensure that Islamic call and guidance are carried out with knowledge, wisdom, and compassion, so that people may understand and live Islam in the best way.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "dawah@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Da'wah program planning and coordination",
+      "Preacher and guide support and training",
+      "Religious awareness campaigns",
+      "Guidance and counseling coordination",
+      "Outreach and community engagement",
+    ],
+  },
+  "fatwa-islamic-research": {
+    name: "Fatwa and Islamic Research Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Fatwa and Islamic Research Department issues religious rulings (fatwas) and conducts Islamic research in accordance with recognized schools of jurisprudence. It addresses contemporary questions, produces research, and supports evidence-based religious guidance for the community and institutions.",
+      mission:
+        "To provide sound, evidence-based fatwas and Islamic research that serve the Muslim community and institutions, in line with authentic Islamic scholarship and Ethiopian context.",
+      vision:
+        "To be the trusted reference for fatwa and Islamic research in the Oromia Region, combining tradition and contemporary scholarship.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Fatwa and research require knowledge, integrity, and care. Our department is committed to issuing rulings and conducting research that are grounded in the Qur'an, Sunnah, and recognized scholarly methods, so that the community may have reliable guidance.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "fatwa@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Fatwa issuance on religious and contemporary issues",
+      "Islamic research and studies",
+      "Scholarly consultation for institutions",
+      "Documentation and publication of rulings",
+      "Coordination with national fatwa bodies",
+    ],
+  },
+  "mosques-awqaf-heritage": {
+    name: "Mosques, Awqaf, and Islamic Heritage Administration Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Mosques, Awqaf, and Islamic Heritage Administration Department supervises mosques, awqaf (endowments), and Islamic heritage sites in the Oromia Region. It supports registration, maintenance, proper use of endowments, and preservation of Islamic cultural and historical assets.",
+      mission:
+        "To ensure mosques and awqaf are well-managed and serve the community, and to preserve and promote Islamic heritage in accordance with Sharia and national law.",
+      vision:
+        "To have well-maintained mosques, transparent and productive awqaf, and preserved Islamic heritage that benefit current and future generations.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Mosques and awqaf are trusts from our community and our history. We are dedicated to their proper administration, maintenance, and the preservation of our Islamic heritage for the benefit of all.",
     },
     contact: {
       phone: "+251 9XX XXX XXX",
@@ -153,31 +271,27 @@ const departmentDataMap: Record<string, typeof departmentData> = {
     },
     services: [
       "Mosque registration and supervision",
-      "Facility maintenance and support",
-      "Imam appointment and training",
-      "Prayer time coordination",
-      "Community event organization",
+      "Awqaf administration and oversight",
+      "Islamic heritage documentation and preservation",
+      "Mosque and endowment facility support",
+      "Coordination with mosque committees",
     ],
   },
-  "zakat-charity": {
-    name: "Zakat & Charity Coordination",
-    head: {
-      name: "Sheikh Amina Ibrahim",
-      title: "Director, Zakat & Charity",
-      image: "👤",
-    },
+  "zakat-administration-development": {
+    name: "Zakat Administration and Development Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
     information: {
       description:
-        "The Zakat & Charity Coordination Department organizes and supervises zakat collection, sadaqah distribution, and charitable initiatives to support the needy and strengthen the social fabric of our community.",
+        "The Zakat Administration and Development Department organizes the collection, distribution, and development use of zakat in the Oromia Region. It ensures Sharia-compliant collection, transparent distribution to eligible recipients, and projects that lift communities out of poverty.",
       mission:
-        "To efficiently collect and distribute zakat, coordinate charitable activities, and ensure that resources reach those in need while maintaining transparency and accountability in all charitable operations.",
+        "To administer zakat with transparency and in accordance with Islamic law, ensuring it reaches rightful beneficiaries and contributes to sustainable development and poverty alleviation.",
       vision:
-        "To establish a comprehensive zakat and charity system that effectively addresses poverty, supports the needy, and strengthens the bonds of brotherhood and sisterhood within the Muslim community.",
+        "To be a model zakat administration that maximizes the social and economic impact of zakat for the benefit of the Muslim community and society.",
     },
     message: {
       title: "Message from the Director",
       content:
-        "Zakat and charity are fundamental pillars of Islam that strengthen our community and help those in need. Our department ensures that zakat is collected properly and distributed fairly to eligible recipients. We coordinate with mosques, community organizations, and individuals to maximize the impact of charitable giving and ensure that every contribution reaches those who need it most.",
+        "Zakat is a pillar of Islam and a means of social justice. We are committed to collecting and distributing it correctly, with full transparency, so that it truly serves the needy and strengthens our community.",
     },
     contact: {
       phone: "+251 9XX XXX XXX",
@@ -186,66 +300,88 @@ const departmentDataMap: Record<string, typeof departmentData> = {
       hours: "Mon - Fri: 8:00 AM - 5:30 PM",
     },
     services: [
-      "Zakat collection and distribution",
-      "Charity coordination and oversight",
-      "Needy family support programs",
-      "Emergency relief assistance",
-      "Transparent financial reporting",
+      "Zakat collection and registration of payers",
+      "Identification and support of eligible recipients",
+      "Zakat-based development projects",
+      "Reporting and transparency mechanisms",
+      "Awareness and guidance on zakat rules",
     ],
   },
-  "community-services": {
-    name: "Community Services & Family Guidance",
-    head: {
-      name: "Sheikh Yusuf Ali",
-      title: "Director, Community Services",
-      image: "👤",
-    },
+  "social-affairs-islamic-associations": {
+    name: "Social Affairs and Islamic Associations Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
     information: {
       description:
-        "The Community Services & Family Guidance Department provides religious counseling, marriage guidance, and social support services to help families and individuals navigate life's challenges according to Islamic principles.",
+        "The Social Affairs and Islamic Associations Department oversees social programs, family support, and coordination with Islamic associations and civil society. It promotes community welfare, family cohesion, and collaboration with organizations that serve the Muslim community.",
       mission:
-        "To provide compassionate religious counseling, family guidance, and social support services that help individuals and families live according to Islamic values and strengthen family bonds.",
+        "To advance social welfare and family well-being, and to strengthen partnerships with Islamic associations and community organizations in service of the Muslim community.",
       vision:
-        "To have strong, healthy Muslim families and communities where individuals receive the support and guidance they need to live fulfilling lives in accordance with Islamic teachings.",
+        "To have a cohesive, well-served community supported by strong partnerships between Oromia Majlis and Islamic associations and civil society.",
     },
     message: {
       title: "Message from the Director",
       content:
-        "Strong families are the foundation of a strong community. Our department provides religious counseling, marriage guidance, and support services to help families navigate challenges and strengthen their bonds. We are here to support you with wisdom, compassion, and Islamic guidance in all aspects of family and community life.",
+        "Strong families and strong associations make a strong community. We work to support social programs, family guidance, and coordination with Islamic associations so that together we can serve more effectively.",
     },
     contact: {
       phone: "+251 9XX XXX XXX",
-      email: "community@oromiamajlis.et",
+      email: "social@oromiamajlis.et",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
       hours: "Mon - Fri: 8:00 AM - 5:30 PM",
     },
     services: [
-      "Marriage counseling and guidance",
-      "Family dispute resolution",
-      "Religious counseling services",
-      "Youth support programs",
-      "Elderly care coordination",
+      "Social and family support programs",
+      "Coordination with Islamic associations",
+      "Community welfare initiatives",
+      "Marriage and family guidance",
+      "Civil society and partnership development",
     ],
   },
-  "hajj-umrah": {
-    name: "Hajj & Umrah Affairs",
-    head: {
-      name: "Sheikh Mohammed Abdi",
-      title: "Director, Hajj & Umrah",
-      image: "👤",
-    },
+  "income-development": {
+    name: "Income and Development Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
     information: {
       description:
-        "The Hajj & Umrah Affairs Department coordinates, guides, and supervises Hajj and Umrah services for pilgrims from the Oromia Region, ensuring safe and proper pilgrimage experiences.",
+        "The Income and Development Department works to diversify and strengthen the revenue base of Oromia Majlis through Sharia-compliant income-generating activities and development projects. It supports financial sustainability and long-term institutional development.",
       mission:
-        "To facilitate and coordinate Hajj and Umrah services, provide guidance to pilgrims, and ensure that all pilgrimage activities are conducted properly and safely according to Islamic requirements.",
+        "To develop sustainable, Sharia-compliant income streams and development projects that enable Oromia Majlis to fulfill its mission and reduce dependence on external funding.",
       vision:
-        "To enable every eligible Muslim in the Oromia Region to perform Hajj and Umrah with ease, proper guidance, and spiritual fulfillment.",
+        "To achieve financial sustainability and institutional development through lawful, transparent, and impactful income and development initiatives.",
     },
     message: {
       title: "Message from the Director",
       content:
-        "Hajj and Umrah are sacred journeys that every Muslim aspires to undertake. Our department works to make these pilgrimages accessible, safe, and spiritually fulfilling for all pilgrims from the Oromia Region. We coordinate with travel agencies, provide guidance, and ensure that all arrangements comply with Islamic requirements and Ethiopian regulations.",
+        "Sustainability allows us to serve for the long term. We focus on lawful income sources and development projects that strengthen Oromia Majlis and benefit the community, in line with Islamic principles.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "income@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Income-generation and fundraising strategy",
+      "Sharia-compliant investment oversight",
+      "Development project design and support",
+      "Partnership and grant development",
+      "Sustainability planning and reporting",
+    ],
+  },
+  "hajj-umrah-services": {
+    name: "Hajj and Umrah Services Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Hajj and Umrah Services Department coordinates and supervises Hajj and Umrah services for pilgrims from the Oromia Region. It works with relevant authorities and service providers to ensure safe, organized, and spiritually fulfilling pilgrimages in accordance with Islamic requirements.",
+      mission:
+        "To facilitate Hajj and Umrah for pilgrims from the Oromia Region with proper guidance, coordination, and care, in compliance with Islamic and national regulations.",
+      vision:
+        "To enable every eligible Muslim in the region to perform Hajj and Umrah with ease, safety, and spiritual satisfaction.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Hajj and Umrah are among the greatest acts of worship. We are committed to coordinating services, providing guidance, and ensuring that pilgrims from our region can perform these rites with peace of mind and devotion.",
     },
     contact: {
       phone: "+251 9XX XXX XXX",
@@ -254,134 +390,28 @@ const departmentDataMap: Record<string, typeof departmentData> = {
       hours: "Mon - Fri: 8:00 AM - 5:30 PM",
     },
     services: [
-      "Hajj registration and coordination",
-      "Umrah travel arrangements",
-      "Pilgrimage guidance and training",
-      "Travel document assistance",
-      "Post-pilgrimage support services",
+      "Hajj and Umrah registration and coordination",
+      "Pilgrim guidance and training",
+      "Liaison with travel and government authorities",
+      "Travel and document support",
+      "Post-pilgrimage follow-up and support",
     ],
   },
-  "training-capacity": {
-    name: "Training & Capacity Building",
-    head: {
-      name: "Sheikh Hassan Ibrahim",
-      title: "Director, Training & Capacity Building",
-      image: "👤",
-    },
+  "halal-services": {
+    name: "Halal Services Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
     information: {
       description:
-        "The Training & Capacity Building Department provides training programs for imams, scholars, and community leaders to enhance their knowledge, skills, and institutional capacity.",
+        "The Halal Services Department provides end-to-end support for Halal certification: registration, application review, compliance checks, inspection coordination, and certification follow-up. It helps businesses and institutions obtain and maintain credible Halal certification in line with Sharia and standards.",
       mission:
-        "To develop the capacity of imams, scholars, and community leaders through comprehensive training programs that enhance their religious knowledge, leadership skills, and ability to serve the community effectively.",
+        "To deliver credible, efficient, and Sharia-aligned Halal certification and related services for businesses and institutions across Oromia and beyond.",
       vision:
-        "To have a network of well-trained, knowledgeable religious leaders and community workers who can effectively serve and guide the Muslim community.",
+        "To be the trusted reference for Halal certification and compliance services in the region.",
     },
     message: {
       title: "Message from the Director",
       content:
-        "Investing in the development of our religious leaders and community workers is essential for the growth and strength of our community. Our department provides comprehensive training programs that enhance religious knowledge, leadership skills, and practical abilities. We are committed to building a generation of capable leaders who can guide and serve the Muslim community with excellence.",
-    },
-    contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "training@oromiamajlis.et",
-      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
-    },
-    services: [
-      "Imam training and certification",
-      "Scholarship development programs",
-      "Leadership training workshops",
-      "Community worker capacity building",
-      "Continuing education programs",
-    ],
-  },
-  "interfaith-relations": {
-    name: "Interfaith & Public Relations",
-    head: {
-      name: "Sheikh Aisha Mohammed",
-      title: "Director, Interfaith Relations",
-      image: "👤",
-    },
-    information: {
-      description:
-        "The Interfaith & Public Relations Department engages with religious institutions, government bodies, and stakeholders to foster cooperation, understanding, and harmony within and beyond the Muslim community.",
-      mission:
-        "To build bridges with other faith communities, engage with government and civil society, and promote understanding, cooperation, and peaceful coexistence while representing the interests of the Muslim community.",
-      vision:
-        "To have strong, positive relationships with all stakeholders that promote mutual respect, understanding, and cooperation for the benefit of all communities.",
-    },
-    message: {
-      title: "Message from the Director",
-      content:
-        "Building positive relationships with other faith communities and stakeholders is essential for the well-being of our society. Our department works to promote understanding, dialogue, and cooperation while representing the interests of the Muslim community. We believe that through respectful engagement and mutual understanding, we can build a more harmonious and prosperous society for all.",
-    },
-    contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "interfaith@oromiamajlis.et",
-      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
-    },
-    services: [
-      "Interfaith dialogue and engagement",
-      "Government relations and advocacy",
-      "Public communication and media relations",
-      "Stakeholder coordination",
-      "Community outreach programs",
-    ],
-  },
-  "research-publications": {
-    name: "Research, Documentation & Publications",
-    head: {
-      name: "Sheikh Abdullah Hassan",
-      title: "Director, Research & Publications",
-      image: "👤",
-    },
-    information: {
-      description:
-        "The Research, Documentation & Publications Department conducts research, maintains documentation, and publishes Islamic studies, guidelines, and official materials to serve the community and preserve Islamic knowledge.",
-      mission:
-        "To conduct research on Islamic affairs, document important information, and publish educational materials, guidelines, and official publications that serve the Muslim community and preserve Islamic knowledge.",
-      vision:
-        "To be a leading center for Islamic research and documentation that produces valuable knowledge and resources for the Muslim community and future generations.",
-    },
-    message: {
-      title: "Message from the Director",
-      content:
-        "Knowledge is a precious asset that must be preserved and shared. Our department conducts research on Islamic affairs, documents important information, and publishes materials that serve the community. We work to ensure that Islamic knowledge is accessible, accurate, and beneficial for all Muslims in the Oromia Region.",
-    },
-    contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "research@oromiamajlis.et",
-      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
-    },
-    services: [
-      "Islamic research and studies",
-      "Documentation and archiving",
-      "Publication of Islamic materials",
-      "Guidelines and policy development",
-      "Library and resource management",
-    ],
-  },
-  "halal-certification": {
-    name: "Halal Certification Department",
-    head: {
-      name: "Sheikh Abdulhadi Abate",
-      title: "Director, Halal Certification Department",
-      image: "👤",
-    },
-    information: {
-      description:
-        "The Halal Certification Department provides end-to-end support for businesses applying for Halal certification, including registration, compliance checks, and process guidance.",
-      mission:
-        "To deliver credible, efficient, and Sharia-aligned Halal certification support services for businesses across Oromia and beyond.",
-      vision:
-        "To become a recognized center of excellence for trusted Halal certification and compliance services.",
-    },
-    message: {
-      title: "Message from the Director",
-      content:
-        "Our department is dedicated to helping businesses complete Halal certification with clarity and confidence. We support each stage of the process, from application to verification, through a transparent digital workflow.",
+        "Halal is a right of the consumer and a responsibility of the producer. We are dedicated to supporting businesses through a clear, transparent certification process so that Halal products and services are trustworthy and accessible.",
     },
     contact: {
       phone: "+251 9XX XXX XXX",
@@ -390,11 +420,191 @@ const departmentDataMap: Record<string, typeof departmentData> = {
       hours: "Mon - Fri: 8:00 AM - 5:30 PM",
     },
     services: [
-      "Business registration for Halal certification",
-      "Application review and documentation support",
+      "Halal certification registration and application support",
+      "Compliance review and documentation",
       "Audit and inspection coordination",
-      "Compliance guidance and correction support",
-      "Certification status follow-up and renewal guidance",
+      "Certification renewal and follow-up",
+      "Halal awareness and standards guidance",
+    ],
+  },
+  "legal-services": {
+    name: "Legal Services Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Legal Services Department provides legal advice, contract review, and representation for Oromia Majlis. It ensures that the Council's activities, agreements, and operations comply with Ethiopian law and supports the resolution of legal matters in the interest of the institution and the community.",
+      mission:
+        "To safeguard the legal interests of Oromia Majlis and support compliance with national laws, while facilitating access to justice and legal clarity for the Council's work.",
+      vision:
+        "To be a reliable legal backbone for Oromia Majlis, ensuring that all operations are lawful, well-documented, and protected.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Legal clarity protects the institution and those we serve. We provide advice, review agreements, and support Oromia Majlis in all legal matters so that we can operate with confidence and within the law.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "legal@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Legal advice and opinion",
+      "Contract and agreement review",
+      "Representation and dispute support",
+      "Compliance and regulatory guidance",
+      "Legal documentation and registration",
+    ],
+  },
+  "security-public-relations": {
+    name: "Security and Public Relations Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Security and Public Relations Department is responsible for the security of Oromia Majlis premises, personnel, and events, and for building positive relations with the public, government, and other stakeholders. It helps maintain a safe environment and a positive image of the Council.",
+      mission:
+        "To ensure a secure environment for Oromia Majlis operations and to foster constructive relations with the public and stakeholders, in support of the Council's mission and reputation.",
+      vision:
+        "To be recognized for a safe, professional environment and for trusted, transparent engagement with the community and partners.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Security and good relations go hand in hand. We work to protect our people and assets and to build trust with the public and partners, so that Oromia Majlis can serve in safety and with credibility.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "security@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Premises and event security",
+      "Visitor and access management",
+      "Public and stakeholder relations",
+      "Crisis and incident response support",
+      "Coordination with law enforcement",
+    ],
+  },
+  "communications": {
+    name: "Communications Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Communications Department manages internal and external communications of Oromia Majlis. It handles media relations, content production, public announcements, and digital and traditional channels to inform the community and stakeholders and to present the Council's work accurately and professionally.",
+      mission:
+        "To communicate Oromia Majlis's message clearly, consistently, and professionally to the Muslim community, media, and the public, in support of transparency and engagement.",
+      vision:
+        "To be the trusted voice of Oromia Majlis, ensuring that accurate and constructive information reaches everyone who needs it.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Clear communication builds trust. We are committed to sharing news, decisions, and activities in a timely and accurate way, so that the community and partners stay informed and engaged with Oromia Majlis.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "communications@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Media relations and press releases",
+      "Content and publication production",
+      "Public announcements and campaigns",
+      "Digital and social media management",
+      "Internal communication support",
+    ],
+  },
+  "study-research-policy": {
+    name: "Study, Research, and Policy Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Study, Research, and Policy Department conducts studies and research on Islamic affairs, society, and policy issues affecting the Muslim community. It produces evidence-based analysis and policy recommendations to support decision-making and strategic planning within Oromia Majlis.",
+      mission:
+        "To produce high-quality studies, research, and policy advice that inform Oromia Majlis's strategies and positions and serve the best interests of the Muslim community.",
+      vision:
+        "To be the primary source of evidence-based insight and policy input for Oromia Majlis and for stakeholders interested in Islamic affairs in the region.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Good decisions need good information. We carry out studies and research so that Oromia Majlis can plan and act on the basis of evidence and sound policy analysis, for the benefit of the community.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "research@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Studies on Islamic affairs and society",
+      "Policy research and recommendations",
+      "Strategic and situational analysis",
+      "Report and briefing production",
+      "Support to planning and decision-making",
+    ],
+  },
+  "youth-womens-council": {
+    name: "Youth and Women's Council Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Youth and Women's Council Department supports the participation, empowerment, and representation of youth and women within Oromia Majlis and the Muslim community. It coordinates programs, councils, and initiatives that address the specific needs and potential of youth and women in religious and community life.",
+      mission:
+        "To empower youth and women and ensure their meaningful participation in the programs and leadership of Oromia Majlis and in the broader Muslim community.",
+      vision:
+        "To have an inclusive community where youth and women are active, empowered, and recognized as essential contributors to Islamic and social life.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Youth and women are the backbone of our community. We work to create spaces, programs, and opportunities so that they can contribute fully to religious, social, and institutional life with confidence and support.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "youth@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Youth programs and council coordination",
+      "Women's council and empowerment programs",
+      "Leadership and capacity building",
+      "Participation in religious and community activities",
+      "Advocacy and representation support",
+    ],
+  },
+  "it-digital-services": {
+    name: "Information Technology (IT) and Digital Services Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "The Information Technology (IT) and Digital Services Department manages Oromia Majlis's technology infrastructure, digital systems, and online services. It supports websites, data management, cybersecurity, and digital tools that improve efficiency and access to the Council's services.",
+      mission:
+        "To provide reliable, secure, and user-friendly IT and digital services that enable Oromia Majlis to operate efficiently and to serve the community through modern technology.",
+      vision:
+        "To be the enabler of a digital-ready Oromia Majlis, where technology supports transparency, accessibility, and quality service delivery.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Technology, when used wisely, helps us serve better and reach further. We are committed to maintaining robust systems, protecting data, and expanding digital services so that Oromia Majlis can meet the expectations of a modern community.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "it@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "IT infrastructure and network management",
+      "Website and digital platform maintenance",
+      "Data management and cybersecurity",
+      "Digital service development and support",
+      "User support and training",
     ],
   },
 };
@@ -591,7 +801,7 @@ export default async function DepartmentDetailPage({
                 </ul>
               </div>
 
-              {id === "halal-certification" && (
+              {id === "halal-services" && (
                 <div className="bg-gradient-to-br from-red-600 to-blue-900 rounded-lg shadow-lg p-6 text-white">
                   <h3 className="text-xl font-bold mb-3">Apply for Halal Certification</h3>
                   <p className="text-white/90 mb-5 text-sm">
