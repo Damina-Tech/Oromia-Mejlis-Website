@@ -4,6 +4,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+const REGISTRATION_PURPOSE_OPTIONS = [
+  {
+    value: "halal_business_certificate",
+    label: "To get Halal Business certificate",
+  },
+  {
+    value: "halal_competency_certificate",
+    label: "To get Halal Competency Certificate",
+  },
+] as const;
+
 export default function RegisterPage() {
   const router = useRouter();
   const [firstName, setFirstName] = useState("");
@@ -11,6 +22,9 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [registrationPurpose, setRegistrationPurpose] = useState<
+    (typeof REGISTRATION_PURPOSE_OPTIONS)[number]["value"] | ""
+  >("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,7 +32,13 @@ export default function RegisterPage() {
     e.preventDefault();
     setError(null);
 
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim()) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !registrationPurpose
+    ) {
       setError("All fields are required.");
       return;
     }
@@ -45,6 +65,7 @@ export default function RegisterPage() {
           lastName,
           email,
           password,
+          registrationPurpose,
         }),
       });
 
@@ -53,7 +74,9 @@ export default function RegisterPage() {
         throw new Error(data?.error || "Registration failed.");
       }
 
-      router.push(`/login?registered=1&email=${encodeURIComponent(email)}`);
+      router.push(
+        `/login?registered=1&email=${encodeURIComponent(email)}&purpose=${encodeURIComponent(registrationPurpose)}`
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed.");
     } finally {
@@ -112,6 +135,35 @@ export default function RegisterPage() {
               )}
 
               <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+                <div>
+                  <label
+                    htmlFor="registrationPurpose"
+                    className="mb-2 block text-sm font-semibold text-gray-700"
+                  >
+                    Why are you registering here?
+                  </label>
+                  <select
+                    id="registrationPurpose"
+                    value={registrationPurpose}
+                    onChange={(e) =>
+                      setRegistrationPurpose(
+                        e.target.value as (typeof REGISTRATION_PURPOSE_OPTIONS)[number]["value"] | ""
+                      )
+                    }
+                    className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-red-600 focus:ring-2 focus:ring-red-100"
+                    required
+                  >
+                    <option value="" disabled>
+                      Select an option
+                    </option>
+                    {REGISTRATION_PURPOSE_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label

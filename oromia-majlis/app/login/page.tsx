@@ -4,6 +4,11 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+const REGISTRATION_PURPOSE_LABELS: Record<string, string> = {
+  halal_business_certificate: "Halal Business certificate",
+  halal_competency_certificate: "Halal Competency Certificate",
+};
+
 export default function LoginPage() {
   const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +18,10 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   const registered = searchParams.get("registered") === "1";
+  const registrationPurpose = searchParams.get("purpose") || "";
+  const registrationPurposeLabel = registrationPurpose
+    ? REGISTRATION_PURPOSE_LABELS[registrationPurpose] ?? null
+    : null;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,28 +64,28 @@ export default function LoginPage() {
             <div className="absolute -bottom-16 -left-10 h-56 w-56 rounded-full bg-red-400/20 blur-3xl" />
 
             <p className="mb-3 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-red-200">
-              Member Access
+              Halal Certification
             </p>
             <h1 className="mb-4 text-3xl font-bold leading-tight md:text-4xl">
               Welcome Back to Oromia Majlis
             </h1>
             <p className="mb-8 text-white/90">
-              Sign in to manage your account, access protected resources, and
-              stay connected with official updates and community services.
+              Sign in to the HRMS portal to continue your Halal Business certificate
+              or Halal Competency Certificate application and track your status.
             </p>
 
             <ul className="space-y-4 text-sm md:text-base">
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 text-red-300">✓</span>
-                <span>Secure member authentication and session protection</span>
+                <span>Secure authentication and role-based HRMS access</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 text-red-300">✓</span>
-                <span>Fast access to announcements and official documents</span>
+                <span>Submit and track Halal certification workflows digitally</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 text-red-300">✓</span>
-                <span>Easy profile and communication preferences management</span>
+                <span>Business certificate and competency certificate services</span>
               </li>
             </ul>
           </div>
@@ -87,12 +96,18 @@ export default function LoginPage() {
                 Sign In
               </h2>
               <p className="mt-2 text-sm text-gray-600">
-                Enter your credentials to continue to Halal Certification services.
+                Enter your credentials to access Halal Business certificate and Halal
+                Competency Certificate services in the HRMS portal.
               </p>
 
               {registered && (
-                <div className="mt-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-                  Account created successfully. Please log in with your new credentials.
+                <div className="mt-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800 space-y-1">
+                  <p>Account created successfully. Please sign in with your new credentials.</p>
+                  {registrationPurposeLabel && (
+                    <p className="text-green-900/90">
+                      You registered for: <strong>{registrationPurposeLabel}</strong>
+                    </p>
+                  )}
                 </div>
               )}
 

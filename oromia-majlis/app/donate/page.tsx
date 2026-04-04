@@ -9,6 +9,18 @@ const EXCHANGE_RATE = 155;
 const donationAmountsUSD = [10, 25, 50, 100, 250, 500];
 const donationAmountsETB = [100, 250, 500, 1000, 2500, 5000];
 
+const BANK_ACCOUNT_NAME = "Oromia Islamic Affairs Supreme Council";
+const BANK_ACCOUNTS = [
+  { bank: "Commercial Bank of Oromia", account: "1000600162447" },
+  { bank: "Cooperative Bank of Oromia", account: "1042200124748" },
+  { bank: "Oromia Bank", account: "1371866200002" },
+  { bank: "AWASH Bank", account: "014100449821400" },
+  { bank: "HIJRA Bank", account: "1000044440001" },
+  { bank: "RAMIS Bank", account: "1030000551101" },
+  { bank: "SINQEE Bank", account: "1058169471818" },
+  { bank: "ZEMZEM Bank", account: "0006692210301" },
+];
+
 export default function DonatePage() {
   const searchParams = useSearchParams();
   const [currency, setCurrency] = useState<"USD" | "ETB">("ETB");
@@ -119,8 +131,7 @@ export default function DonatePage() {
   const localMethods = [
     { id: "chapa", name: "Chapa", icon: "📱", description: "Mobile & Card" },
     { id: "telebirr", name: "Telebirr", icon: "📲", description: "Mobile Money" },
-    { id: "cbe", name: "CBE", icon: "🏛️", description: "Bank Transfer" },
-    { id: "other-banks", name: "Other Banks", icon: "🏦", description: "Local Banks" },
+    { id: "cbe", name: "Bank Transfer", icon: "🏛️", description: "CBE, Oromia, AWASH, Hijra, etc." },
   ];
 
   return (
@@ -399,22 +410,25 @@ export default function DonatePage() {
                     {selectedMethod === "bank-transfer" && (
                       <div className="text-sm text-gray-700 space-y-3">
                         <p>
-                          Please transfer <strong className="text-blue-700">{currencySymbol}{finalAmount.toLocaleString()} {currencyCode}</strong> to:
+                          Please transfer <strong className="text-blue-700">{currencySymbol}{finalAmount.toLocaleString()} {currencyCode}</strong> to one of the following accounts:
                         </p>
-                        <div className="font-mono bg-white p-4 rounded-lg border border-gray-200">
-                          Bank: Commercial Bank of Ethiopia
-                          <br />
-                          Account: 1234567890
-                          <br />
-                          SWIFT: CBETETAA
-                          <br />
-                          Reference: DON-{Date.now()}
+                        <div className="bg-white p-4 rounded-lg border border-gray-200 space-y-3">
+                          <p className="font-semibold text-gray-900">Account Name: {BANK_ACCOUNT_NAME}</p>
+                          <ul className="font-mono text-xs md:text-sm space-y-2">
+                            {BANK_ACCOUNTS.map((b) => (
+                              <li key={b.bank}>
+                                <span className="font-medium text-gray-800">{b.bank}:</span> {b.account}
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="text-gray-600 pt-2">Reference: DON-{Date.now()}</p>
                         </div>
                         <p>
-                          After transfer, please email the receipt to
-                          <a href="mailto:donations@oromiamajlis.com" className="text-blue-600 hover:underline ml-1">
-                            donations@oromiamajlis.com
-                          </a>
+                          For international transfers (SWIFT), please contact{" "}
+                          <a href="mailto:donations@oromiamajlis.et" className="text-blue-600 hover:underline">
+                            donations@oromiamajlis.et
+                          </a>{" "}
+                          for details. After transfer, email the receipt to the same address.
                         </p>
                       </div>
                     )}
@@ -445,26 +459,26 @@ export default function DonatePage() {
                         </div>
                       </div>
                     )}
-                    {(selectedMethod === "cbe" || selectedMethod === "other-banks") && (
+                    {selectedMethod === "cbe" && (
                       <div className="text-sm text-gray-700 space-y-3">
                         <p>
-                          Please transfer <strong className="text-red-700">{finalAmount.toLocaleString()} {currencyCode}</strong> to:
+                          Please transfer <strong className="text-red-700">{finalAmount.toLocaleString()} {currencyCode}</strong> to one of the following accounts:
                         </p>
-                        <div className="font-mono bg-white p-4 rounded-lg border border-gray-200">
-                          {selectedMethod === "cbe"
-                            ? "Bank: Commercial Bank of Ethiopia"
-                            : "Bank: Your Preferred Local Bank"}
-                          <br />
-                          Account Name: Oromia Majlis Administration
-                          <br />
-                          Account Number: 1234567890
-                          <br />
-                          Reference: DON-{Date.now()}
+                        <div className="bg-white p-4 rounded-lg border border-gray-200 space-y-3">
+                          <p className="font-semibold text-gray-900">Account Name: {BANK_ACCOUNT_NAME}</p>
+                          <ul className="font-mono text-xs md:text-sm space-y-2">
+                            {BANK_ACCOUNTS.map((b) => (
+                              <li key={b.bank}>
+                                <span className="font-medium text-gray-800">{b.bank}:</span> {b.account}
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="text-gray-600 pt-2">Reference: DON-{Date.now()}</p>
                         </div>
                         <p>
-                          After transfer, please email the receipt to
-                          <a href="mailto:donations@oromiamajlis.com" className="text-red-600 hover:underline ml-1">
-                            donations@oromiamajlis.com
+                          After transfer, please email the receipt to{" "}
+                          <a href="mailto:donations@oromiamajlis.et" className="text-red-600 hover:underline">
+                            donations@oromiamajlis.et
                           </a>
                         </p>
                       </div>
@@ -563,8 +577,8 @@ export default function DonatePage() {
                     <div>
                       <strong className="text-gray-900">Email:</strong>
                       <br />
-                      <a href="mailto:donations@oromiamajlis.com" className="text-blue-600 hover:underline">
-                        donations@oromiamajlis.com
+                      <a href="mailto:donations@oromiamajlis.et" className="text-blue-600 hover:underline">
+                        donations@oromiamajlis.et
                       </a>
                     </div>
                   </div>

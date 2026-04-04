@@ -1,8 +1,14 @@
+const REGISTRATION_PURPOSES = [
+  "halal_business_certificate",
+  "halal_competency_certificate",
+] as const;
+
 interface HrmsRegisterPayload {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
+  registrationPurpose?: string;
 }
 
 interface HrmsRegisterResponse {
@@ -23,6 +29,21 @@ export async function POST(request: Request) {
     if (!body.email || !body.password || !body.firstName || !body.lastName) {
       return Response.json(
         { error: "firstName, lastName, email, and password are required." },
+        { status: 400 }
+      );
+    }
+
+    if (
+      !body.registrationPurpose ||
+      !REGISTRATION_PURPOSES.includes(
+        body.registrationPurpose as (typeof REGISTRATION_PURPOSES)[number]
+      )
+    ) {
+      return Response.json(
+        {
+          error:
+            "registrationPurpose is required and must be halal_business_certificate or halal_competency_certificate.",
+        },
         { status: 400 }
       );
     }

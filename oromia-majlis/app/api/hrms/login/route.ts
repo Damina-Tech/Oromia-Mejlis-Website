@@ -47,8 +47,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const isHalalBusiness = data.user?.roles?.includes("HALAL_BUSINESS");
-    const redirectPath = data.redirectTo || (isHalalBusiness ? "/halal/dashboard" : "/dashboard");
+    const roles = data.user?.roles ?? [];
+    const isHalalPortal =
+      roles.includes("HALAL_BUSINESS") || roles.includes("HALAL_COMPETENCY");
+    const redirectPath =
+      data.redirectTo || (isHalalPortal ? "/halal/dashboard" : "/dashboard");
     const redirectUrl = `${getHrmsWebBaseUrl()}/auth/callback?redirect=${encodeURIComponent(
       redirectPath
     )}#accessToken=${encodeURIComponent(data.accessToken)}`;
