@@ -242,6 +242,27 @@ const currentActivities = [
 ];
 
 export default function AboutPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const videoId = "1fU0W4hkBmo";
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [isModalOpen]);
+
   return (
     <main className="bg-gray-50 text-gray-900">
       {/* Hero Section */}
@@ -288,13 +309,14 @@ export default function AboutPage() {
                 >
                   Contact Us
                 </Link>
-                <Link
-                  href="/about/video"
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(true)}
                   className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 backdrop-blur-sm border border-white/20"
                 >
                   <span className="text-xl">▶</span>
                   Video Introduction
-                </Link>
+                </button>
               </div>
             </div>
             <div className="relative">
@@ -593,6 +615,34 @@ export default function AboutPage() {
           </div>
         </div>
       </section> */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-black/70 hover:bg-black/90 text-white rounded-full flex items-center justify-center transition-colors"
+              aria-label="Close video"
+            >
+              <span className="text-2xl">×</span>
+            </button>
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                title="Video Introduction - Oromia Majlis"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
