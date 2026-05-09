@@ -10,20 +10,32 @@
       "type": "string",
       "required": true
     },
+    "titleOm": { "type": "string" },
+    "titleAm": { "type": "string" },
+    "titleAr": { "type": "string" },
     "subtitle": {
       "type": "text",
       "required": true
     },
+    "subtitleOm": { "type": "text" },
+    "subtitleAm": { "type": "text" },
+    "subtitleAr": { "type": "text" },
     "ctaText": {
       "type": "string",
       "required": false,
       "default": "Discover More"
     },
+    "ctaTextOm": { "type": "string" },
+    "ctaTextAm": { "type": "string" },
+    "ctaTextAr": { "type": "string" },
     "ctaLink": {
       "type": "string",
       "required": false,
       "default": "/discover"
     },
+    "ctaLinkOm": { "type": "string" },
+    "ctaLinkAm": { "type": "string" },
+    "ctaLinkAr": { "type": "string" },
     "image": {
       "type": "media",
       "multiple": false,

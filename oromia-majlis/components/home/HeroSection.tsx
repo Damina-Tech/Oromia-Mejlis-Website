@@ -3,12 +3,62 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getHeroSection, HeroSection as HeroSectionType } from "@/lib/strapi";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME, normalizeLocale } from "@/lib/i18n";
 
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [heroData, setHeroData] = useState<HeroSectionType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [locale, setLocale] = useState(DEFAULT_LOCALE);
+
+  const t = (key: "topBarText" | "exploreMore" | "loading" | "noContent") => {
+    const dict: Record<string, Record<typeof key, string>> = {
+      en: {
+        topBarText:
+          "Serving the Muslim community by promoting Islamic values, strengthening unity, and managing Islamic affairs across the Oromia Region.",
+        exploreMore: "Let's explore more →",
+        loading: "Loading...",
+        noContent:
+          "No content available. Please configure Hero Section in Strapi.",
+      },
+      om: {
+        topBarText:
+          "Hawaasa Muslimootaa tajaajiluudhaan qajeelfama Islaamaa cimsuu, tokkummaa jabeessuu fi dhimma Islaamaa naannoo Oromiyaa keessatti sirnaan gaggeessuu.",
+        exploreMore: "Dabalataan haa ilaallu →",
+        loading: "Fe'amaa jira...",
+        noContent:
+          "Qabiyyeen hin jiru. Hero Section Strapi keessatti qopheessi.",
+      },
+      am: {
+        topBarText:
+          "በኦሮሚያ ክልል የኢስላማዊ ጉዳዮችን በታማኝነት በማስተዳደር፣ እሴቶችን በማበረታታት እና አንድነትን በማጠናከር ሙስሊም ማህበረሰብን እንገለግላለን።",
+        exploreMore: "ተጨማሪ ይመልከቱ →",
+        loading: "በመጫን ላይ...",
+        noContent:
+          "ይዘት አልተገኘም። እባክዎ Hero Section በStrapi ውስጥ ያቀናብሩ።",
+      },
+      ar: {
+        topBarText:
+          "نخدم المجتمع المسلم عبر تعزيز القيم الإسلامية وتقوية الوحدة وإدارة الشؤون الإسلامية في إقليم أوروميا.",
+        exploreMore: "اكتشف المزيد ←",
+        loading: "جارٍ التحميل...",
+        noContent:
+          "لا يوجد محتوى متاح. يرجى إعداد قسم البطل في Strapi.",
+      },
+    };
+    return (dict[locale] ?? dict.en)[key];
+  };
+
+  useEffect(() => {
+    const cookieValue =
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${LOCALE_COOKIE_NAME}=`))
+        ?.split("=")[1] ?? "";
+    setLocale(normalizeLocale(decodeURIComponent(cookieValue || DEFAULT_LOCALE)));
+  }, []);
 
   // Fetch hero section data from Strapi
   useEffect(() => {
@@ -27,18 +77,39 @@ export default function HeroSection() {
     };
 
     fetchData();
-  }, []);
+  }, [locale]);
 
   // Use Strapi data only
-  const slides = heroData?.slides?.map((slide) => ({
-    title: slide.title,
-    subtitle: slide.subtitle,
-    image: slide.image || "",
-    ctaText: slide.ctaText || "Learn More",
-    ctaLink: slide.ctaLink || "#",
-  })) || [];
+  const localizedField = <T extends Record<string, any>>(
+    item: T,
+    base: string,
+    fallback: string
+  ) => {
+    if (locale === "om") return item[`${base}Om`] || item[base] || fallback;
+    if (locale === "am") return item[`${base}Am`] || item[base] || fallback;
+    if (locale === "ar") return item[`${base}Ar`] || item[base] || fallback;
+    return item[base] || fallback;
+  };
 
-  const services = heroData?.services || [];
+  const slides =
+    heroData?.slides?.map((slide: any) => ({
+      title: localizedField(slide, "title", ""),
+      subtitle: localizedField(slide, "subtitle", ""),
+      image: slide.image || "",
+      ctaText: localizedField(slide, "ctaText", "Learn More"),
+      ctaLink: localizedField(slide, "ctaLink", "#"),
+    })) || [];
+
+  const services =
+    heroData?.services?.map((service: any) => ({
+      ...service,
+      title: localizedField(service, "title", service.title || ""),
+      description: localizedField(
+        service,
+        "description",
+        service.description || ""
+      ),
+    })) || [];
   const activeSlide = slides[currentSlide];
 
   const goToSlide = (direction: "next" | "prev") => {
@@ -67,16 +138,16 @@ export default function HeroSection() {
         <div className="hidden lg:block bg-red-600 text-white py-2">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between gap-2 text-sm">
-              <p>Serving the Muslim community by promoting Islamic values, strengthening unity, and managing Islamic affairs across the Oromia Region.</p>
+              <p>{t("topBarText")}</p>
               <Link href="/explore" className="hover:underline font-semibold">
-                Let&apos;s explore more →
+                {t("exploreMore")}
               </Link>
             </div>
           </div>
         </div>
         <div className="relative h-[520px] md:h-[620px] lg:h-[700px] bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center">
           <div className="text-center">
-            <p className="text-white text-lg">No content available. Please configure Hero Section in Strapi.</p>
+            <p className="text-white text-lg">{t("noContent")}</p>
             <p className="text-white/70 text-sm mt-2">
               Debug: slides={slides.length}, services={services.length}
             </p>
@@ -93,9 +164,9 @@ export default function HeroSection() {
         <div className="hidden lg:block bg-red-600 text-white py-2">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between gap-2 text-sm">
-                <p>Serving the Muslim community by promoting Islamic values, strengthening unity, and managing Islamic affairs across the Oromia Region.</p>
+                <p>{t("topBarText")}</p>
                 <Link href="/explore" className="hover:underline font-semibold">
-                Let&apos;s explore more →
+                {t("exploreMore")}
               </Link>
             </div>
           </div>
@@ -103,7 +174,7 @@ export default function HeroSection() {
         <div className="relative h-[520px] md:h-[620px] lg:h-[700px] bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-            <p className="text-white text-lg">Loading...</p>
+            <p className="text-white text-lg">{t("loading")}</p>
           </div>
         </div>
       </section>
@@ -116,9 +187,9 @@ export default function HeroSection() {
       <div className="hidden lg:block bg-red-600 text-white py-2">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between gap-2 text-sm">
-            <p>Serving the Muslim community by promoting Islamic values, strengthening unity, and managing Islamic affairs across the Oromia Region.</p>
+            <p>{t("topBarText")}</p>
             <Link href="/explore" className="hover:underline font-semibold">
-              Let&apos;s explore more →
+              {t("exploreMore")}
             </Link>
           </div>
         </div>

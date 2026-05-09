@@ -10,17 +10,31 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "slides": {
       "type": "component",
       "repeatable": true,
-      "component": "hero.slide"
+      "component": "hero.slide",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "services": {
       "type": "component",
       "repeatable": true,
-      "component": "hero.service"
+      "component": "hero.service",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

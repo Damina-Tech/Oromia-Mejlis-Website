@@ -3,11 +3,50 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { GalleryItem, getGalleryItems } from "@/lib/strapi";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME, normalizeLocale } from "@/lib/i18n";
 
 export default function CityHighlightsSection() {
   const [highlights, setHighlights] = useState<GalleryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [locale, setLocale] = useState(DEFAULT_LOCALE);
+
+  useEffect(() => {
+    const cookieValue =
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${LOCALE_COOKIE_NAME}=`))
+        ?.split("=")[1] ?? "";
+    setLocale(normalizeLocale(decodeURIComponent(cookieValue || DEFAULT_LOCALE)));
+  }, []);
+
+  const dict: Record<
+    string,
+    { title: string; loading: string; empty: string }
+  > = {
+    en: {
+      title: "Explore Oromia Majlis Highlights",
+      loading: "Loading highlights...",
+      empty: "No highlights available at this time.",
+    },
+    om: {
+      title: "Mul'ata Oromia Majlis Qoradhu",
+      loading: "Mul'ata fe'amaa jira...",
+      empty: "Ammaaf mul'anni hin jiru.",
+    },
+    am: {
+      title: "የኦሮሚያ መጅሊስ ማስታወቂያዎችን ያስሱ",
+      loading: "ማስታወቂያዎች በመጫን ላይ...",
+      empty: "በዚህ ጊዜ ማስታወቂያ የለም።",
+    },
+    ar: {
+      title: "استكشف أبرز لقطات مجلس أوروميا",
+      loading: "جارٍ تحميل اللقطات...",
+      empty: "لا توجد لقطات متاحة حالياً.",
+    },
+  };
+
+  const t = dict[locale] ?? dict.en;
 
   useEffect(() => {
     const fetchTopHighlights = async () => {
@@ -53,17 +92,17 @@ export default function CityHighlightsSection() {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">
-          Explore Oromia Majlis Highlights
+          {t.title}
         </h2>
 
         {isLoading ? (
           <div className="text-center py-10">
             <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-red-600"></div>
-            <p className="mt-4 text-gray-600">Loading highlights...</p>
+            <p className="mt-4 text-gray-600">{t.loading}</p>
           </div>
         ) : highlights.length === 0 ? (
           <div className="text-center py-10 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-gray-600">No highlights available at this time.</p>
+            <p className="text-gray-600">{t.empty}</p>
           </div>
         ) : (
           <div

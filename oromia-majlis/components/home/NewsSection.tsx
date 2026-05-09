@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Article, getArticles } from "@/lib/strapi";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME, normalizeLocale } from "@/lib/i18n";
 
 const formatDate = (dateString: string) => {
   if (!dateString) {
@@ -29,6 +30,67 @@ const isImageUrl = (value?: string) => {
 export default function NewsSection() {
   const [newsItems, setNewsItems] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [locale, setLocale] = useState(DEFAULT_LOCALE);
+
+  useEffect(() => {
+    const cookieValue =
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${LOCALE_COOKIE_NAME}=`))
+        ?.split("=")[1] ?? "";
+    setLocale(normalizeLocale(decodeURIComponent(cookieValue || DEFAULT_LOCALE)));
+  }, []);
+
+  const dict: Record<
+    string,
+    {
+      title: string;
+      subtitle: string;
+      cta: string;
+      loading: string;
+      empty: string;
+      readMore: string;
+    }
+  > = {
+    en: {
+      title: "News and Publications",
+      subtitle:
+        "Stay informed about the latest news, announcements, and activities from Oromia Majlis.",
+      cta: "More News",
+      loading: "Loading news...",
+      empty: "No news articles available at this time.",
+      readMore: "Continue Reading →",
+    },
+    om: {
+      title: "Oduu fi Maxxansa",
+      subtitle:
+        "Oduu haaraa, beeksisa fi hojiiwwan Oromia Majlis irraa akka haaraa ta’uun isin biraan ga’u.",
+      cta: "Oduu Dabalataa",
+      loading: "Oduu fe'amaa jira...",
+      empty: "Ammaaf barruuleen oduu hin argamne.",
+      readMore: "Dubbisuu itti fufi →",
+    },
+    am: {
+      title: "ዜና እና ህትመቶች",
+      subtitle:
+        "ከኦሮሚያ መጅሊስ የሚመጡ ዜናዎችን፣ ማስታወቂያዎችን እና እንቅስቃሴዎችን ይከታተሉ።",
+      cta: "ተጨማሪ ዜና",
+      loading: "ዜና በመጫን ላይ...",
+      empty: "በዚህ ጊዜ የዜና ጽሁፎች የሉም።",
+      readMore: "ቀጥለው ያንብቡ →",
+    },
+    ar: {
+      title: "الأخبار والمنشورات",
+      subtitle:
+        "ابقَ على اطلاع بآخر الأخبار والإعلانات والأنشطة من مجلس أوروميا.",
+      cta: "المزيد من الأخبار",
+      loading: "جارٍ تحميل الأخبار...",
+      empty: "لا توجد مقالات أخبار متاحة حالياً.",
+      readMore: "متابعة القراءة →",
+    },
+  };
+
+  const t = dict[locale] ?? dict.en;
 
   useEffect(() => {
     const fetchLatestNews = async () => {
@@ -51,24 +113,24 @@ export default function NewsSection() {
         <div className="flex flex-col md:flex-row items-center justify-between mb-12">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-              News and Publications
+              {t.title}
             </h2>
             <p className="text-lg text-gray-600">
-              Stay informed about the latest news, announcements, and activities from Oromia Majlis.
+              {t.subtitle}
             </p>
           </div>
           <Link
             href="/news"
             className="mt-4 md:mt-0 bg-blue-900 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded-md transition-colors whitespace-nowrap"
           >
-            More News
+            {t.cta}
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {isLoading && (
             <div className="md:col-span-3 bg-white rounded-lg p-6 text-gray-600 shadow-md">
-              Loading news...
+              {t.loading}
             </div>
           )}
 
@@ -100,7 +162,7 @@ export default function NewsSection() {
                     href={`/news/${item.slug || item.id}`}
                     className="text-blue-700 hover:text-red-600 font-semibold transition-colors inline-flex items-center gap-2"
                   >
-                    Continue Reading →
+                    {t.readMore}
                   </Link>
                 </div>
               </article>
@@ -108,7 +170,7 @@ export default function NewsSection() {
 
           {!isLoading && newsItems.length === 0 && (
             <div className="md:col-span-3 bg-white rounded-lg p-6 text-gray-600 shadow-md">
-              No news articles available at this time.
+              {t.empty}
             </div>
           )}
         </div>

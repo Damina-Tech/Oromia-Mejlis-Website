@@ -49,6 +49,18 @@ export interface HeroSlide {
   subtitle: string;
   ctaText: string;
   ctaLink: string;
+  titleOm?: string;
+  titleAm?: string;
+  titleAr?: string;
+  subtitleOm?: string;
+  subtitleAm?: string;
+  subtitleAr?: string;
+  ctaTextOm?: string;
+  ctaTextAm?: string;
+  ctaTextAr?: string;
+  ctaLinkOm?: string;
+  ctaLinkAm?: string;
+  ctaLinkAr?: string;
   image: string; // URL string for easier use in components
 }
 
@@ -58,6 +70,12 @@ export interface HeroService {
   title: string;
   description: string;
   href: string;
+  titleOm?: string;
+  titleAm?: string;
+  titleAr?: string;
+  descriptionOm?: string;
+  descriptionAm?: string;
+  descriptionAr?: string;
 }
 
 export interface HeroSection {
@@ -219,6 +237,18 @@ export async function getHeroSection(): Promise<HeroSection | null> {
         subtitle: slide.subtitle || '',
         ctaText: slide.ctaText || 'Discover More',
         ctaLink: slide.ctaLink || '/discover',
+        titleOm: slide.titleOm || undefined,
+        titleAm: slide.titleAm || undefined,
+        titleAr: slide.titleAr || undefined,
+        subtitleOm: slide.subtitleOm || undefined,
+        subtitleAm: slide.subtitleAm || undefined,
+        subtitleAr: slide.subtitleAr || undefined,
+        ctaTextOm: slide.ctaTextOm || undefined,
+        ctaTextAm: slide.ctaTextAm || undefined,
+        ctaTextAr: slide.ctaTextAr || undefined,
+        ctaLinkOm: slide.ctaLinkOm || undefined,
+        ctaLinkAm: slide.ctaLinkAm || undefined,
+        ctaLinkAr: slide.ctaLinkAr || undefined,
         image: imageUrl
           ? `${STRAPI_URL}${imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`}`
           : 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
@@ -232,6 +262,12 @@ export async function getHeroSection(): Promise<HeroSection | null> {
       title: service.title || '',
       description: service.description || '',
       href: service.href || '#',
+      titleOm: service.titleOm || undefined,
+      titleAm: service.titleAm || undefined,
+      titleAr: service.titleAr || undefined,
+      descriptionOm: service.descriptionOm || undefined,
+      descriptionAm: service.descriptionAm || undefined,
+      descriptionAr: service.descriptionAr || undefined,
     }));
 
     return {

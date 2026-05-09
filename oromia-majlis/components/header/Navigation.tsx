@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME, normalizeLocale } from "@/lib/i18n";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -24,6 +25,98 @@ export default function Navigation() {
   const pathname = usePathname();
   const [isProgramsOpen, setIsProgramsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [locale, setLocale] = useState(DEFAULT_LOCALE);
+
+  useEffect(() => {
+    const cookieValue =
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${LOCALE_COOKIE_NAME}=`))
+        ?.split("=")[1] ?? "";
+    setLocale(normalizeLocale(decodeURIComponent(cookieValue || DEFAULT_LOCALE)));
+  }, []);
+
+  const labels: Record<
+    string,
+    {
+      home: string;
+      about: string;
+      services: string;
+      departments: string;
+      programs: string;
+      news: string;
+      contact: string;
+      projects: string;
+      events: string;
+      gallery: string;
+    }
+  > = {
+    en: {
+      home: "Home",
+      about: "About",
+      services: "Services",
+      departments: "Departments",
+      programs: "Programs",
+      news: "News",
+      contact: "Contact",
+      projects: "Projects",
+      events: "Events",
+      gallery: "Gallery",
+    },
+    om: {
+      home: "Mana",
+      about: "Waa'ee keenya",
+      services: "Tajaajila",
+      departments: "Kutaa hojii",
+      programs: "Sagantaa",
+      news: "Oduu",
+      contact: "Nu qunnamaa",
+      projects: "Pirojektoota",
+      events: "Taateewwan",
+      gallery: "Suuraa",
+    },
+    am: {
+      home: "መነሻ",
+      about: "ስለ እኛ",
+      services: "አገልግሎቶች",
+      departments: "መምሪያዎች",
+      programs: "ፕሮግራሞች",
+      news: "ዜና",
+      contact: "አግኙን",
+      projects: "ፕሮጀክቶች",
+      events: "ክስተቶች",
+      gallery: "ጋለሪ",
+    },
+    ar: {
+      home: "الرئيسية",
+      about: "من نحن",
+      services: "الخدمات",
+      departments: "الإدارات",
+      programs: "البرامج",
+      news: "الأخبار",
+      contact: "اتصل بنا",
+      projects: "المشاريع",
+      events: "الفعاليات",
+      gallery: "المعرض",
+    },
+  };
+
+  const t = labels[locale] ?? labels.en;
+
+  const navItemsLocalized = [
+    { name: t.home, href: "/" },
+    { name: t.about, href: "/about" },
+    { name: t.services, href: "/services" },
+    { name: t.departments, href: "/offices" },
+    { name: t.news, href: "/news" },
+    { name: t.contact, href: "/contact" },
+  ];
+
+  const programsDropdownLocalized = [
+    { name: t.projects, href: "/projects" },
+    { name: t.events, href: "/event" },
+    { name: t.gallery, href: "/gallery" },
+  ];
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -43,13 +136,13 @@ export default function Navigation() {
   }, [isProgramsOpen]);
 
   // Check if current path is in programs dropdown
-  const isProgramsActive = programsDropdown.some(
+  const isProgramsActive = programsDropdownLocalized.some(
     (item) => pathname === item.href || pathname.startsWith(item.href)
   );
 
   return (
     <nav className="hidden lg:flex items-center gap-6">
-      {navItems.slice(0, 4).map((item) => (
+      {navItemsLocalized.slice(0, 4).map((item) => (
         <Link
           key={item.name}
           href={item.href}
@@ -73,7 +166,7 @@ export default function Navigation() {
               : "text-blue-700 hover:text-red-600"
           }`}
         >
-          Programs
+          {t.programs}
           <svg
             className={`w-4 h-4 transition-transform duration-200 ${
               isProgramsOpen ? "rotate-180" : ""
@@ -94,7 +187,7 @@ export default function Navigation() {
         {/* Dropdown Menu */}
         {isProgramsOpen && (
           <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
-            {programsDropdown.map((item) => (
+            {programsDropdownLocalized.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
@@ -112,7 +205,7 @@ export default function Navigation() {
         )}
       </div>
 
-      {navItems.slice(4).map((item) => (
+      {navItemsLocalized.slice(4).map((item) => (
         <Link
           key={item.name}
           href={item.href}

@@ -14,10 +14,16 @@
       "type": "string",
       "required": true
     },
+    "titleOm": { "type": "string" },
+    "titleAm": { "type": "string" },
+    "titleAr": { "type": "string" },
     "description": {
       "type": "text",
       "required": true
     },
+    "descriptionOm": { "type": "text" },
+    "descriptionAm": { "type": "text" },
+    "descriptionAr": { "type": "text" },
     "href": {
       "type": "string",
       "required": true

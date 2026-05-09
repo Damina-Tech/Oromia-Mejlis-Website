@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Event, getEvents } from "@/lib/strapi";
 import { majlisDocuments } from "@/lib/documents";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME, normalizeLocale } from "@/lib/i18n";
 
 const formatDateLabel = (dateString: string) => {
   const date = new Date(dateString);
@@ -39,6 +40,68 @@ const isImageUrl = (value?: string) => {
 export default function EventsDocumentsSection() {
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoadingEvents, setIsLoadingEvents] = useState(true);
+  const [locale, setLocale] = useState(DEFAULT_LOCALE);
+
+  useEffect(() => {
+    const cookieValue =
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${LOCALE_COOKIE_NAME}=`))
+        ?.split("=")[1] ?? "";
+    setLocale(normalizeLocale(decodeURIComponent(cookieValue || DEFAULT_LOCALE)));
+  }, []);
+
+  const dict: Record<
+    string,
+    {
+      upcomingEvents: string;
+      seeAllEvents: string;
+      loadingEvents: string;
+      noEvents: string;
+      moreDetails: string;
+      documents: string;
+      moreDocuments: string;
+    }
+  > = {
+    en: {
+      upcomingEvents: "Upcoming Events",
+      seeAllEvents: "See All Events →",
+      loadingEvents: "Loading events...",
+      noEvents: "No upcoming events found.",
+      moreDetails: "More Details →",
+      documents: "Majlis Documents",
+      moreDocuments: "More Documents →",
+    },
+    om: {
+      upcomingEvents: "Taateewwan Dhufan",
+      seeAllEvents: "Taateewwan hunda ilaali →",
+      loadingEvents: "Taateewwan fe'amaa jiru...",
+      noEvents: "Taateewwan dhufan hin argamne.",
+      moreDetails: "Ibsa dabalataa →",
+      documents: "Dokumantii Majlis",
+      moreDocuments: "Dokumantii dabalataa →",
+    },
+    am: {
+      upcomingEvents: "የሚመጡ ክስተቶች",
+      seeAllEvents: "ሁሉንም ክስተቶች ይመልከቱ →",
+      loadingEvents: "ክስተቶች በመጫን ላይ...",
+      noEvents: "የሚመጡ ክስተቶች አልተገኙም።",
+      moreDetails: "ተጨማሪ ዝርዝር →",
+      documents: "የመጅሊስ ሰነዶች",
+      moreDocuments: "ተጨማሪ ሰነዶች →",
+    },
+    ar: {
+      upcomingEvents: "الفعاليات القادمة",
+      seeAllEvents: "عرض كل الفعاليات ←",
+      loadingEvents: "جارٍ تحميل الفعاليات...",
+      noEvents: "لا توجد فعاليات قادمة.",
+      moreDetails: "تفاصيل أكثر ←",
+      documents: "وثائق المجلس",
+      moreDocuments: "المزيد من الوثائق ←",
+    },
+  };
+
+  const t = dict[locale] ?? dict.en;
 
   useEffect(() => {
     const fetchTopEvents = async () => {
@@ -63,20 +126,20 @@ export default function EventsDocumentsSection() {
           <div>
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                Upcoming Events
+                {t.upcomingEvents}
               </h2>
               <Link
                 href="/event"
                 className="text-blue-700 hover:text-red-600 font-semibold transition-colors"
               >
-                See All Events →
+                {t.seeAllEvents}
               </Link>
             </div>
 
             <div className="space-y-6">
               {isLoadingEvents && (
                 <div className="bg-white border border-gray-200 rounded-lg p-6 text-gray-600">
-                  Loading events...
+                  {t.loadingEvents}
                 </div>
               )}
 
@@ -117,7 +180,7 @@ export default function EventsDocumentsSection() {
                           href={`/event/${event.slug || event.id}`}
                           className="inline-block text-red-600 hover:text-red-700 font-semibold text-sm transition-colors"
                         >
-                          More Details →
+                          {t.moreDetails}
                         </Link>
                       </div>
                     </div>
@@ -126,7 +189,7 @@ export default function EventsDocumentsSection() {
 
               {!isLoadingEvents && events.length === 0 && (
                 <div className="bg-white border border-gray-200 rounded-lg p-6 text-gray-600">
-                  No upcoming events found.
+                  {t.noEvents}
                 </div>
               )}
             </div>
@@ -136,13 +199,13 @@ export default function EventsDocumentsSection() {
           <div>
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                Majlis Documents
+                {t.documents}
               </h2>
               <Link
                 href="/documents"
                 className="text-blue-700 hover:text-red-600 font-semibold transition-colors"
               >
-                More Documents →
+                {t.moreDocuments}
               </Link>
             </div>
 

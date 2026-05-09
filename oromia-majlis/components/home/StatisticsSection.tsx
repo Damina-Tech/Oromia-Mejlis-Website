@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { DEFAULT_LOCALE, LOCALE_COOKIE_NAME, normalizeLocale } from "@/lib/i18n";
 
 const statistics = [
   {
@@ -119,6 +120,49 @@ function Counter({ targetValue, originalValue, label }: { targetValue: number; o
 }
 
 export default function StatisticsSection() {
+  const [locale, setLocale] = useState(DEFAULT_LOCALE);
+
+  useEffect(() => {
+    const cookieValue =
+      document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${LOCALE_COOKIE_NAME}=`))
+        ?.split("=")[1] ?? "";
+    setLocale(normalizeLocale(decodeURIComponent(cookieValue || DEFAULT_LOCALE)));
+  }, []);
+
+  const labels: Record<string, string[]> = {
+    en: [
+      "Mosques & Islamic Centers Supported",
+      "Muslims Served Across Oromia Region",
+      "Religious Education Programs",
+      "Years of Service to the Community",
+    ],
+    om: [
+      "Masjiidaa fi Wiirtuu Islaamaa deeggaraman",
+      "Muslimoota Oromiyaa keessatti tajaajilaman",
+      "Sagantaalee Barnoota Amantii",
+      "Waggoota tajaajila hawaasaa",
+    ],
+    am: [
+      "የተደገፉ መስጊዶችና የኢስላማዊ ማዕከላት",
+      "በኦሮሚያ ክልል የተገለገሉ ሙስሊሞች",
+      "የሀይማኖት ትምህርት ፕሮግራሞች",
+      "ለማህበረሰብ የአገልግሎት ዓመታት",
+    ],
+    ar: [
+      "المساجد والمراكز الإسلامية المدعومة",
+      "المسلمون الذين تم خدمتهم في إقليم أوروميا",
+      "برامج التعليم الديني",
+      "سنوات الخدمة للمجتمع",
+    ],
+  };
+
+  const localizedStatistics = statistics.map((s, idx) => ({
+    ...s,
+    label: (labels[locale] ?? labels.en)[idx] ?? s.label,
+  }));
+
   return (
     <section className="py-16 bg-blue-900 text-white relative overflow-hidden">
       {/* Background Pattern */}
@@ -128,7 +172,7 @@ export default function StatisticsSection() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {statistics.map((stat, index) => (
+          {localizedStatistics.map((stat, index) => (
             <Counter
               key={index}
               targetValue={parseValue(stat.value)}
