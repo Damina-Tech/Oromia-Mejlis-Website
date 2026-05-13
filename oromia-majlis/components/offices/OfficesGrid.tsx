@@ -4,6 +4,14 @@ import OfficeCard from "./OfficeCard";
 
 const offices = [
   {
+    id: "halal-services",
+    title: "Halal Services Department",
+    description: "End-to-end support for Halal certification: registration, compliance, inspection, and follow-up.",
+    image: "✅",
+    icon: "✅",
+    href: "/offices/halal-services",
+  },
+  {
     id: "organizational-structure-institutional",
     title: "Organizational Structure and Institutional Department",
     description: "Oversight of organizational design, bylaws, and institutional framework for effective governance.",
@@ -92,14 +100,6 @@ const offices = [
     href: "/offices/hajj-umrah-services",
   },
   {
-    id: "halal-services",
-    title: "Halal Services Department",
-    description: "End-to-end support for Halal certification: registration, compliance, inspection, and follow-up.",
-    image: "✅",
-    icon: "✅",
-    href: "/offices/halal-services",
-  },
-  {
     id: "legal-services",
     title: "Legal Services Department",
     description: "Legal advice, contract review, and representation in compliance with Ethiopian law.",
@@ -151,7 +151,7 @@ const offices = [
 
 export default function OfficesGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-9 lg:grid-cols-3 lg:gap-10">
       {offices.map((office) => (
         <OfficeCard
           key={office.id}

@@ -3,14 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary-blue: #1e3a8a;
-  --primary-blue-dark: #1e40af;
-  --primary-blue-light: #3b82f6;
+  --primary: #12ae9d;
+  --primary-dark: #0e8f83;
+  --primary-darker: #0b7268;
+  --primary-light: #3fd0c1;
+  --primary-lighter: #8be7de;
   --primary-yellow: #eab308;
   --primary-yellow-light: #facc15;
-  --primary-red: #dc2626;
-  --primary-red-dark: #b91c1c;
-  --primary-red-light: #ef4444;
+  --primary-red: var(--primary);
+  --primary-red-dark: var(--primary-dark);
+  --primary-red-light: var(--primary-light);
+  --primary-blue: var(--primary-darker);
+  --primary-blue-dark: var(--primary-dark);
+  --primary-blue-light: var(--primary-light);
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -28,6 +33,29 @@
   --color-primary-red: var(--primary-red);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Brand remap: make site primary = #12ae9d */
+  --color-red-50: #e9fbf8;
+  --color-red-100: #c8f5ee;
+  --color-red-200: #9eede3;
+  --color-red-300: #6fe3d6;
+  --color-red-400: #3fd0c1;
+  --color-red-500: #1bb8a7;
+  --color-red-600: var(--primary);
+  --color-red-700: var(--primary-dark);
+  --color-red-800: var(--primary-darker);
+  --color-red-900: #064d46;
+
+  --color-blue-50: #e9fbf8;
+  --color-blue-100: #c8f5ee;
+  --color-blue-200: #9eede3;
+  --color-blue-300: #6fe3d6;
+  --color-blue-400: #3fd0c1;
+  --color-blue-500: #1bb8a7;
+  --color-blue-600: var(--primary);
+  --color-blue-700: var(--primary-dark);
+  --color-blue-800: var(--primary-darker);
+  --color-blue-900: #064d46;
 }
 
 @media (prefers-color-scheme: dark) {

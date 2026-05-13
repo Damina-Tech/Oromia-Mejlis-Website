@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import HalalServicesDepartmentView from "@/components/offices/HalalServicesDepartmentView";
+import OfficesBreadcrumb from "@/components/offices/OfficesBreadcrumb";
 
 interface DepartmentDetailPageProps {
   params: Promise<{
@@ -46,6 +48,7 @@ const defaultDepartmentData = {
 type DepartmentData = typeof defaultDepartmentData;
 
 const departmentNames: Record<string, string> = {
+  "halal-services": "Halal Services Department",
   "organizational-structure-institutional": "Organizational Structure and Institutional Department",
   "finance-resource-administration": "Finance and Resource Administration Department",
   "audit-inspection": "Audit and Inspection Department",
@@ -57,7 +60,6 @@ const departmentNames: Record<string, string> = {
   "social-affairs-islamic-associations": "Social Affairs and Islamic Associations Department",
   "income-development": "Income and Development Department",
   "hajj-umrah-services": "Hajj and Umrah Services Department",
-  "halal-services": "Halal Services Department",
   "legal-services": "Legal Services Department",
   "security-public-relations": "Security and Public Relations Department",
   "communications": "Communications Department",
@@ -67,6 +69,36 @@ const departmentNames: Record<string, string> = {
 };
 
 const departmentDataMap: Record<string, DepartmentData> = {
+  "halal-services": {
+    name: "Halal Services Department",
+    head: { name: "Director", title: "Department Director", image: "👤" },
+    information: {
+      description:
+        "ORIASC-HCB (Oromiya Region Islamic Affairs Supreme Council — Department of Halal Certification Body) is Ethiopia's EIAC- and SFDA Halal Center–accredited national halal certification body. We develop Halal standards, conduct inspections under Sharia and GSO requirements, and support access to UAE, Saudi Arabia, and Gulf markets.",
+      mission:
+        "To develop Halal standards aligned with Islamic Law and international food standards, build skilled manpower through training, and expand knowledge of Halal certification to strengthen production, exports, and global acceptance.",
+      vision:
+        "To be the national reference for credible Halal certification and regulatory assurance for Ethiopia and international Halal markets.",
+    },
+    message: {
+      title: "Message from the Director",
+      content:
+        "Halal is a right of the consumer and a duty upon producers and certifiers. ORIASC-HCB is committed to a transparent certification journey—from first audit through Decision Committee approval—so that Ethiopian businesses can trade with confidence in Halal integrity.",
+    },
+    contact: {
+      phone: "+251 9XX XXX XXX",
+      email: "halal@oromiamajlis.et",
+      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
+      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+    },
+    services: [
+      "Halal product certification (initial audit, evaluation, and certificate issuance)",
+      "Scheme and compliance review aligned with GSO and Gulf market requirements",
+      "Training and capacity building for auditors, inspectors, and industry",
+      "Halal awareness, standards guidance, and documentation support",
+      "Certification renewal, surveillance, and follow-up with applicants",
+    ],
+  },
   "organizational-structure-institutional": {
     name: "Organizational Structure and Institutional Department",
     head: { name: "Director", title: "Department Director", image: "👤" },
@@ -397,36 +429,6 @@ const departmentDataMap: Record<string, DepartmentData> = {
       "Post-pilgrimage follow-up and support",
     ],
   },
-  "halal-services": {
-    name: "Halal Services Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
-    information: {
-      description:
-        "The Halal Services Department provides end-to-end support for Halal certification: registration, application review, compliance checks, inspection coordination, and certification follow-up. It helps businesses and institutions obtain and maintain credible Halal certification in line with Sharia and standards.",
-      mission:
-        "To deliver credible, efficient, and Sharia-aligned Halal certification and related services for businesses and institutions across Oromia and beyond.",
-      vision:
-        "To be the trusted reference for Halal certification and compliance services in the region.",
-    },
-    message: {
-      title: "Message from the Director",
-      content:
-        "Halal is a right of the consumer and a responsibility of the producer. We are dedicated to supporting businesses through a clear, transparent certification process so that Halal products and services are trustworthy and accessible.",
-    },
-    contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "halal@oromiamajlis.et",
-      address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
-    },
-    services: [
-      "Halal certification registration and application support",
-      "Compliance review and documentation",
-      "Audit and inspection coordination",
-      "Certification renewal and follow-up",
-      "Halal awareness and standards guidance",
-    ],
-  },
   "legal-services": {
     name: "Legal Services Department",
     head: { name: "Director", title: "Department Director", image: "👤" },
@@ -626,197 +628,229 @@ export default async function DepartmentDetailPage({
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <section className="py-16 lg:py-20">
-        <div className="container mx-auto px-4 max-w-6xl">
-          {/* Back Button */}
-          <Link
-            href="/offices"
-            className="inline-flex items-center text-blue-700 hover:text-red-600 mb-8 transition-colors"
-          >
-            <span className="mr-2">←</span>
-            <span>Back to Offices</span>
-          </Link>
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-teal-50/25">
+      <section className="relative py-14 lg:py-20">
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-teal-100/35 to-transparent"
+          aria-hidden
+        />
+        <div className="container relative mx-auto max-w-6xl px-4">
+          <OfficesBreadcrumb current={departmentName} />
 
-          {/* Department Header */}
-          <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {departmentName}
-            </h1>
-            <p className="text-lg text-gray-600">
-              {departmentData.information.description}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Department Head */}
-              <div className="bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Department Head
-                </h2>
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                  <div className="w-32 h-32 bg-gradient-to-br from-blue-200 to-blue-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <div className="text-6xl">{departmentData.head.image}</div>
-                  </div>
-                  <div className="text-center md:text-left">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {departmentData.head.name}
-                    </h3>
-                    <p className="text-gray-600 mb-4">{departmentData.head.title}</p>
-                    <p className="text-gray-700">
-                      Leading the department with vision and dedication to serve
-                      the community.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Department Information */}
-              <div className="bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Department Information
-                </h2>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      Mission
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed">
-                      {departmentData.information.mission}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      Vision
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed">
-                      {departmentData.information.vision}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Message from Department Head */}
-              <div className="bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  {departmentData.message.title}
-                </h2>
-                <div className="border-l-4 border-red-600 pl-6">
-                  <p className="text-gray-700 leading-relaxed italic">
-                    {departmentData.message.content}
-                  </p>
-                  <p className="text-gray-600 mt-4 font-semibold">
-                    — {departmentData.head.name}
-                  </p>
-                </div>
-              </div>
-
-              {/* Services */}
-              <div className="bg-white rounded-lg shadow-md p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Our Services
-                </h2>
-                <ul className="space-y-3">
-                  {departmentData.services.map((service, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-red-600 font-bold mt-1">•</span>
-                      <span className="text-gray-700">{service}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Contact Information */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">
-                  Contact Information
-                </h2>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 text-xl">📞</span>
-                    <div>
-                      <p className="font-semibold text-gray-900">Phone</p>
-                      <p className="text-gray-600">{departmentData.contact.phone}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 text-xl">✉️</span>
-                    <div>
-                      <p className="font-semibold text-gray-900">Email</p>
-                      <p className="text-gray-600">{departmentData.contact.email}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 text-xl">📍</span>
-                    <div>
-                      <p className="font-semibold text-gray-900">Address</p>
-                      <p className="text-gray-600">{departmentData.contact.address}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 text-xl">🕐</span>
-                    <div>
-                      <p className="font-semibold text-gray-900">Office Hours</p>
-                      <p className="text-gray-600">{departmentData.contact.hours}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Links */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">
-                  Quick Links
-                </h2>
-                <ul className="space-y-3">
-                  <li>
-                    <Link
-                      href="/services"
-                      className="text-blue-700 hover:text-red-600 transition-colors"
-                    >
-                      Services →
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/news"
-                      className="text-blue-700 hover:text-red-600 transition-colors"
-                    >
-                      News & Updates →
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/contact"
-                      className="text-blue-700 hover:text-red-600 transition-colors"
-                    >
-                      Contact Us →
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              {id === "halal-services" && (
-                <div className="bg-gradient-to-br from-red-600 to-blue-900 rounded-lg shadow-lg p-6 text-white">
-                  <h3 className="text-xl font-bold mb-3">Apply for Halal Certification</h3>
-                  <p className="text-white/90 mb-5 text-sm">
-                    Start your application process online and track your certification progress.
-                  </p>
+          {id === "halal-services" ? (
+            <HalalServicesDepartmentView
+              departmentName={departmentName}
+              head={departmentData.head}
+              contact={departmentData.contact}
+              services={departmentData.services}
+              messageTitle={departmentData.message.title}
+              messageContent={departmentData.message.content}
+            />
+          ) : (
+            <>
+              {/* Department Header */}
+              <div className="mb-8 rounded-2xl border border-gray-100 bg-gradient-to-br from-white via-white to-teal-50/40 p-8 shadow-lg ring-1 ring-gray-100/90 md:p-10">
+                <h1 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
+                  {departmentName}
+                </h1>
+                <p className="text-lg leading-relaxed text-gray-600">
+                  {departmentData.information.description}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
                   <Link
-                    href="/register"
-                    className="inline-flex w-full items-center justify-center rounded-md bg-white px-6 py-3 text-center font-semibold text-red-700 hover:bg-red-50 transition-colors"
+                    href="/offices"
+                    className="inline-flex items-center gap-2 rounded-xl border border-teal-200 bg-white px-4 py-2.5 text-sm font-semibold text-teal-800 shadow-sm transition hover:border-teal-300 hover:bg-teal-50"
                   >
-                    Start Registration
+                    ← All departments
+                  </Link>
+                  <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:border-gray-300 hover:bg-gray-50"
+                  >
+                    Home
                   </Link>
                 </div>
-              )}
-            </div>
-          </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Main Content */}
+                <div className="lg:col-span-2 space-y-8">
+                  {/* Department Head */}
+                  <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-200/70 hover:shadow-xl">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                      Department Head
+                    </h2>
+                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                      <div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-100 to-emerald-200 shadow-inner ring-2 ring-teal-100/80">
+                        <div className="text-6xl">{departmentData.head.image}</div>
+                      </div>
+                      <div className="text-center md:text-left">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                          {departmentData.head.name}
+                        </h3>
+                        <p className="text-gray-600 mb-4">{departmentData.head.title}</p>
+                        <p className="text-gray-700">
+                          Leading the department with vision and dedication to serve
+                          the community.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Department Information */}
+                  <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-200/70 hover:shadow-xl">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                      Department Information
+                    </h2>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                          Mission
+                        </h3>
+                        <p className="text-gray-700 leading-relaxed">
+                          {departmentData.information.mission}
+                        </p>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                          Vision
+                        </h3>
+                        <p className="text-gray-700 leading-relaxed">
+                          {departmentData.information.vision}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Message from Department Head */}
+                  <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-200/70 hover:shadow-xl">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                      {departmentData.message.title}
+                    </h2>
+                    <div className="border-l-4 border-teal-600 pl-6">
+                      <p className="text-gray-700 leading-relaxed italic">
+                        {departmentData.message.content}
+                      </p>
+                      <p className="text-gray-600 mt-4 font-semibold">
+                        — {departmentData.head.name}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Services */}
+                  <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-200/70 hover:shadow-xl">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                      Our Services
+                    </h2>
+                    <ul className="space-y-3">
+                      {departmentData.services.map((service, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="mt-1 font-bold text-teal-600">•</span>
+                          <span className="text-gray-700">{service}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Sidebar */}
+                <div className="space-y-6">
+                  {/* Contact Information */}
+                  <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:shadow-lg">
+                    <h2 className="text-xl font-bold text-gray-900 mb-6">
+                      Contact Information
+                    </h2>
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl text-teal-600">📞</span>
+                        <div>
+                          <p className="font-semibold text-gray-900">Phone</p>
+                          <p className="text-gray-600">{departmentData.contact.phone}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl text-teal-600">✉️</span>
+                        <div>
+                          <p className="font-semibold text-gray-900">Email</p>
+                          <p className="text-gray-600">{departmentData.contact.email}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl text-teal-600">📍</span>
+                        <div>
+                          <p className="font-semibold text-gray-900">Address</p>
+                          <p className="text-gray-600">{departmentData.contact.address}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <span className="text-xl text-teal-600">🕐</span>
+                        <div>
+                          <p className="font-semibold text-gray-900">Office Hours</p>
+                          <p className="text-gray-600">{departmentData.contact.hours}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quick Links */}
+                  <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:shadow-lg">
+                    <h2 className="mb-6 text-xl font-bold text-gray-900">
+                      Quick Links
+                    </h2>
+                    <ul className="space-y-1">
+                      <li>
+                        <Link
+                          href="/offices"
+                          className="group flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-teal-50 hover:text-teal-900"
+                        >
+                          All departments
+                          <span className="text-teal-600 transition group-hover:translate-x-0.5">
+                            →
+                          </span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/services"
+                          className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-teal-50 hover:text-teal-900"
+                        >
+                          Services
+                          <span className="text-teal-600">→</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/news"
+                          className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-teal-50 hover:text-teal-900"
+                        >
+                          News &amp; Updates
+                          <span className="text-teal-600">→</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/contact"
+                          className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-teal-50 hover:text-teal-900"
+                        >
+                          Contact us
+                          <span className="text-teal-600">→</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/"
+                          className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-teal-50 hover:text-teal-900"
+                        >
+                          Home
+                          <span className="text-teal-600">→</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </section>
     </main>

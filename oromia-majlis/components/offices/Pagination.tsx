@@ -15,16 +15,19 @@ export default function Pagination({
 }: PaginationProps) {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  const baseClass =
+    "flex h-10 w-10 items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 border";
+
   return (
-    <div className="flex items-center justify-center gap-2 mt-12">
+    <div className="mt-14 flex flex-wrap items-center justify-center gap-2">
       {pages.map((page) => (
         <Link
           key={page}
           href={page === 1 ? basePath : `${basePath}?page=${page}`}
-          className={`w-10 h-10 flex items-center justify-center rounded font-semibold transition-colors ${
+          className={`${baseClass} ${
             page === currentPage
-              ? "bg-red-600 text-white"
-              : "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50"
+              ? "border-teal-600 bg-teal-600 text-white shadow-md ring-2 ring-teal-200/60"
+              : "border-gray-200 bg-white text-gray-800 hover:border-teal-300 hover:bg-teal-50 hover:text-teal-900"
           }`}
         >
           {page}
@@ -33,7 +36,7 @@ export default function Pagination({
       {currentPage < totalPages && (
         <Link
           href={`${basePath}?page=${currentPage + 1}`}
-          className="w-10 h-10 flex items-center justify-center rounded bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 font-semibold transition-colors"
+          className={`${baseClass} border-gray-200 bg-white text-gray-800 hover:border-teal-300 hover:bg-teal-50 hover:text-teal-900`}
         >
           &gt;
         </Link>
@@ -41,4 +44,3 @@ export default function Pagination({
     </div>
   );
 }
-
