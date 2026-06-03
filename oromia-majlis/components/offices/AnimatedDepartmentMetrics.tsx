@@ -11,19 +11,19 @@ type StatDef = {
 
 const STATS: StatDef[] = [
   {
-    label: "Competency requests",
+    label: "Halal Certification Requests",
     trend: "↑ 12%",
     endNumeric: 10_000,
     format: (n) => `${Math.round(n / 1000)}K+`,
   },
   {
-    label: "Facility requests",
+    label: "Halal Meat Exported",
     trend: "↑ 8%",
     endNumeric: 25.3,
-    format: (n) => `${n.toFixed(1)}K`,
+    format: (n) => `${n.toFixed(1)}M`,
   },
   {
-    label: "Slaughter requests",
+    label: "Individual Served",
     trend: "↑ 15%",
     endNumeric: 20_000,
     format: (n) => `${Math.round(n / 1000)}K+`,

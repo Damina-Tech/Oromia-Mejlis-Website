@@ -73,7 +73,7 @@ export default function ProvisionUseOriasView() {
         </div>
       </header>
 
-      <div className="container mx-auto max-w-6xl px-4 pb-16 pt-6 md:pt-8">
+      <div className="container mx-auto px-4 pb-16 pt-6 md:pt-8">
         <Link
           href="/offices/halal-services"
           className="mb-6 inline-flex items-center text-sm font-medium text-teal-800 hover:text-teal-600"

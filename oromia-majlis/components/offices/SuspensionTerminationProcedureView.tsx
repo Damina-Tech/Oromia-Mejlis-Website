@@ -50,7 +50,7 @@ export default function SuspensionTerminationProcedureView() {
         </div>
       </header>
 
-      <div className="container mx-auto max-w-6xl px-4 py-10 md:py-12">
+      <div className="container mx-auto px-4 py-10 md:py-12">
         <Link
           href="/offices/halal-services"
           className="mb-8 inline-flex items-center text-sm font-medium text-teal-800 hover:text-teal-600"

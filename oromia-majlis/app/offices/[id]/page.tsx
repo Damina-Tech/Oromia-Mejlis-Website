@@ -634,7 +634,7 @@ export default async function DepartmentDetailPage({
           className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-teal-100/35 to-transparent"
           aria-hidden
         />
-        <div className="container relative mx-auto max-w-6xl px-4">
+        <div className="container relative mx-auto px-4">
           <OfficesBreadcrumb current={departmentName} />
 
           {id === "halal-services" ? (
