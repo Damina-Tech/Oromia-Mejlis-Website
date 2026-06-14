@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:cpanel": "node server.js",
+    "build:cpanel": "next build && node scripts/cpanel-postbuild.mjs",
     "lint": "eslint"
   },
   "dependencies": {

@@ -32,13 +32,47 @@ npm run build
 yarn build
 ```
 
-## ⚙️ Deployment
+## ⚙️ Deployment (Render)
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+This API is configured for [Render](https://render.com) with **PostgreSQL** via a single `DATABASE_URL`.
 
+### Environment variables
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_CLIENT` | `postgres` |
+| `DATABASE_URL` | Full Postgres connection string (Render sets this when you link a DB) |
+| `DATABASE_SSL` | `true` on Render |
+| `PUBLIC_URL` | e.g. `https://oriasc-api.onrender.com` or your custom domain |
+| `CORS_ORIGIN` | `https://oriasc.org,https://www.oriasc.org` |
+| `FRONTEND_URL` | `https://oriasc.org` |
+
+See `.env.example` for the full list.
+
+### Deploy with Blueprint
+
+1. Push this repo to GitHub.
+2. In Render → **New → Blueprint** → connect the repo.
+3. Render reads `render.yaml` at the repo root (creates Postgres + web service).
+4. Set `PUBLIC_URL` to your Render service URL (or custom domain `https://oriasc-api.oriasc.org`).
+5. Add payment keys (`STRIPE_SECRET_KEY`, `CHAPA_SECRET_KEY`) in the Render dashboard.
+6. After deploy, open `/admin` and create the Strapi admin user.
+
+**Build:** `npm install && npm run build`  
+**Start:** `npm start`
+
+### Local development
+
+```bash
+DATABASE_CLIENT=postgres
+DATABASE_URL=postgresql://postgres:PASSWORD@localhost:5432/mejlis_db
+DATABASE_SSL=false
+npm run develop
 ```
-yarn strapi deploy
-```
+
+### Uploads on Render
+
+Render’s filesystem is ephemeral. For production media, plan to use S3 (or similar) or a Render persistent disk.
 
 ## 📚 Learn more
 

@@ -1,0 +1,39 @@
+# ORIASC Strapi API — https://oriasc-api.oriasc.org
+# cPanel: Setup Node.js App → startup file: node_modules/@strapi/strapi/bin/strapi.js start
+#   OR set Application startup file to: server.cpanel.js (included in this repo)
+# Set application URL in cPanel env: PUBLIC_URL=https://oriasc-api.oriasc.org
+
+# --- Block access to secrets and source ---
+<FilesMatch "^(\.env|\.env\..*|\.git|\.gitignore|package-lock\.json)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Reverse-proxy to Strapi (default port 1337 — match PORT in .env)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ http://127.0.0.1:1337/$1 [P,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+  Header unset X-Powered-By
+</IfModule>
+
+Options -Indexes

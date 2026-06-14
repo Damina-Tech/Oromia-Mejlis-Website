@@ -1,57 +1,37 @@
-export default [
-  'strapi::logger',
-  'strapi::errors',
-  {
-    name: 'strapi::security',
-    config: {
-      contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-          'connect-src': ["'self'", 'https:'],
-          'img-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'dl.airtable.com',
-            'market-assets.strapi.io',
-            'localhost:1337',
-          ],
-          'media-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'dl.airtable.com',
-            'market-assets.strapi.io',
-            'localhost:1337',
-          ],
-          upgradeInsecureRequests: null,
+import { getCorsOrigins, getMediaCspSources } from './deployment';
+
+export default ({ env }) => {
+  const mediaSources = getMediaCspSources(env);
+
+  return [
+    'strapi::logger',
+    'strapi::errors',
+    {
+      name: 'strapi::security',
+      config: {
+        contentSecurityPolicy: {
+          useDefaults: true,
+          directives: {
+            'connect-src': ["'self'", 'https:'],
+            'img-src': mediaSources,
+            'media-src': mediaSources,
+            upgradeInsecureRequests: null,
+          },
         },
       },
     },
-  },
-  {
-    name: 'strapi::cors',
-    config: {
-      enabled: true,
-      origin: [
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://127.0.0.1:3000',
-        'http://127.0.0.1:3001',
-        'http://192.168.1.3:3000',
-      ],
-      headers: [
-        'Content-Type',
-        'Authorization',
-        'Origin',
-        'Accept',
-      ],
+    {
+      name: 'strapi::cors',
+      config: {
+        origin: getCorsOrigins(env),
+        headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+      },
     },
-  },
-  'strapi::poweredBy',
-  'strapi::query',
-  'strapi::body',
-  'strapi::session',
-  'strapi::favicon',
-  'strapi::public',
-];
+    'strapi::query',
+    'strapi::body',
+    'strapi::session',
+    'strapi::favicon',
+    'strapi::public',
+  ];
+};
