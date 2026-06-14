@@ -6,10 +6,9 @@ export default ({ env }) => {
   return {
     upload: {
       config: {
+        sizeLimit: 10000000,
         provider: 'local',
-        providerOptions: {
-          sizeLimit: 10000000,
-        },
+        providerOptions: {},
         actionOptions: {
           upload: {},
           uploadStream: {},

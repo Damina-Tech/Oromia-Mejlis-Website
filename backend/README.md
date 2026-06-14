@@ -32,34 +32,45 @@ npm run build
 yarn build
 ```
 
-## ⚙️ Deployment (Render)
+## ⚙️ Deployment (Render + Supabase)
 
-This API is configured for [Render](https://render.com) with **PostgreSQL** via a single `DATABASE_URL`.
+Render does **not** read `backend/.env`. Set every variable in **Render → your service → Environment**.
 
-### Environment variables
+### Required environment variables
 
-| Variable | Description |
-|----------|-------------|
+| Variable | Value |
+|----------|--------|
+| `NODE_ENV` | `production` |
 | `DATABASE_CLIENT` | `postgres` |
-| `DATABASE_URL` | Full Postgres connection string (Render sets this when you link a DB) |
-| `DATABASE_SSL` | `true` on Render |
-| `PUBLIC_URL` | e.g. `https://oriasc-api.onrender.com` or your custom domain |
+| `DATABASE_URL` | Full **Session pooler** URI from Supabase (see below) |
+| `DATABASE_SSL` | `true` |
+| `DATABASE_SSL_REJECT_UNAUTHORIZED` | `false` |
+| `DATABASE_POOL_MIN` | `0` |
+| `DATABASE_POOL_MAX` | `4` |
+| `PUBLIC_URL` | `https://your-service.onrender.com` (or custom domain) |
 | `CORS_ORIGIN` | `https://oriasc.org,https://www.oriasc.org` |
 | `FRONTEND_URL` | `https://oriasc.org` |
+| `ADMIN_JWT_SECRET`, `API_TOKEN_SALT`, `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, `APP_KEYS`, `JWT_SECRET` | Generate with `node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"` |
 
-See `.env.example` for the full list.
+### Supabase `DATABASE_URL` (important)
 
-### Deploy with Blueprint
+In Supabase: **Project Settings → Connect → Session pooler → URI**
 
-1. Push this repo to GitHub.
-2. In Render → **New → Blueprint** → connect the repo.
-3. Render reads `render.yaml` at the repo root (creates Postgres + web service).
-4. Set `PUBLIC_URL` to your Render service URL (or custom domain `https://oriasc-api.oriasc.org`).
-5. Add payment keys (`STRIPE_SECRET_KEY`, `CHAPA_SECRET_KEY`) in the Render dashboard.
-6. After deploy, open `/admin` and create the Strapi admin user.
+It must look like:
 
-**Build:** `npm install && npm run build`  
-**Start:** `npm start`
+```txt
+postgresql://postgres.fdyljrnokqsbuccjotrg:YOUR_DB_PASSWORD@aws-0-eu-west-3.pooler.supabase.com:5432/postgres
+```
+
+**Do not** paste the `.env.example` placeholders (`aws-0-REGION`, `PROJECT_REF`, `YOUR-PASSWORD`). Render will fail with `ENOTFOUND aws-0-REGION.pooler.supabase.com`.
+
+### Render service settings
+
+- **Root directory:** `backend`
+- **Build command:** `npm install && npm run build`
+- **Start command:** `npm start`
+
+After deploy, open `/admin` and create the Strapi admin user.
 
 ### Local development
 

@@ -4,6 +4,15 @@ export default ({ env }) => {
   const databaseUrl = env('DATABASE_URL', '');
   const client = env('DATABASE_CLIENT', databaseUrl ? 'postgres' : 'sqlite');
 
+  if (
+    databaseUrl &&
+    /PROJECT_REF|YOUR-PASSWORD|aws-0-REGION|replace_me/i.test(databaseUrl)
+  ) {
+    throw new Error(
+      'DATABASE_URL still contains placeholder values. Set the real Supabase Session pooler URI in Render → Environment (Dashboard → Connect → Session pooler).'
+    );
+  }
+
   const connections = {
     postgres: {
       connection: {
