@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0",
     "start:cpanel": "node server.js",
-    "build:cpanel": "next build && node scripts/cpanel-postbuild.mjs",
+    "build:cpanel": "CPANEL_DEPLOY=true next build && node scripts/cpanel-postbuild.mjs",
     "lint": "eslint"
   },
   "dependencies": {
@@ -28,5 +28,8 @@
     "eslint-config-next": "16.0.4",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }

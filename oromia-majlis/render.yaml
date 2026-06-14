@@ -1,0 +1,35 @@
+# Render Blueprint — ORIASC public website (Next.js)
+# Paste missing secrets in Render Dashboard if sync: false
+
+services:
+  - type: web
+    name: oriasc-website
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://oriasc.org
+      - key: NEXT_PUBLIC_STRAPI_URL
+        value: https://oromia-mejlis-website.onrender.com
+      - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: NEXT_PUBLIC_CHAPA_PUBLIC_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: CHAPA_SECRET_KEY
+        sync: false
+      - key: PAYMENT_SUCCESS_URL
+        value: https://oriasc.org/donate?payment=success
+      - key: PAYMENT_CANCEL_URL
+        value: https://oriasc.org/donate?payment=cancelled
+      - key: HRMS_API_BASE_URL
+        value: http://localhost:4000/api/v1
+      - key: HRMS_WEB_BASE_URL
+        value: http://localhost:8080
+      - key: HRMS_FRONTEND_URL
+        value: http://localhost:8080

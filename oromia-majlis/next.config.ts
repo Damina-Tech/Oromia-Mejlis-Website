@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "oromia-mejlis-website.onrender.com",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
         hostname: "oriasc-api.oriasc.org",
         pathname: "/uploads/**",
       },
