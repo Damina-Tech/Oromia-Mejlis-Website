@@ -18,7 +18,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Oromia Majlis - Official Website",
-  description: "Official website of Oromia Majlis Administration",
+  description: "Official website of Oromia Regional Islamic Affairs Supreme Council",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default async function RootLayout({
