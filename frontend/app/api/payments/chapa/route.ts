@@ -9,7 +9,10 @@ interface ChapaDonationPayload {
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as ChapaDonationPayload;
-    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+    const strapiUrl =
+      process.env.NEXT_PUBLIC_STRAPI_URL ||
+      process.env.STRAPI_URL ||
+      "http://localhost:1337";
     const response = await fetch(`${strapiUrl}/api/payments/chapa/checkout`, {
       method: "POST",
       headers: {

@@ -1,0 +1,22 @@
+# Strapi PostgreSQL only — host port 5433 (HRMS uses 5432 on same VPS)
+# Start: docker compose --env-file deploy/env/postgres.env -f deploy/docker-compose.yml up -d
+
+services:
+  strapi-postgres:
+    image: postgres:16-alpine
+    container_name: strapi-postgres
+    restart: unless-stopped
+    env_file:
+      - ./env/postgres.env
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - strapi_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  strapi_pg_data:

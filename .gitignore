@@ -1,0 +1,28 @@
+# Secrets — never commit
+deploy/env/postgres.env
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Dependencies & builds
+**/node_modules/
+backend/.tmp/
+backend/dist/
+backend/build/
+backend/.strapi/
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Strapi uploads (persist on VPS, not in git)
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
+
+# Logs & OS
+*.log
+.DS_Store
+
+# IDE
+.idea/
+.vscode/

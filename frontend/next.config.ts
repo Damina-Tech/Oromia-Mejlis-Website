@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const isProduction = process.env.NODE_ENV === "production";
-const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+const strapiUrl =
+  process.env.NEXT_PUBLIC_STRAPI_URL ||
+  process.env.STRAPI_URL ||
+  "http://localhost:1337";
 
 let strapiHostname = "localhost";
 try {
@@ -15,6 +18,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cms.oriasc.org",
+        pathname: "/uploads/**",
+      },
       {
         protocol: "https",
         hostname: "oromia-mejlis-website.onrender.com",
