@@ -243,7 +243,7 @@ const currentActivities = [
 
 export default function AboutPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const videoId = "1fU0W4hkBmo";
+  const videoId = "EIug1kZeh7Q";
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {

@@ -126,6 +126,67 @@ bash deploy/scripts/deploy-all.sh main
 2. Create admin user
 3. **Settings → Users & Permissions → Public** — enable `find` / `findOne` for public content types
 
+### 10. Seed Strapi content (automatic)
+
+This project **seeds sample content on every Strapi start** via `backend/src/index.ts` (bootstrap). No separate seed command is required.
+
+**What gets seeded (on first deploy / empty database):**
+
+| Content | Behavior |
+|---------|----------|
+| Hero section | Created or updated if slides/services empty |
+| Services | Creates only **missing** slugs |
+| Offices | Creates only **missing** departments |
+| Articles | All 6 — only if **none** exist |
+| Projects | All 10 — only if **none** exist |
+| Gallery | All 18 — only if **none** exist |
+| Events | All 10 — only if **none** exist |
+
+**Steps on VPS:**
+
+```bash
+cd /var/www/website
+
+# 1. Ensure Postgres is running
+docker compose --env-file deploy/env/postgres.env -f deploy/docker-compose.yml up -d
+
+# 2. Deploy / start Strapi (bootstrap runs on start)
+bash deploy/scripts/deploy-backend.sh main
+
+# 3. Watch seed output in logs
+pm2 logs oriasc-strapi --lines 100
+```
+
+Look for lines like:
+
+```text
+✅ Hero section data seeded successfully
+✅ Services data seeded successfully
+✅ Articles data seeded successfully
+...
+```
+
+**First-time checklist after seed:**
+
+1. Create admin at https://cms.oriasc.org/admin (if not done yet)
+2. **Settings → Users & Permissions → Roles → Public** — enable `find` / `findOne` for: `article`, `service`, `office`, `project`, `gallery-item`, `event`, `hero-section`
+3. **Content Manager → Hero Section** — upload slide images (seed uses placeholders)
+4. **Content Manager → Media Library** — upload images for articles/projects/gallery as needed
+5. **Publish** draft entries if Strapi shows them as draft (website only shows published content)
+
+**Re-seed on a fresh database:**
+
+```bash
+# WARNING: deletes all Strapi data
+docker compose --env-file deploy/env/postgres.env -f deploy/docker-compose.yml down -v
+docker compose --env-file deploy/env/postgres.env -f deploy/docker-compose.yml up -d
+bash deploy/scripts/deploy-backend.sh main
+```
+
+Then recreate the admin user and set Public permissions again.
+
+**Partial re-seed:** Articles/projects/gallery/events skip if **any** row exists. To add only new services/offices, restart Strapi — missing slugs are inserted automatically. To force full article/project seed, delete those entries in admin (or use fresh DB above).
+
 ---
 
 ## Ongoing deploys
