@@ -1,30 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #12ae9d;
-  --primary-dark: #0e8f83;
-  --primary-darker: #0b7268;
-  --primary-light: #3fd0c1;
-  --primary-lighter: #8be7de;
-  --primary-yellow: #eab308;
-  --primary-yellow-light: #facc15;
-  --primary-red: var(--primary);
-  --primary-red-dark: var(--primary-dark);
-  --primary-red-light: var(--primary-light);
-  --primary-blue: var(--primary-darker);
-  --primary-blue-dark: var(--primary-dark);
-  --primary-blue-light: var(--primary-light);
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -33,6 +8,14 @@
   --color-primary-red: var(--primary-red);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Consistent content width cap (1280px) across breakpoints */
+  --container-2xl: 80rem;
+  --container-3xl: 80rem;
+  --container-4xl: 80rem;
+  --container-5xl: 80rem;
+  --container-6xl: 80rem;
+  --container-7xl: 80rem;
 
   /* Brand remap: make site primary = #12ae9d */
   --color-red-50: #e9fbf8;
@@ -58,6 +41,32 @@
   --color-blue-900: #064d46;
 }
 
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #12ae9d;
+  --primary-dark: #0e8f83;
+  --primary-darker: #0b7268;
+  --primary-light: #3fd0c1;
+  --primary-lighter: #8be7de;
+  --primary-yellow: #eab308;
+  --primary-yellow-light: #facc15;
+  --primary-red: var(--primary);
+  --primary-red-dark: var(--primary-dark);
+  --primary-red-light: var(--primary-light);
+  --primary-blue: var(--primary-darker);
+  --primary-blue-dark: var(--primary-dark);
+  --primary-blue-light: var(--primary-light);
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --site-max-width: 80rem;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #ffffff;
@@ -65,15 +74,37 @@
   }
 }
 
+/* Cross-browser layout baseline */
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  margin: 0;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Consistent centered content width — placed after Tailwind so it wins at all breakpoints */
+.container {
+  width: 100%;
+  max-width: var(--site-max-width);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+@media (min-width: 96rem) {
+  .container {
+    max-width: var(--site-max-width);
+  }
 }
 
 /* Custom scrollbar for webkit browsers */

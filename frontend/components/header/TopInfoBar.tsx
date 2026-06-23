@@ -27,17 +27,17 @@ export default function TopInfoBar({ languageSelector }: TopInfoBarProps) {
     en: {
       callOn: "Call on:",
       openHours: "Open Hours:",
-      hoursValue: "Mon - Sat 8.00 am - 6.00 pm",
+      hoursValue: "Mon - Sat 8:00 am - 5:30 pm",
     },
     om: {
       callOn: "Bilbilaa:",
       openHours: "Sa'aatii hojii:",
-      hoursValue: "Wiix - Sanb 8:00 ganama - 6:00 galgala",
+      hoursValue: "Wiix - Sanb 8:00 ganama - 5:30 galgala",
     },
     am: {
       callOn: "ይደውሉ:",
       openHours: "የስራ ሰዓት:",
-      hoursValue: "ሰኞ - ቅዳሜ 8:00 ጡዋት - 6:00 ማታ",
+      hoursValue: "ሰኞ - ቅዳሜ 8:00 ጡዋት - 5:30 ማታ",
     },
     ar: {
       callOn: "اتصل على:",
@@ -57,7 +57,7 @@ export default function TopInfoBar({ languageSelector }: TopInfoBarProps) {
             <div className="flex items-center gap-2">
               <span className="text-red-500">📞</span>
               <span>
-                {t.callOn} +251911111111
+                {t.callOn} +251 11 123 4567
               </span>
             </div>
             <div className="flex items-center gap-2">

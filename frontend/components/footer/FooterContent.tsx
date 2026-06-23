@@ -39,15 +39,15 @@ export default function FooterContent() {
               </p>
               <p className="flex items-center gap-2">
                 <span>🕒</span>
-                <span>Working Hours: Mon – Fri, 8:00 AM – 5:30 PM</span>
+                <span>Working Hours: Mon – Sat, 8:00 AM – 5:30 PM</span>
               </p>
               <p className="flex items-center gap-2">
                 <span>📞</span>
-                <span>Phone: +251 9XX XXX XXX</span>
+                <span>Phone: +251 11 123 4567</span>
               </p>
               <p className="flex items-center gap-2">
                 <span>✉️</span>
-                <span>Email: info@oromiamajlis.et</span>
+                <span>Email: info@oriasc.org</span>
               </p>
             </div>
           </div>

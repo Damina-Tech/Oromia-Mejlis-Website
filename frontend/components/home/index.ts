@@ -1,4 +1,5 @@
 export { default as HeroSection } from "./HeroSection";
+export { default as PrayerCalendarSection } from "./PrayerCalendarSection";
 export { default as LocalServicesSection } from "./LocalServicesSection";
 export { default as LeaderSection } from "./LeaderSection";
 export { default as StatisticsSection } from "./StatisticsSection";

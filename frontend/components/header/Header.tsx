@@ -46,9 +46,7 @@ export default function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             {/* Logo */}
-            <div className="origin-left scale-90 sm:scale-100">
-              <Logo />
-            </div>
+            <Logo />
 
             {/* Desktop Navigation */}
             <Navigation />

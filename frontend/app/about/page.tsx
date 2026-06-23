@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { managementTeam, getLeaderSlug } from "@/lib/leadership";
+import OrganizationalStructureDiagram from "@/components/about/OrganizationalStructureDiagram";
 
 const navSections = [
   { id: "mission", label: "Mission & Vision" },
@@ -491,6 +492,8 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+
+          <OrganizationalStructureDiagram />
         </div>
       </section>
 

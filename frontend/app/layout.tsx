@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
@@ -16,8 +16,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: "Oromia Majlis - Official Website",
+  title: "Oromia Regional Islamic Affairs Supreme Council - Official Website",
   description: "Official website of Oromia Regional Islamic Affairs Supreme Council",
   icons: {
     icon: "/logo.png",
@@ -37,10 +42,10 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen w-full overflow-x-clip`}
       >
         <Header />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow w-full min-w-0 overflow-x-clip">{children}</main>
         <Footer />
       </body>
     </html>

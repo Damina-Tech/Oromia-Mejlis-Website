@@ -1,5 +1,6 @@
 import {
   HeroSection,
+  PrayerCalendarSection,
   LocalServicesSection,
   LeaderSection,
   StatisticsSection,
@@ -67,6 +68,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen">
       <HeroSection />
+      <PrayerCalendarSection />
       <section className="bg-gradient-to-r from-red-600 via-red-700 to-blue-900 text-white">
         <div className="container mx-auto px-4 py-10 md:py-12">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">

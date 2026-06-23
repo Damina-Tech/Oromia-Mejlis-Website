@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import HalalServicesDepartmentView from "@/components/offices/HalalServicesDepartmentView";
+import DepartmentHeadCard from "@/components/offices/DepartmentHeadCard";
 import OfficesBreadcrumb from "@/components/offices/OfficesBreadcrumb";
 
 interface DepartmentDetailPageProps {
@@ -101,7 +102,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "organizational-structure-institutional": {
     name: "Organizational Structure and Institutional Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Sheik Abdulhakiim Huseen", title: "Department Head", image: "/img/119.jpg" },
     information: {
       description:
         "The Organizational Structure and Institutional Department oversees the organizational design, bylaws, and institutional framework of Oromia Majlis. It ensures clear mandates, reporting lines, and governance so that all offices and departments operate effectively and in line with Islamic and administrative best practices.",
@@ -116,10 +117,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "A strong structure is the foundation of every successful institution. Our department is committed to keeping Oromia Majlis well-organized, with clear roles and processes, so that we can serve the community with consistency and integrity.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "institutional@oromiamajlis.et",
+      phone: "+251911772445",
+      email: "institutional@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Organizational design and structure review",
@@ -221,7 +222,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "dawah-guidance-irshad": {
     name: "Da'wah and Guidance (Irshad) Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Sheik Said Muhammad ", title: "Department Head", image: "/img/120.jpg" },
     information: {
       description:
         "The Da'wah and Guidance (Irshad) Department organizes and coordinates da'wah activities, religious guidance, and outreach programs. It promotes authentic Islamic teachings, supports preachers and guides, and engages with the community to strengthen faith and practice.",
@@ -237,9 +238,9 @@ const departmentDataMap: Record<string, DepartmentData> = {
     },
     contact: {
       phone: "+251 9XX XXX XXX",
-      email: "dawah@oromiamajlis.et",
+      email: "dawah@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Da'wah program planning and coordination",
@@ -281,7 +282,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "mosques-awqaf-heritage": {
     name: "Mosques, Awqaf, and Islamic Heritage Administration Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Sheik Mubaarak Ibraahim Abbaas", title: "Department Head", image: "/img/116.jpg" },
     information: {
       description:
         "The Mosques, Awqaf, and Islamic Heritage Administration Department supervises mosques, awqaf (endowments), and Islamic heritage sites in the Oromia Region. It supports registration, maintenance, proper use of endowments, and preservation of Islamic cultural and historical assets.",
@@ -296,10 +297,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "Mosques and awqaf are trusts from our community and our history. We are dedicated to their proper administration, maintenance, and the preservation of our Islamic heritage for the benefit of all.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "mosques@oromiamajlis.et",
+      phone: "+251 91 341 3013",
+      email: "mosques@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Mosque registration and supervision",
@@ -311,7 +312,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "zakat-administration-development": {
     name: "Zakat Administration and Development Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Sheik Naziif Muusaa ", title: "Department Head", image: "/img/112.jpg" },
     information: {
       description:
         "The Zakat Administration and Development Department organizes the collection, distribution, and development use of zakat in the Oromia Region. It ensures Sharia-compliant collection, transparent distribution to eligible recipients, and projects that lift communities out of poverty.",
@@ -327,9 +328,9 @@ const departmentDataMap: Record<string, DepartmentData> = {
     },
     contact: {
       phone: "+251 9XX XXX XXX",
-      email: "zakat@oromiamajlis.et",
+      email: "zakat@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Zakat collection and registration of payers",
@@ -341,7 +342,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "social-affairs-islamic-associations": {
     name: "Social Affairs and Islamic Associations Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Sheik Yaasiin Jibroo", title: "Department Head", image: "/img/114.jpg" },
     information: {
       description:
         "The Social Affairs and Islamic Associations Department oversees social programs, family support, and coordination with Islamic associations and civil society. It promotes community welfare, family cohesion, and collaboration with organizations that serve the Muslim community.",
@@ -356,10 +357,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "Strong families and strong associations make a strong community. We work to support social programs, family guidance, and coordination with Islamic associations so that together we can serve more effectively.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "social@oromiamajlis.et",
+      phone: "+251984578505",
+      email: "social@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Social and family support programs",
@@ -401,7 +402,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "hajj-umrah-services": {
     name: "Hajj and Umrah Services Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Sheik Muhammednuur Boru Guyyoo", title: "Department Head", image: "/img/113.jpg" },
     information: {
       description:
         "The Hajj and Umrah Services Department coordinates and supervises Hajj and Umrah services for pilgrims from the Oromia Region. It works with relevant authorities and service providers to ensure safe, organized, and spiritually fulfilling pilgrimages in accordance with Islamic requirements.",
@@ -416,10 +417,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "Hajj and Umrah are among the greatest acts of worship. We are committed to coordinating services, providing guidance, and ensuring that pilgrims from our region can perform these rites with peace of mind and devotion.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "hajj@oromiamajlis.et",
+      phone: "+251921310379",
+      email: "hajj@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Hajj and Umrah registration and coordination",
@@ -461,7 +462,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "security-public-relations": {
     name: "Security and Public Relations Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Ustaaz Kaliil Adamu", title: "Department Head", image: "/img/115.jpg" },
     information: {
       description:
         "The Security and Public Relations Department is responsible for the security of Oromia Majlis premises, personnel, and events, and for building positive relations with the public, government, and other stakeholders. It helps maintain a safe environment and a positive image of the Council.",
@@ -476,10 +477,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "Security and good relations go hand in hand. We work to protect our people and assets and to build trust with the public and partners, so that Oromia Majlis can serve in safety and with credibility.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "security@oromiamajlis.et",
+      phone: "+251 91 335 5575",
+      email: "security@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Premises and event security",
@@ -490,8 +491,8 @@ const departmentDataMap: Record<string, DepartmentData> = {
     ],
   },
   "communications": {
-    name: "Communications Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    name: "Communications Department of Oromia Majlis",
+    head: { name: "Sheik Sulxaan Muhammed ", title: "Department Head", image: "/img/118.jpg" },
     information: {
       description:
         "The Communications Department manages internal and external communications of Oromia Majlis. It handles media relations, content production, public announcements, and digital and traditional channels to inform the community and stakeholders and to present the Council's work accurately and professionally.",
@@ -506,10 +507,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "Clear communication builds trust. We are committed to sharing news, decisions, and activities in a timely and accurate way, so that the community and partners stay informed and engaged with Oromia Majlis.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "communications@oromiamajlis.et",
+      phone: "+251 90 223 5946",
+      email: "communications@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Media relations and press releases",
@@ -551,7 +552,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "youth-womens-council": {
     name: "Youth and Women's Council Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Ustaaz Shuayib Shamsu", title: "Department Head", image: "/img/117.jpg" },
     information: {
       description:
         "The Youth and Women's Council Department supports the participation, empowerment, and representation of youth and women within Oromia Majlis and the Muslim community. It coordinates programs, councils, and initiatives that address the specific needs and potential of youth and women in religious and community life.",
@@ -567,9 +568,9 @@ const departmentDataMap: Record<string, DepartmentData> = {
     },
     contact: {
       phone: "+251 9XX XXX XXX",
-      email: "youth@oromiamajlis.et",
+      email: "youth@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Youth programs and council coordination",
@@ -581,7 +582,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "it-digital-services": {
     name: "Information Technology (IT) and Digital Services Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Gurmessa Milkiyoo", title: "Department Head", image: "/img/Gurmessa.jpg" },
     information: {
       description:
         "The Information Technology (IT) and Digital Services Department manages Oromia Majlis's technology infrastructure, digital systems, and online services. It supports websites, data management, cybersecurity, and digital tools that improve efficiency and access to the Council's services.",
@@ -596,10 +597,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "Technology, when used wisely, helps us serve better and reach further. We are committed to maintaining robust systems, protecting data, and expanding digital services so that Oromia Majlis can meet the expectations of a modern community.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "it@oromiamajlis.et",
+      phone: "+251 91 712 3477",
+      email: "ict@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "IT infrastructure and network management",
@@ -675,27 +676,11 @@ export default async function DepartmentDetailPage({
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Main Content */}
                 <div className="lg:col-span-2 space-y-8">
-                  {/* Department Head */}
-                  <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-200/70 hover:shadow-xl">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                      Department Head
-                    </h2>
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                      <div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-100 to-emerald-200 shadow-inner ring-2 ring-teal-100/80">
-                        <div className="text-6xl">{departmentData.head.image}</div>
-                      </div>
-                      <div className="text-center md:text-left">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">
-                          {departmentData.head.name}
-                        </h3>
-                        <p className="text-gray-600 mb-4">{departmentData.head.title}</p>
-                        <p className="text-gray-700">
-                          Leading the department with vision and dedication to serve
-                          the community.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <DepartmentHeadCard
+                    name={departmentData.head.name}
+                    title={departmentData.head.title}
+                    image={departmentData.head.image}
+                  />
 
                   {/* Department Information */}
                   <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-md ring-1 ring-gray-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-200/70 hover:shadow-xl">
