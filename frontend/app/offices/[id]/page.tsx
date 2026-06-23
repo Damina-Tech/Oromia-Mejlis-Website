@@ -132,7 +132,7 @@ const departmentDataMap: Record<string, DepartmentData> = {
   },
   "finance-resource-administration": {
     name: "Finance and Resource Administration Department",
-    head: { name: "Director", title: "Department Director", image: "👤" },
+    head: { name: "Sheik Naasir Tamaam", title: "Department Head", image: "/img/12.jpg" },
     information: {
       description:
         "The Finance and Resource Administration Department manages the financial operations, budgeting, procurement, and resource allocation of Oromia Majlis. It ensures transparency, accountability, and Sharia-compliant financial practices in support of all programs and services.",
@@ -147,10 +147,10 @@ const departmentDataMap: Record<string, DepartmentData> = {
         "Sound finance and resource management are essential to our mission. We are dedicated to prudent budgeting, transparent reporting, and efficient use of resources so that every birr serves the community and upholds trust.",
     },
     contact: {
-      phone: "+251 9XX XXX XXX",
-      email: "finance@oromiamajlis.et",
+      phone: "+251933682084",
+      email: "finance@oriasc.org",
       address: "Oromia Majlis Headquarters, Addis Ababa, Ethiopia",
-      hours: "Mon - Fri: 8:00 AM - 5:30 PM",
+      hours: "Mon - Sat: 8:00 AM - 5:30 PM",
     },
     services: [
       "Budget planning and execution",
